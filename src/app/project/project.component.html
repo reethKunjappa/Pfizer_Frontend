@@ -1,0 +1,154 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-12 pad-0 text-right">
+                <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-primary" (click)="create()">Create</button>
+            <!-- <button routerLink="/compare" mat-raised-button color="purple">Create</button> -->
+          </div>
+    </div>
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-primary">
+                      <h4 class="card-title ">Simple Table</h4>
+                      <p class="card-category"> Here is a subtitle for this table</p>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead class="text-primary">
+                                  <th *ngFor="let header of projectTableHeaders">
+                                    {{ header }}
+                                  </th>
+                              </thead>
+                              <tbody>
+                                  <tr class="mat-row" *ngFor="let project of projectList">
+                                      <th class="mat-cell" scope="row">
+                                        <i *ngIf="!project.favorite" class="fa fa-star-o"></i>
+                                        <i *ngIf="project.favorite" class="fa fa-star"></i>
+                                      </th>
+                                      <td class="mat-cell">{{ project.id }}</td>
+                                      <td class="mat-cell">{{ project.productName }}</td>
+                                      <td class="mat-cell">{{ project.country.name }}</td>
+                                      <td class="mat-cell">{{ project.createdBy.name }}</td>
+                                      <td class="mat-cell">{{ project.createdOn }}</td>
+                                      <td class="mat-cell">
+                                        <div class="dropdown">
+                                          <div class="numberCircle dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">{{ project.conflicts.number }}</div>
+                                          <div class="dropdown-menu dropdown-menu-right conflicts-dropdown shadow bg-white rounded"
+                                            aria-labelledby="dropdownMenuButton">
+                                            <table class="table table-bordered table-sm table-light">
+                                              <tbody>
+                                                <tr>
+                                                  <td scope="row">Font Conflicts</td>
+                                                  <td>{{ project.conflicts.types.fontConflicts }}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td scope="row">Content Conflicts</td>
+                                                  <td>{{ project.conflicts.types.contentConflicts }}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td scope="row">Order Conflicts</td>
+                                                  <td>{{ project.conflicts.types.orderConflicts }}</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  <!-- <tr>
+                                      <td>
+                                          2
+                                      </td>
+                                      <td>
+                                          Minerva Hooper
+                                      </td>
+                                      <td>
+                                          Curaçao
+                                      </td>
+                                      <td>
+                                          Sinaai-Waas
+                                      </td>
+                                      <td class="text-primary">
+                                          $23,789
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          3
+                                      </td>
+                                      <td>
+                                          Sage Rodriguez
+                                      </td>
+                                      <td>
+                                          Netherlands
+                                      </td>
+                                      <td>
+                                          Baileux
+                                      </td>
+                                      <td class="text-primary">
+                                          $56,142
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          4
+                                      </td>
+                                      <td>
+                                          Philip Chaney
+                                      </td>
+                                      <td>
+                                          Korea, South
+                                      </td>
+                                      <td>
+                                          Overland Park
+                                      </td>
+                                      <td class="text-primary">
+                                          $38,735
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          5
+                                      </td>
+                                      <td>
+                                          Doris Greene
+                                      </td>
+                                      <td>
+                                          Malawi
+                                      </td>
+                                      <td>
+                                          Feldkirchen in Kärnten
+                                      </td>
+                                      <td class="text-primary">
+                                          $63,542
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          6
+                                      </td>
+                                      <td>
+                                          Mason Porter
+                                      </td>
+                                      <td>
+                                          Chile
+                                      </td>
+                                      <td>
+                                          Gloucester
+                                      </td>
+                                      <td class="text-primary">
+                                          $78,615
+                                      </td>
+                                  </tr> -->
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

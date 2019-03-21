@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./app/compare/compare.component.scss";
+
+.ng-sidebar {
+    background: rgb(255, 255, 255);
+    width: 13rem;
+  }
+  
+  .ng-sidebar--right {
+    color: rgb(255, 255, 255) !important;
+    background: rgb(255, 255, 255);
+    width: 12rem;
+  }
+  
