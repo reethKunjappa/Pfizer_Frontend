@@ -17,13 +17,52 @@ export class ProjectViewService {
       // 'Authorization': 'my-auth-token'
     })
   };
-  
+
+  public projectId : string = "";
+
   constructor(private http: HttpClient) { }
 
+  // Setter Method for Maintaining Project Id 
+  public projectID(v : any) {
+    this.projectId = v._id;
+  }
+
+  // Create Project API Call
   createProject( createProjectData: any ) : Observable<any> {
     let url = this.endPointAddress + '/api/labelling/createProject';
-    console.log("Inside service",createProjectData, url);
     return this.http.post<any>(url,createProjectData,this.httpOptions)
+    .pipe(
+      map((response: any ) => {
+        if ( response.status.code == '0' ) {
+          return response.result;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Fetch All Project Details API Call
+  fetchAllProjects() : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/getProjects';
+    return this.http.post<any>( url, null, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response.result;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Open Project Details API Call
+  openProject(id : string) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/viewProject';
+    return this.http.post<any>( url, { "_id" : id }, this.httpOptions)
     .pipe(
       map((response: any )=> {
         if ( response.status.code == '0' ) {

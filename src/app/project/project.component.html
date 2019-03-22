@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12 pad-0 text-right">
             <button mat-raised-button routerLink="/create" type="submit" class="btn btn-primary">Create</button>
-          </div>
+        </div>
     </div>
       <div class="row">
           <div class="col-md-12">
@@ -15,47 +15,47 @@
                   <div class="card-body">
                       <div class="table-responsive">
                           <table class="table">
-                              <thead class="text-primary">
-                                  <th *ngFor="let header of projectTableHeaders">{{ header }}</th>
-                              </thead>
-                              <tbody>
-                                  <tr class="mat-row" *ngFor="let project of projectList">
-                                      <th class="mat-cell" scope="row">
-                                        <i *ngIf="!project.favorite" class="fa fa-star-o"></i>
-                                        <i *ngIf="project.favorite" class="fa fa-star"></i>
-                                      </th>
-                                      <td class="mat-cell">{{ project.id }}</td>
-                                      <td class="mat-cell">{{ project.projectName }}</td>
-                                      <td class="mat-cell">{{ project.country.name }}</td>
-                                      <td class="mat-cell">{{ project.createdBy.name }}</td>
-                                      <td class="mat-cell">{{ project.createdOn }}</td>
-                                      <td class="mat-cell">
-                                        <div class="dropdown">
-                                          <div class="numberCircle dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">{{ project.conflicts.number }}</div>
-                                          <div class="dropdown-menu dropdown-menu-right conflicts-dropdown shadow bg-white rounded"
-                                            aria-labelledby="dropdownMenuButton">
-                                            <table class="table table-bordered table-sm table-light">
-                                              <tbody>
-                                                <tr>
-                                                  <td scope="row">Font Conflicts</td>
-                                                  <td>{{ project.conflicts.types.fontConflicts }}</td>
-                                                </tr>
-                                                <tr>
-                                                  <td scope="row">Content Conflicts</td>
-                                                  <td>{{ project.conflicts.types.contentConflicts }}</td>
-                                                </tr>
-                                                <tr>
-                                                  <td scope="row">Order Conflicts</td>
-                                                  <td>{{ project.conflicts.types.orderConflicts }}</td>
-                                                </tr>
-                                              </tbody>
-                                            </table>
-                                          </div>
+                            <thead class="text-primary">
+                                <th *ngFor="let header of projectTableHeaders">{{ header }}</th>
+                            </thead>
+                            <tbody>
+                                <tr class="mat-row" *ngFor="let project of allProjectList">
+                                    <th class="mat-cell" scope="row">
+                                    <i *ngIf="!project.favorite" class="fa fa-star-o"></i>
+                                    <i *ngIf="project.favorite" class="fa fa-star"></i>
+                                    </th>
+                                    <!-- <td class="mat-cell">{{ project._id }}</td> -->
+                                    <td class="mat-cell"><a href="javascript:void(0)" (click)="openProject(project)">{{ project.projectName }}</a></td>
+                                    <td class="mat-cell">{{ project.country.name }}</td>
+                                    <td class="mat-cell">{{ project.createdBy.name }}</td>
+                                    <td class="mat-cell">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
+                                    <td class="mat-cell">
+                                    <div class="dropdown">
+                                        <div class="numberCircle dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">{{ project.conflicts.number }}</div>
+                                        <div class="dropdown-menu dropdown-menu-right conflicts-dropdown shadow bg-white rounded"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <table class="table table-bordered table-sm table-light">
+                                            <tbody>
+                                            <tr>
+                                                <td scope="row">Font Conflicts</td>
+                                                <td>{{ project.conflicts.types.fontConflicts }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Content Conflicts</td>
+                                                <td>{{ project.conflicts.types.contentConflicts }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Order Conflicts</td>
+                                                <td>{{ project.conflicts.types.orderConflicts }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                         </div>
-                                      </td>
-                                    </tr>
-                                </tbody>
+                                    </div>
+                                    </td>
+                                </tr>
+                            </tbody>
                           </table>
                       </div>
                   </div>

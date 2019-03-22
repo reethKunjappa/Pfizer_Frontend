@@ -8,7 +8,7 @@ import { UserProfileComponent } from 'app/user-profile/user-profile.component';
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'project', component: ProjectComponent },
-    { path: 'compare', component: CompareComponent},
-    { path: 'view', component: ViewProjectComponent},
+    { path: 'compare', component: CompareComponent },
+    { path: 'view', component: ViewProjectComponent },
     { path: 'create', component: UserProfileComponent },
 ];
