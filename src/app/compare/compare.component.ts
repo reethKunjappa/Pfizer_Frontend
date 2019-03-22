@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompareComponent implements OnInit {
 
-  showFiller = false;
+  /* showFiller = false; */
   
   private sampleImages: any[] = [];
   private sampleRevImages: any[] = [];
