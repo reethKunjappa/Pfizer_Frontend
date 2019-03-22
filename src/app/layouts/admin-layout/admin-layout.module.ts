@@ -25,6 +25,7 @@ import {
 } from '@angular/material';
 import { ProjectComponent } from '../../project/project.component';
 import { CompareComponent } from '../../compare/compare.component';
+import { ViewProjectComponent } from '../../view-project/view-project.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -50,7 +51,8 @@ import { CompareComponent } from '../../compare/compare.component';
     UpgradeComponent,
     ProtocolComponent,
     ProjectComponent,
-    CompareComponent
+    CompareComponent,
+    ViewProjectComponent
   ]
 })
 

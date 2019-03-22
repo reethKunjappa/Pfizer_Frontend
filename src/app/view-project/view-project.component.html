@@ -1,0 +1,41 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-12 pad-0 text-right">
+                <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-primary">Conflicts</button>
+            <!-- <button routerLink="/compare" mat-raised-button color="purple">Create</button> -->
+          </div>
+    </div>
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-primary">
+                      <h4 class="card-title ">{{project.projectName}}</h4>
+                      <div class="card-category">
+                        <span>Country : {{project.country}} | Created By : {{project.createdBy}} | Created On : {{project.createdOn}}</span>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead class="text-primary">
+                                  <th *ngFor="let header of documentTableHeaders">
+                                    {{ header }}
+                                  </th>
+                              </thead>
+                              <tbody>
+                                  <tr class="mat-row" *ngFor="let document of documentList">
+                                      <td class="mat-cell">{{ document.documentName }}</td>
+                                      <td class="mat-cell">{{ document.documentType }}</td>
+                                      <td class="mat-cell">{{ document.uploadedBy }}</td>
+                                      <td class="mat-cell">{{ document.uploadedOn }}</td>
+                                    </tr>
+                                </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
