@@ -14,8 +14,8 @@ import { CompareComponent } from '../../compare/compare.component';
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'project',   component: ProjectComponent },
-    { path: 'compare', component: CompareComponent},
-
+    { path: 'compare', component: CompareComponent },
+    { path: 'create', component: UserProfileComponent },
 
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
