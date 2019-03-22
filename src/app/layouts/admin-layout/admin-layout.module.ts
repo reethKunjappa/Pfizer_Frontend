@@ -12,6 +12,8 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ProtocolComponent } from '../../protocol/protocol.component';
+import { FileUploadModule } from 'ng2-file-upload';
+import { MatIconModule } from '@angular/material/icon';
 
 import {
   MatButtonModule,
@@ -31,6 +33,7 @@ import { ViewProjectComponent } from '../../view-project/view-project.component'
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatRippleModule,
     MatFormFieldModule,
@@ -38,7 +41,9 @@ import { ViewProjectComponent } from '../../view-project/view-project.component'
     MatSelectModule,
     MatCardModule,
     MatTooltipModule,
-    MatSidenavModule
+    MatSidenavModule,
+    FileUploadModule,
+    MatIconModule,
   ],
   declarations: [
     DashboardComponent,

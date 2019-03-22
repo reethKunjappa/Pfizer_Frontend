@@ -8,13 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class ProjectComponent implements OnInit {
 
 
-  public projectTableHeaders : string[] = [ 'Favorite', 'Id', 'Product Name', 'Country', 'Created By', 'Created On', 'Conflicts'];
+  public projectTableHeaders : string[] = [ 'Favorite', 'Id', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts'];
 
   public projectList = [
     {
       id : "001",
       sequenceNumber : 1,
-      productName : "Product One",
+      projectName : "Project One",
       country : {
           id : "+91",
           name : "India"
@@ -37,7 +37,7 @@ export class ProjectComponent implements OnInit {
     {
       id : "002",
       sequenceNumber : 2,
-      productName : "Product Two",
+      projectName : "Project Two",
       country : {
           id : "+91",
           name : "India"
@@ -60,7 +60,7 @@ export class ProjectComponent implements OnInit {
     {
       id : "003",
       sequenceNumber : 3,
-      productName : "Product Three",
+      projectName : "Project Three",
       country : {
           id : "+01",
           name : "USA"
@@ -84,7 +84,6 @@ export class ProjectComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

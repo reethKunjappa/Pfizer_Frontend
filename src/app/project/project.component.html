@@ -2,24 +2,21 @@
   <div class="container-fluid">
     <div class="row">
         <div class="col-12 pad-0 text-right">
-                <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-primary" (click)="create()">Create</button>
-            <!-- <button routerLink="/compare" mat-raised-button color="purple">Create</button> -->
+            <button mat-raised-button routerLink="/create" type="submit" class="btn btn-primary">Create</button>
           </div>
     </div>
       <div class="row">
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-primary">
-                      <h4 class="card-title ">Simple Table</h4>
-                      <p class="card-category"> Here is a subtitle for this table</p>
+                      <h4 class="card-title">Projects</h4>
+                      <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
                           <table class="table">
                               <thead class="text-primary">
-                                  <th *ngFor="let header of projectTableHeaders">
-                                    {{ header }}
-                                  </th>
+                                  <th *ngFor="let header of projectTableHeaders">{{ header }}</th>
                               </thead>
                               <tbody>
                                   <tr class="mat-row" *ngFor="let project of projectList">
@@ -28,7 +25,7 @@
                                         <i *ngIf="project.favorite" class="fa fa-star"></i>
                                       </th>
                                       <td class="mat-cell">{{ project.id }}</td>
-                                      <td class="mat-cell">{{ project.productName }}</td>
+                                      <td class="mat-cell">{{ project.projectName }}</td>
                                       <td class="mat-cell">{{ project.country.name }}</td>
                                       <td class="mat-cell">{{ project.createdBy.name }}</td>
                                       <td class="mat-cell">{{ project.createdOn }}</td>

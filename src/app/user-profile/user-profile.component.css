@@ -1,0 +1,53 @@
+.material-icons {
+  cursor: pointer !important;
+}
+
+.my-drop-zone { 
+  border: dotted 3px lightgray; 
+  height: 200px;   
+  text-align: center; 
+  width: 50%;
+  margin-left: 25%;
+  padding: 4%;
+}
+
+.another-file-over-class { 
+  border: dotted 3px green; 
+}
+
+.upload-icon {
+  font-size: -webkit-xxx-large;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload-btn-wrapper .btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 0px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.d-contents {
+  display: contents !important;
+}
+
+.disabled {
+  cursor : not-allowed !important;
+}

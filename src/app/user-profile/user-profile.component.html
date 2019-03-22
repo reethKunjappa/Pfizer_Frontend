@@ -1,105 +1,157 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-8">
-              <div class="card">
-                  <div class="card-header card-header-danger">
-                      <h4 class="card-title">Edit Profile</h4>
-                      <p class="card-category">Complete your profile</p>
-                  </div>
-                  <div class="card-body">
-                      <form>
-                          <div class="row">
-                              <div class="col-md-5">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Company (disabled)" disabled>
-                                  </mat-form-field>
-                              </div>
-                              <div class="col-md-3">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Username">
-                                  </mat-form-field>
-                              </div>
-                              <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Email address" type="email">
-                                  </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Fist Name" type="text">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-6">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Last Name" type="text">
-                                </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-12">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Adress" type="text">
-                                </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="City" type="text">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Country" type="text">
-                                </mat-form-field>
-                              </div>
-                              <div class="col-md-4">
-                                <mat-form-field class="example-full-width">
-                                  <input matInput placeholder="Postal Code" type="text">
-                                </mat-form-field>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-12">
-                                <label>About Me</label>
-                                <mat-form-field class="example-full-width">
-                                   <textarea matInput placeholder="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."></textarea>
-                                 </mat-form-field>
-                                  <!-- <div class="form-group">
-
-                                      <div class="form-group">
-                                          <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                          <textarea class="form-control" rows="5"></textarea>
-                                      </div>
-                                  </div> -->
-                              </div>
-                          </div>
-                          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
-                          <div class="clearfix"></div>
-                      </form>
-                  </div>
-              </div>
-          </div>
-          <div class="col-md-4">
-              <div class="card card-profile">
-                  <div class="card-avatar">
-                      <a href="#pablo">
-                          <img class="img" src="./assets/img/faces/marc.jpg" />
-                      </a>
-                  </div>
-                  <div class="card-body">
-                      <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                      <h4 class="card-title">Alec Thompson</h4>
-                      <p class="card-description">
-                          Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                      </p>
-                      <a href="#pablo" class="btn btn-danger btn-round">Follow</a>
-                  </div>
-              </div>
-          </div>
+    <div class="row">
+      <div class="col align-self-end">
+        <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-primary pull-right">Compare</button>
+        <button (click)="createProject()" [disabled]="!projectForm.valid" mat-raised-button type="submit"
+          class="btn btn-primary pull-right">Create</button>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Create Project</h4>
+            <!-- <p class="card-category">Complete your profile</p> -->
+          </div>
+          <div class="card-body">
+            <form [formGroup]="projectForm">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <input [(ngModel)]="createProjectData.projectName" formControlName="projectName" matInput
+                      placeholder="Project Name" required />
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="example-full-width">
+                    <!-- [(ngModel)]="createProjectData.country.name" -->
+                    <mat-select [(ngModel)]="countryObj" (ngModelChange)="setCountry(countryObj)"
+                      formControlName="country" placeholder="Country" required>
+                      <mat-option *ngFor="let item of countryData" [value]="item">
+                        <img src="{{ item.flag }}" width="18" height="18" />{{item.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="createdProjectData._id" class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Upload Project Document</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 ">
+                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                  [uploader]="uploader" (onFileDrop)="onFileSelected($event)" class="well my-drop-zone ">
+                  <span class="align-middle">Drop or select the files</span>
+                  <br>
+                  <span><i class="material-icons upload-icon">cloud_upload</i></span>
+                  <br>
+                  <div class="upload-btn-wrapper">
+                    <button class="btn">Browse</button>
+                    <input type="file" ng2FileSelect [uploader]="uploader" multiple
+                      (onFileSelected)="onFileSelected($event)" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-12">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Size</th>
+                      <th scope="col">Progress</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">File Type</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of uploader.queue; let i=index;" [class.bg-light]="item.isUploaded">
+                      <fieldset [class.disabled]="item.isUploaded" [disabled]="item.isUploaded"
+                        class="w-100 d-contents">
+                        <th scope="row"><strong>{{ item?.file?.name }}</strong></th>
+                        <!-- *ngIf="uploader.isHTML5" -->
+                        <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                        <!-- *ngIf="uploader.isHTML5" -->
+                        <td>
+                          <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                          <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                          <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                        </td>
+                        <td>
+                          <mat-form-field class="example-full-width">
+                            <mat-select [(ngModel)]="item.fileType" (ngModelChange)="setFileType(item,i)"
+                              [class.disabled]="item.isUploaded" [disabled]="item.isUploaded" placeholder="File Type" required>
+                              <mat-option *ngFor="let file of fileTypes" [value]="file.value">{{file.value}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </td>
+                        <td class="td-actions text-left">
+                          <button (click)="item.upload()" [disabled]="!item.fileType || item.isUploaded"
+                            mat-raised-button type="button" matTooltip="Upload" [matTooltipPosition]="'above'"
+                            class="btn btn-primary btn-link btn-sm btn-just-icon">
+                            <i class="material-icons">cloud</i>
+                          </button>
+                          <button (click)="item.cancel()" [disabled]="false" mat-raised-button type="button"
+                            matTooltip="Cancel" [matTooltipPosition]="'above'"
+                            class="btn btn-primary btn-link btn-sm btn-just-icon">
+                            <i class="material-icons">close</i>
+                          </button>
+                          <button (click)="item.remove()" mat-raised-button type="button" matTooltip="Remove"
+                            [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                            <i class="material-icons">delete</i>
+                          </button>
+                        </td>
+                      </fieldset>
+                    </tr>
+                  </tbody>
+                </table>
+                <div>
+                  <div>Queue progress:
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }">
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
+                    [disabled]="disableUploadAll || !uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                  </button>
+                  <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
+                    [disabled]="!uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                  </button>
+                  <button type="button" class="btn btn-primary btn-s" (click)="uploader.clearQueue()"
+                    [disabled]="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
