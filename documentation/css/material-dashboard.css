@@ -9152,14 +9152,14 @@ button:focus {
         color: #fff;
         margin-top: 0; }
     .card [class*="card-header-"] .card-title + .card-category {
-      color: rgba(255, 255, 255, 0.62); }
+      color: rgba(255, 255, 255, 0.9); }
       .card [class*="card-header-"] .card-title + .card-category a {
         color: #fff; }
     .card [class*="card-header-"] .ct-chart .card-title {
       color: #fff; }
     .card [class*="card-header-"] .ct-chart .card-category {
       margin-bottom: 0;
-      color: rgba(255, 255, 255, 0.62); }
+      color: rgba(255, 255, 255, 0.90); }
     .card [class*="card-header-"] .ct-chart .ct-label {
       color: rgba(255, 255, 255, 0.7); }
     .card [class*="card-header-"] .ct-chart .ct-grid {

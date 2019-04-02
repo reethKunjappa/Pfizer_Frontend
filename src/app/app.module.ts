@@ -12,6 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+// import { MdePopoverModule } from '@material-extended/mde';
 
 // Services Imports
 import { ProjectViewService } from './services/project-view.service';
@@ -31,7 +32,8 @@ import { ProjectViewService } from './services/project-view.service';
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     }),
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // MdePopoverModule,
   ],
   declarations: [
     AppComponent,
@@ -43,6 +45,7 @@ import { ProjectViewService } from './services/project-view.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    // MdePopoverModule,
   ],
   providers: [
     ProjectViewService,

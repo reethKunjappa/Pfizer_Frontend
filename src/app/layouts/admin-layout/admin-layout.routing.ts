@@ -10,5 +10,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'project', component: ProjectComponent },
     { path: 'compare', component: CompareComponent },
     { path: 'view', component: ViewProjectComponent },
+    { path: 'view/:id', component: ViewProjectComponent },
     { path: 'create', component: UserProfileComponent },
+    { path: 'create/:id', component: UserProfileComponent },
 ];

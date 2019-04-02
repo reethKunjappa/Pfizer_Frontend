@@ -3,16 +3,19 @@
     <div class="row">
         <div class="col-12 pad-0 text-right">
             <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-primary">Conflicts</button>
+            <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Upload</button>
         </div>
     </div>
       <div class="row">
           <div class="col-md-12">
               <div class="card">
                   <div class="card-header card-header-primary">
-                      <h4 class="card-title ">{{projectDetails.projectName}}</h4>
+                    <div *ngIf="projectDetails.projectName">
+                      <h4 class="card-title">{{projectDetails.projectName}}</h4>
                       <div class="card-category">
                         <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} | Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
                       </div>
+                    </div>
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
@@ -24,8 +27,8 @@
                                 <tr class="mat-row" *ngFor="let document of projectDetails.documents">
                                     <td class="mat-cell">{{ document.documentName }}</td>
                                     <td class="mat-cell">{{ document.fileType }}</td>
-                                    <td class="mat-cell">{{ document.uploadedBy.name }}</td>
-                                    <td class="mat-cell">{{ document.uploadedOn | date : 'dd-MMM-yyyy' }}</td>
+                                    <td class="mat-cell">{{ document.uploadedBy }}</td>
+                                    <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
                                 </tr>
                             </tbody>
                         </table>
