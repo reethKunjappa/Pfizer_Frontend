@@ -14,20 +14,13 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { ProtocolComponent } from '../../protocol/protocol.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatIconModule } from '@angular/material/icon';
+import { MdePopoverModule } from '@material-extended/mde';
+import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTooltipModule,MatSelectModule,MatCardModule,MatSidenavModule } from '@angular/material';
 
-import {
-  MatButtonModule,
-  MatInputModule,
-  MatRippleModule,
-  MatFormFieldModule,
-  MatTooltipModule,
-  MatSelectModule,
-  MatCardModule,
-  MatSidenavModule
-} from '@angular/material';
 import { ProjectComponent } from '../../project/project.component';
 import { CompareComponent } from '../../compare/compare.component';
 import { ViewProjectComponent } from '../../view-project/view-project.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -44,6 +37,7 @@ import { ViewProjectComponent } from '../../view-project/view-project.component'
     MatSidenavModule,
     FileUploadModule,
     MatIconModule,
+    MdePopoverModule,
   ],
   declarations: [
     DashboardComponent,

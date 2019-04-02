@@ -25,7 +25,7 @@
                   <p class="font-2"><span class="font-weight-bold text-dark">Comment:</span> {{item.comment}}</p>
                 </mat-card-content>
                 <mat-card-actions>
-                  <button mat-button (click)="drawer.toggle()" class="text-primary">Reference Doc</button>
+                  <button mat-button (click)="drawer.toggle();runOnRouteChange();" class="text-primary">Reference Doc</button>
                 </mat-card-actions>
               </mat-card>
             </div>

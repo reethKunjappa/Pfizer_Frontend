@@ -51,3 +51,7 @@
 .disabled {
   cursor : not-allowed !important;
 }
+
+#uploadSection td th .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}

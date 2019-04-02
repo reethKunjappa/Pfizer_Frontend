@@ -20,7 +20,6 @@ export class ProjectComponent implements OnInit {
   constructor( private projectViewService : ProjectViewService, private router : Router ) { 
     this.projectViewService.fetchAllProjects().subscribe(( allProjects : any )=>{
       this.allProjectList = allProjects;
-      console.log("Fetch All Projects Resp::", this.allProjectList);
     });   
   }
 
@@ -28,7 +27,13 @@ export class ProjectComponent implements OnInit {
 
   openProject(projectDetails : any){
     this.projectViewService.projectID(projectDetails);
-    this.router.navigate(['/view',{}]);
+    this.projectViewService._initializeProjectId$.next(projectDetails);
+    this.router.navigate(['/view', projectDetails._id]);
+  }
+
+  createProject(){
+    this.projectViewService.projectID({ '_id' : "" });
+    this.router.navigate(['/create',{}]);
   }
 
 }

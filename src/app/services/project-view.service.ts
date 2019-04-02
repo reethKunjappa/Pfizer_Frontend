@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, retry, catchError } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,11 @@ import { map, retry, catchError } from 'rxjs/operators';
 
 export class ProjectViewService {
 
-  public endPointAddress : string = 'http://192.168.0.18:5555';
+  public _initializeProjectId$: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  public _initializeProjectId = this._initializeProjectId$.asObservable();   // asObservable declarations for listening to the
+
+  // public endPointAddress : string = 'http://192.168.0.18:5555';
+  public endPointAddress : string = 'http://localhost:5555';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -34,9 +39,10 @@ export class ProjectViewService {
     .pipe(
       map((response: any ) => {
         if ( response.status.code == '0' ) {
-          return response.result;                
+          return response;                
         }else {
-          throw new Error('Value expected!');
+          alert(response.status.message);
+          throw new Error(response.status.message);
         }
       }),
       // catchError(err => of([]))
