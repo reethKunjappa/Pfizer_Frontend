@@ -14,16 +14,16 @@ export class CompareComponent implements OnInit {
 
   /* showFiller = false; */
   
-  private sampleImages: any[] = [];
-  private sampleRevImages: any[] = [];
-  private comments: any[] = [];
-  private _opened: boolean = false;
+   sampleImages: any[] = [];
+   sampleRevImages: any[] = [];
+   comments: any[] = [];
+   _opened: boolean = false;
 
-  private _router: Subscription;
-  private lastPoppedUrl: string;
-  private yScrollStack: number[] = [];
+   _router: Subscription;
+   lastPoppedUrl: string;
+   yScrollStack: number[] = [];
 
-  constructor(public location: Location, private router: Router) {
+  constructor(public location: Location,  private router: Router) {
     this.comments = [
       {
         'id': 1,
@@ -198,7 +198,7 @@ export class CompareComponent implements OnInit {
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginRight = "0";
   }
-  private _toggleSidebar() {
+   _toggleSidebar() {
     this._opened = !this._opened;
   }
 

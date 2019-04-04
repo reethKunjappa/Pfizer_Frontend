@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
   // public hasAnotherDropZoneOver:boolean = false;
   public fileObject: any;
 
-  constructor(private projectViewService: ProjectViewService, private activatedRoute : ActivatedRoute, private router : Router) {
+  constructor( private projectViewService: ProjectViewService,  private activatedRoute : ActivatedRoute,  private router : Router) {
     this.activatedRoute.paramMap.subscribe(( params : any )=>{
       console.log("Params::",params.get('id'));
       if ( params.get('id') != "" && params.get('id') != undefined && params.get('id') != null ) {
