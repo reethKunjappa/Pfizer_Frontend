@@ -11,7 +11,8 @@ export class CreateProjectData {
     };
     createdBy: any = {
         email : "",
-        name : ""
+        name : "",
+        userId : ''
     };
     createdOn: string = "";
     _id : string = "";

@@ -1,0 +1,62 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Favorites</h4>
+            <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary text-center">
+                  <th *ngFor="let header of projectTableHeaders">{{ header }}</th>
+                </thead>
+                <tbody>
+                  <tr class="mat-row" *ngFor="let project of allFavoriteList">
+                    <th class="mat-cell text-center cursor-pointer" scope="row">
+                      <i *ngIf="!project.favorite" class="fa fa-star-o"></i>
+                      <i *ngIf="project.favorite" (click)="unMarkFavorite(project)" class="fa fa-star cursor-pointer"></i>
+                    </th>
+                    <td class="mat-cell text-center"><a href="javascript:void(0)"
+                        (click)="openProject(project)">{{ project.projectName }}</a></td>
+                    <td class="mat-cell text-center">{{ project.country.name }}</td>
+                    <td class="mat-cell text-center">{{ project.createdBy.name }}</td>
+                    <td class="mat-cell text-center">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
+                    <td class="mat-cell text-center">
+                      <button mat-mini-fab color="primary" [mdePopoverTriggerFor]="appPopover"
+                        mdePopoverTriggerOn="hover">{{ project.conflicts.number }}</button>
+                      <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+                        <mat-card style="max-width: 300px;padding: 5px;">
+                          <mat-card-content>
+                            <table class="table table-bordered table-sm table-light">
+                              <tbody>
+                                <tr>
+                                  <td scope="row">Font Conflicts</td>
+                                  <td>{{ project.conflicts.types.fontConflicts }}</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Content Conflicts</td>
+                                  <td>{{ project.conflicts.types.contentConflicts }}</td>
+                                </tr>
+                                <tr>
+                                  <td scope="row">Order Conflicts</td>
+                                  <td>{{ project.conflicts.types.orderConflicts }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </mat-card-content>
+                        </mat-card>
+                      </mde-popover>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

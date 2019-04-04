@@ -2,13 +2,16 @@
 @import "./app/compare/compare.component.scss";
 
 .ng-sidebar {
-    background: rgb(255, 255, 255);
-    width: 13rem;
-  }
+  background: rgb(255, 255, 255);
+  width: 13rem;
+}
   
-  .ng-sidebar--right {
-    color: rgb(255, 255, 255) !important;
-    background: rgb(255, 255, 255);
-    width: 12rem;
-  }
+.ng-sidebar--right {
+  color: rgb(255, 255, 255) !important;
+  background: rgb(255, 255, 255);
+  width: 12rem;
+}
   
+.cursor-pointer {
+  cursor: pointer;
+}

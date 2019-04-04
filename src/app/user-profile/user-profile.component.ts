@@ -20,12 +20,12 @@ import { ProjectViewService } from '../services/project-view.service';
 export class UserProfileComponent implements OnInit {
 
   // Property Declarations
-  private countryData: any[] = countries;
+  public countryData: any[] = countries;
   public projectForm: FormGroup;
   public createProjectData: CreateProjectData = new CreateProjectData();
   public countryObj: any = { id: "", name: "" };
   public created: boolean = false;
-  private loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao' };
+  public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
   public documentTableHeaders = [ 'Document Name', 'Document Type', 'Uploaded By', 'Uploaded On'];
 
   // public createdProjectData : any = {};
@@ -36,7 +36,7 @@ export class UserProfileComponent implements OnInit {
   public uploader: FileUploader = null;
   public hasBaseDropZoneOver: boolean = true;
   // public hasAnotherDropZoneOver:boolean = false;
-  fileObject: any;
+  public fileObject: any;
 
   constructor(private projectViewService: ProjectViewService, private activatedRoute : ActivatedRoute, private router : Router) {
     this.activatedRoute.paramMap.subscribe(( params : any )=>{
@@ -64,9 +64,12 @@ export class UserProfileComponent implements OnInit {
     });
 
     this.fileTypes = [
-      { value: 'Core' },
+      { value: 'Label' },
       { value: 'Reference' },
-      { value: 'Reference-1' },
+      { value: 'Previous Label' },
+      { value: 'HA Guidelines' },
+      { value: 'Pfizer Checklist' },
+      { value: 'Font Format Spec' },
     ];
   }
 

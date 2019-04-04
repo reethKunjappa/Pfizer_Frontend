@@ -4,6 +4,7 @@ import { ProjectComponent } from '../../project/project.component';
 import { CompareComponent } from '../../compare/compare.component';
 import { ViewProjectComponent } from '../../view-project/view-project.component'
 import { UserProfileComponent } from 'app/user-profile/user-profile.component';
+import { FavoriteProjectComponent } from 'app/favorite-project/favorite-project.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -13,4 +14,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'view/:id', component: ViewProjectComponent },
     { path: 'create', component: UserProfileComponent },
     { path: 'create/:id', component: UserProfileComponent },
+    { path: 'favorite', component: FavoriteProjectComponent }
 ];

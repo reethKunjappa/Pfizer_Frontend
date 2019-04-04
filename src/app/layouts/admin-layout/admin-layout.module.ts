@@ -20,6 +20,7 @@ import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTo
 import { ProjectComponent } from '../../project/project.component';
 import { CompareComponent } from '../../compare/compare.component';
 import { ViewProjectComponent } from '../../view-project/view-project.component';
+import { FavoriteProjectComponent } from '../../favorite-project/favorite-project.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { ViewProjectComponent } from '../../view-project/view-project.component'
     ProtocolComponent,
     ProjectComponent,
     CompareComponent,
-    ViewProjectComponent
+    ViewProjectComponent,
+    FavoriteProjectComponent
   ]
 })
 
