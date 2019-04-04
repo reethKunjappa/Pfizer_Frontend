@@ -20,12 +20,12 @@ import { ProjectViewService } from '../services/project-view.service';
 export class UserProfileComponent implements OnInit {
 
   // Property Declarations
-  private countryData: any[] = countries;
+   countryData: any[] = countries;
   public projectForm: FormGroup;
   public createProjectData: CreateProjectData = new CreateProjectData();
   public countryObj: any = { id: "", name: "" };
   public created: boolean = false;
-  private loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao' };
+   loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao' };
   public documentTableHeaders = [ 'Document Name', 'Document Type', 'Uploaded By', 'Uploaded On'];
 
   // public createdProjectData : any = {};
@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
   // public hasAnotherDropZoneOver:boolean = false;
   fileObject: any;
 
-  constructor(private projectViewService: ProjectViewService, private activatedRoute : ActivatedRoute, private router : Router) {
+  constructor( private projectViewService: ProjectViewService,  private activatedRoute : ActivatedRoute,  private router : Router) {
     this.activatedRoute.paramMap.subscribe(( params : any )=>{
       console.log("Params::",params.get('id'));
       if ( params.get('id') != "" && params.get('id') != undefined && params.get('id') != null ) {

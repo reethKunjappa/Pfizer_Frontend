@@ -11,7 +11,6 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
-import { ProtocolComponent } from '../../protocol/protocol.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatIconModule } from '@angular/material/icon';
 import { MdePopoverModule } from '@material-extended/mde';
@@ -48,7 +47,6 @@ import { ViewProjectComponent } from '../../view-project/view-project.component'
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    ProtocolComponent,
     ProjectComponent,
     CompareComponent,
     ViewProjectComponent
