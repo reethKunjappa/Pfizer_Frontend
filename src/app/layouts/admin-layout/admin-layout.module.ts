@@ -17,6 +17,8 @@ import { MdePopoverModule } from '@material-extended/mde';
 import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTooltipModule,MatSelectModule,MatCardModule,MatSidenavModule,MatDialogModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 
+import { MaterialModule } from 'app/material.module';
+
 import { ProjectComponent } from '../../project/project.component';
 import { CompareComponent } from '../../compare/compare.component';
 import { ViewProjectComponent } from '../../view-project/view-project.component';
@@ -45,6 +47,7 @@ import { CommentsComponent } from '../../comments/comments.component';
     MdePopoverModule,
     MatDialogModule,
     MatChipsModule,
+    MaterialModule
   ],
   declarations: [
     DashboardComponent,
