@@ -23,6 +23,8 @@ import { ViewProjectComponent } from '../../view-project/view-project.component'
 import { FavoriteProjectComponent } from '../../favorite-project/favorite-project.component';
 import { CreateProjectModalComponent } from '../../create-project-modal/create-project-modal.component';
 import { UploadDocumentsModalComponent } from '../../upload-documents-modal/upload-documents-modal.component';
+import { HistoryComponent } from '../../history/history.component';
+import { CommentsComponent } from '../../comments/comments.component';
 
 @NgModule({
   imports: [
@@ -58,7 +60,9 @@ import { UploadDocumentsModalComponent } from '../../upload-documents-modal/uplo
     ViewProjectComponent,
     FavoriteProjectComponent,
     CreateProjectModalComponent,
-    UploadDocumentsModalComponent
+    UploadDocumentsModalComponent,
+    HistoryComponent,
+    CommentsComponent
   ],
   entryComponents: [
     CreateProjectModalComponent,UploadDocumentsModalComponent,
