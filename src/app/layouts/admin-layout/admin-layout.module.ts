@@ -14,12 +14,15 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatIconModule } from '@angular/material/icon';
 import { MdePopoverModule } from '@material-extended/mde';
-import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTooltipModule,MatSelectModule,MatCardModule,MatSidenavModule } from '@angular/material';
+import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTooltipModule,MatSelectModule,MatCardModule,MatSidenavModule,MatDialogModule } from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { ProjectComponent } from '../../project/project.component';
 import { CompareComponent } from '../../compare/compare.component';
 import { ViewProjectComponent } from '../../view-project/view-project.component';
 import { FavoriteProjectComponent } from '../../favorite-project/favorite-project.component';
+import { CreateProjectModalComponent } from '../../create-project-modal/create-project-modal.component';
+import { UploadDocumentsModalComponent } from '../../upload-documents-modal/upload-documents-modal.component';
 
 @NgModule({
   imports: [
@@ -38,6 +41,8 @@ import { FavoriteProjectComponent } from '../../favorite-project/favorite-projec
     FileUploadModule,
     MatIconModule,
     MdePopoverModule,
+    MatDialogModule,
+    MatChipsModule,
   ],
   declarations: [
     DashboardComponent,
@@ -51,8 +56,13 @@ import { FavoriteProjectComponent } from '../../favorite-project/favorite-projec
     ProjectComponent,
     CompareComponent,
     ViewProjectComponent,
-    FavoriteProjectComponent
-  ]
+    FavoriteProjectComponent,
+    CreateProjectModalComponent,
+    UploadDocumentsModalComponent
+  ],
+  entryComponents: [
+    CreateProjectModalComponent,UploadDocumentsModalComponent,
+  ],
 })
 
 export class AdminLayoutModule {}

@@ -1,0 +1,33 @@
+<div class="mat-dialog-title">
+  <div>Create Project</div>
+</div>
+<div class="mat-dialog-content">
+  <form [formGroup]="projectForm" class="mb-0">
+    <fieldset [disabled]="created" [class.disabled]="created">
+    <div class="row">
+      <div class="col-md-6">                
+        <mat-form-field class="example-full-width">
+          <input [(ngModel)]="createProjectData.projectName" formControlName="projectName" matInput
+            placeholder="Project Name" autocomplete="off" required />
+        </mat-form-field>                  
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="example-full-width">
+          <mat-select [(ngModel)]="createProjectData.country.name" [disabled]="created" [class.disabled]="created" formControlName="country" placeholder="Country" required>
+            <mat-select-trigger>
+              <span><img src="{{createProjectData.country.id}}" width="20" height="20" /> {{ createProjectData.country.name }}</span>
+            </mat-select-trigger>
+            <mat-option *ngFor="let item of countryData" [value]="item.name" (onSelectionChange)="setCountry($event, item)">
+              <img src="{{ item.flag }}" width="20" height="20" />&nbsp;&nbsp;{{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </fieldset>
+</form>
+</div>
+<div class="mat-dialog-actions" style="border-top:0;display:block !important;">
+  <button (click)="createProject()" [disabled]="!projectForm.valid" [class.disabled]="!projectForm.valid" mat-raised-button type="submit"
+  class="btn btn-primary pull-right">Create</button>
+</div>

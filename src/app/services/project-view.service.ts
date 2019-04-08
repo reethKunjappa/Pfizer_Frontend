@@ -13,8 +13,8 @@ export class ProjectViewService {
   public _initializeProjectId$: BehaviorSubject<any> = new BehaviorSubject<any>('');
   public _initializeProjectId = this._initializeProjectId$.asObservable();   // asObservable declarations for listening to the
 
-  // public endPointAddress : string = 'http://192.168.0.18:5555';
-  public endPointAddress : string = 'http://localhost:5555';
+  public endPointAddress : string = 'http://192.168.0.18:5555';
+  // public endPointAddress : string = 'http://localhost:5555';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',

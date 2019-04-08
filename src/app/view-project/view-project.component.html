@@ -1,41 +1,49 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-        <div class="col-12 pad-0 text-right">
-            <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-primary">Conflicts</button>
-            <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Upload</button>
-        </div>
-    </div>
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-primary">
-                    <div *ngIf="projectDetails.projectName">
-                      <h4 class="card-title">{{projectDetails.projectName}}</h4>
-                      <div class="card-category">
-                        <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} | Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table">
-                            <thead class="text-primary">
-                                <th *ngFor="let header of documentTableHeaders">{{ header }}</th>
-                            </thead>
-                            <tbody>
-                                <tr class="mat-row" *ngFor="let document of projectDetails.documents">
-                                    <td class="mat-cell">{{ document.documentName }}</td>
-                                    <td class="mat-cell">{{ document.fileType }}</td>
-                                    <td class="mat-cell">{{ document.uploadedBy }}</td>
-                                    <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                      </div>
-                  </div>
-              </div>
-          </div>
+      <div class="col-12 pad-0 text-right">
+        <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-primary">Conflicts</button>
+        <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Add
+          Documents</button>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div *ngIf="projectDetails.projectName">
+              <h4 class="card-title">{{projectDetails.projectName}}</h4>
+              <div class="card-category">
+                <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
+                  Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="text-primary">
+                  <th *ngFor="let header of documentTableHeaders">{{ header }}</th>
+                </thead>
+                <tbody>
+                  <tr class="mat-row mx-auto" *ngIf="projectDetails.documents.length == 0">
+                    <mat-chip-list class="text-center w-100 mx-auto">
+                      <mat-chip color="primary" class="mx-auto" selected>No documents to show.</mat-chip>
+                    </mat-chip-list>                    
+                  </tr>
+                  <tr class="mat-row" *ngFor="let document of projectDetails.documents" >
+                    <td class="mat-cell">{{ document.documentName }}</td>
+                    <td class="mat-cell">{{ document.fileType }}</td>
+                    <td class="mat-cell">{{ document.uploadedBy }}</td>
+                    <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
+                    <td class="mat-cell">Actions</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
