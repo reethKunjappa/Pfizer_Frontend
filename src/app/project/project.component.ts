@@ -12,13 +12,13 @@ import { CreateProjectModalComponent } from 'app/create-project-modal/create-pro
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
-  styleUrls: ['./project.component.scss']
+  styleUrls: ['./project.component.css']
 })
 
 export class ProjectComponent implements OnInit {
 
   // Property Declarations
-  public projectTableHeaders : string[] = [ 'Favorite', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts']; // 'Id',
+  public projectTableHeaders : string[] = [ '', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts']; // 'Id',
   public allProjectList : any[] = [];
   public createProjectDialog : any;
 
