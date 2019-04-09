@@ -8,27 +8,51 @@ import { Component, OnInit } from '@angular/core';
 export class CommentsComponent implements OnInit {
 
   public projectDetails = {};
-  public commentsList = [
-    {
-      'commentedBy': { 'name': 'XYZ' },
-      'commentedOn': '2019-03-27T10:08:01.823Z',
-      'comment': 'sdklfj ksldjf klsdfj k jfsdklfj klsdfj skldfj klsdfj slkdfj sdlkfj '
-    },
-    {
-      'commentedBy': { 'name': 'XYZ' },
-      'commentedOn': '2019-03-27T10:08:01.823Z',
-      'comment': 'sdklfj ksldjf klsdfj k jfsdklfj klsdfj skldfj klsdfj slkdfj sdlkfj '
-    },
-    {
-      'commentedBy': { 'name': 'XYZ' },
-      'commentedOn': '2019-03-27T10:08:01.823Z',
-      'comment': 'sdklfj ksldjf klsdfj k jfsdklfj klsdfj skldfj klsdfj slkdfj sdlkfj '
-    }
-  ];
+
+  public commentObject = {
+    'commentedBy': { 'name': 'XYZ' },
+    'commentedOn': new Date().toString(),
+    'comment': '',
+    'id': '1'
+  }
+
+  public commentsList = [];
 
   constructor() { }
 
   ngOnInit() {
+    this.getAllComments();
   }
 
+  resetCommentObject() {
+    this.commentObject = {
+      'commentedBy': { 'name': 'XYZ' },
+      'commentedOn': new Date().toString(),
+      'comment': '',
+      'id': '1'
+    }
+  }
+
+  /* REST CALL FUNCTIONS */
+  getAllComments() {
+
+  }
+
+  addComment() {
+
+    this.commentsList.push(this.commentObject);
+    this.resetCommentObject();
+  }
+
+  cancelComment() {
+    this.resetCommentObject();
+  }
+
+  editComment(comment) {
+    this.commentObject = comment;
+  }
+
+  removeComment(comment) {
+
+  }
 }
