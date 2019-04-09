@@ -19,7 +19,7 @@
                   <th *ngFor="let header of historyColHeader">{{ header }}</th>
                 </thead>
                 <tbody>
-                  <tr class="mat-row mx-auto" *ngIf="projectDetails.historyList.length == 0">
+                  <tr class="mat-row mx-auto" *ngIf="historyList.length == 0">
                     <mat-chip-list class="text-center w-100 mx-auto">
                       <mat-chip color="primary" class="mx-auto" selected>No documents to show.</mat-chip>
                     </mat-chip-list>                    

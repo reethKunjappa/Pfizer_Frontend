@@ -18,7 +18,7 @@
                     <th class="mat-cell text-center cursor-pointer" scope="row">
                       <!-- <i *ngIf="!project.favorite" class="fa fa-star-o"></i>
                       <i *ngIf="project.favorite" (click)="unMarkFavorite(project)" class="fa fa-star cursor-pointer"></i> -->
-                      <button *ngIf="!project.favorite" [disabled]="false" mat-raised-button type="button" matTooltip="Unfavorite" [matTooltipPosition]="'above'"
+                      <button *ngIf="!project.favorite" (click)="markFavorite(project)" [disabled]="false" mat-raised-button type="button" matTooltip="Unfavorite" [matTooltipPosition]="'above'"
                           class="btn btn-primary btn-link btn-sm btn-just-icon">
                           <i class="fa fa-star-o"></i>
                       </button>
@@ -28,11 +28,11 @@
                       </button>
                       <!-- <i *ngIf="!project.favorite" class="fa fa-star-o"></i>                                     -->
                       <!-- <i *ngIf="project.favorite" class="fa fa-star"></i> -->
-                      <button [disabled]="false" mat-raised-button type="button" matTooltip="History" [matTooltipPosition]="'above'"
+                      <button [disabled]="false" (click)="openHistory(project)" mat-raised-button type="button" matTooltip="History" [matTooltipPosition]="'above'"
                           class="btn btn-primary btn-link btn-sm btn-just-icon">
                           <i class="material-icons">history</i>
                       </button>
-                      <button [disabled]="false" mat-raised-button type="button" matTooltip="Comments" [matTooltipPosition]="'above'"
+                      <button [disabled]="false" (click)="openComments(project)" mat-raised-button type="button" matTooltip="Comments" [matTooltipPosition]="'above'"
                           class="btn btn-primary btn-link btn-sm btn-just-icon">
                           <i class="material-icons">question_answer</i>
                       </button>

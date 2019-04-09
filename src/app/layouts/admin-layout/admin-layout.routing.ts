@@ -18,5 +18,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'create/:id', component: UserProfileComponent },
     { path: 'favorite', component: FavoriteProjectComponent },
     { path: 'history', component: HistoryComponent },
-    { path: 'comments', component: CommentsComponent }
+    { path: 'history/:id', component: HistoryComponent },
+    { path: 'comments', component: CommentsComponent },
+    { path: 'comments/:id', component: CommentsComponent },
 ];

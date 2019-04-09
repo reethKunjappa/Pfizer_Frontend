@@ -19,23 +19,44 @@ export class FavoriteProjectComponent implements OnInit {
 
   constructor(private projectViewService : ProjectViewService, private router : Router) { 
     // Favorite API needs to be INtegrated. This is a dummy API  
-    this.projectViewService.fetchAllProjects().subscribe(( allProjects : any )=>{
-      allProjects.forEach(element => {element.favorite = true;});
-      this.allFavoriteList = allProjects;
+    this.projectViewService.fetchFavoriteProjects({ user : this.projectViewService.loggedInUser }).subscribe(( allFavProjects : any )=>{
+      // allFavProjects.forEach(element => {element.favorite = true;});
+      this.allFavoriteList = allFavProjects;
     });  
   }
 
   ngOnInit() {}
 
-  unMarkFavorite( project : any ) {
-    console.log("unMarkFavorite::", project);
-    // Call the unMarkFavorite API and in the success response pop the respective records from this.allFavoriteList array    
+  markFavorite( projectDetails : any ) {
+    this.projectViewService.markFavorite({
+      user : this.projectViewService.loggedInUser,
+      project: projectDetails._id
+    }).subscribe(( markFavoriteResponse : any ) =>{
+      console.log("markFavoriteResponse", markFavoriteResponse);
+    });
+  }
+
+  unMarkFavorite( projectDetails : any ) {
+    this.projectViewService.unMarkFavorite({
+      user : this.projectViewService.loggedInUser,
+      project : projectDetails._id
+    }).subscribe((unMarkFavoriteResponse : any)=>{
+      console.log("unMarkFavoriteResponse::",unMarkFavoriteResponse);      
+    });
   }
 
   openProject(projectDetails : any){
     this.projectViewService.projectID(projectDetails);
     this.projectViewService._initializeProjectId$.next(projectDetails);
     this.router.navigate(['/view', projectDetails._id]);
+  }
+
+  openHistory( projectDetails : any ) {
+    this.router.navigate(['/history', projectDetails._id]);    
+  }
+
+  openComments( projectDetails : any ) {
+    this.router.navigate(['/comments', projectDetails._id]);
   }
 
 }

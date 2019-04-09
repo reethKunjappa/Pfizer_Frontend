@@ -53,4 +53,30 @@ export class ProjectComponent implements OnInit {
     // this.router.navigate(['/create',{}]);
   }
 
+  openHistory( projectDetails : any ) {
+    this.router.navigate(['/history', projectDetails._id]);    
+  }
+
+  openComments( projectDetails : any ) {
+    this.router.navigate(['/comments', projectDetails._id]);
+  }
+
+  markFavorite( projectDetails : any ) {
+    this.projectViewService.markFavorite({
+      user : this.projectViewService.loggedInUser,
+      project: projectDetails._id
+    }).subscribe(( markFavoriteResponse : any ) =>{
+      console.log("markFavoriteResponse", markFavoriteResponse);
+    });
+  }
+
+  unMarkFavorite( projectDetails : any ) {
+    this.projectViewService.unMarkFavorite({
+      user : this.projectViewService.loggedInUser,
+      project : projectDetails._id
+    }).subscribe((unMarkFavoriteResponse : any)=>{
+      console.log("unMarkFavoriteResponse::",unMarkFavoriteResponse);      
+    });
+  }
+
 }

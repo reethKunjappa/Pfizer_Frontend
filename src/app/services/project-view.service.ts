@@ -12,9 +12,11 @@ export class ProjectViewService {
 
   public _initializeProjectId$: BehaviorSubject<any> = new BehaviorSubject<any>('');
   public _initializeProjectId = this._initializeProjectId$.asObservable();   // asObservable declarations for listening to the
+  public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
 
-  // public endPointAddress : string = 'http://192.168.0.18:5555';
-  public endPointAddress : string = 'http://localhost:5555';
+  // public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
+  public endPointAddress : string = 'http://192.168.0.19:3000';  // Ashish IP
+  // public endPointAddress : string = 'http://localhost:5555';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -81,5 +83,52 @@ export class ProjectViewService {
     );
   }
 
+  // Fetch Favorite Projects API Call
+  fetchFavoriteProjects( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/getFavorites';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response.result;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Mark Favorite API Call
+  markFavorite( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/markFavorite';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response.result;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Unmark Favorite API Call
+  unMarkFavorite( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/unMarkFavorite';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response.result;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
 
 }
