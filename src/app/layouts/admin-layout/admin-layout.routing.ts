@@ -11,7 +11,7 @@ import { CommentsComponent } from 'app/comments/comments.component';
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'project', component: ProjectComponent },
-    { path: 'compare', component: CompareComponent },
+    { path: 'compare/:id', component: CompareComponent },
     { path: 'view', component: ViewProjectComponent },
     { path: 'view/:id', component: ViewProjectComponent },
     { path: 'create', component: UserProfileComponent },

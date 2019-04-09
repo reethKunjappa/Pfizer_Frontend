@@ -27,8 +27,7 @@ export class ViewProjectComponent implements OnInit {
       if ( params.get('id') != "" && params.get('id') != undefined && params.get('id') != null ) {
         this.projectViewService.openProject( params.get('id') ).subscribe(( projectDetails : any )=>{
           this.projectDetails = projectDetails;
-          console.log("View Comp::",this.projectDetails);
-        });        
+        });
       }
     });
 
@@ -39,6 +38,10 @@ export class ViewProjectComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  showConflict(projectDetails) {
+    this.router.navigate(['/compare', projectDetails._id]);
+  }
 
   uploadMoreDocuments(){
     this.uploadDocumentDialog = this.dialog.open(UploadDocumentsModalComponent, {

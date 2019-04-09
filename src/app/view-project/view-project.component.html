@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 pad-0 text-right">
-        <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-danger">Conflicts</button>
+        <button mat-raised-button (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger">Conflicts</button>
         <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Add
           Documents</button>
       </div>
