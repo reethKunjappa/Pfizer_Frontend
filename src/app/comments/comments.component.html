@@ -24,12 +24,12 @@
                   </mat-expansion-panel-header>
 
                   <mat-form-field>
-                    <textarea matInput rows="6" placeholder="Add a comment"></textarea>
+                    <textarea matInput rows="6" placeholder="Add a comment" name="comment" [(ngModel)]="commentObject.comment"></textarea>
                   </mat-form-field>
                   <div class="row">
                     <div class="col-12 pad-0 text-right">
-                      <button mat-raised-button type="submit" class="btn btn-primary">Add</button>
-                      <button mat-raised-button type="submit" class="btn btn-danger">Cancel</button>
+                      <button mat-raised-button type="submit" class="btn btn-primary" (click)="addComment()">Add</button>
+                      <button mat-raised-button type="submit" class="btn btn-danger" (click)="cancelComment()">Cancel</button>
                     </div>
                   </div>
                 </mat-expansion-panel>
@@ -40,13 +40,13 @@
                 <div class="card-header" style="background-color: #e3b8f1">
                   <span class="font-weight-bold">{{comment.commentedBy.name}}</span> | <span>{{comment.commentedOn | date : 'dd-MMM-yyyy h:mm a'}}</span>
                   <span class="float-right">
-                    <button mat-button color="primary" (click)="nextStep()" mattooltip="Edit Comment"><i class="material-icons">edit</i></button>
-                    <button mat-button color="warn" (click)="prevStep()" mattooltip="Remove Comment"><i class="material-icons">close</i></button>
+                    <button mat-button color="primary" (click)="editComment(comment)" mattooltip="Edit Comment"><i class="material-icons">edit</i></button>
+                    <button mat-button color="warn" (click)="removeComment(comment)" mattooltip="Remove Comment"><i class="material-icons">close</i></button>
                   </span>
                 </div>
                 <div class="card-body">
 
-                  <p>{{comment.comment}}</p>
+                  <pre>{{comment.comment}}</pre>
                 </div>
               </div>
             </div>
