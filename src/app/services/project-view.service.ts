@@ -14,8 +14,7 @@ export class ProjectViewService {
   public _initializeProjectId = this._initializeProjectId$.asObservable();   // asObservable declarations for listening to the
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
 
-  // public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
-  public endPointAddress = 'http://34.204.2.145:3005';  // Ashish IP
+  public endPointAddress = 'http://34.204.2.145:3005';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -39,12 +38,7 @@ export class ProjectViewService {
     return this.http.post<any>(url,createProjectData,this.httpOptions)
     .pipe(
       map((response: any ) => {
-        if ( response.status.code == '0' ) {
-          return response;                
-        }else {
-          alert(response.status.message);
-          throw new Error(response.status.message);
-        }
+        return response;
       }),
       // catchError(err => of([]))
     );

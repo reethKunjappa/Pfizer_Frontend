@@ -27,6 +27,7 @@ import { CreateProjectModalComponent } from '../../create-project-modal/create-p
 import { UploadDocumentsModalComponent } from '../../upload-documents-modal/upload-documents-modal.component';
 import { HistoryComponent } from '../../history/history.component';
 import { CommentsComponent } from '../../comments/comments.component';
+import { StatusComponent } from '../../status/status.component';
 
 @NgModule({
   imports: [
@@ -65,10 +66,11 @@ import { CommentsComponent } from '../../comments/comments.component';
     CreateProjectModalComponent,
     UploadDocumentsModalComponent,
     HistoryComponent,
-    CommentsComponent
+    CommentsComponent,
+    StatusComponent
   ],
   entryComponents: [
-    CreateProjectModalComponent,UploadDocumentsModalComponent,
+    CreateProjectModalComponent,UploadDocumentsModalComponent,StatusComponent
   ],
 })
 
