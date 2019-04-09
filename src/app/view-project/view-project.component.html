@@ -23,7 +23,7 @@
             <div class="table-responsive">
               <table class="table">
                 <thead class="text-primary">
-                  <th *ngFor="let header of documentTableHeaders | async">{{ header }}</th>
+                  <th *ngFor="let header of documentTableHeaders">{{ header }}</th>
                 </thead>
                 <tbody>
                   <tr class="mat-row mx-auto" *ngIf="projectDetails.documents.length < 1">
@@ -34,7 +34,7 @@
                   <tr class="mat-row" *ngFor="let document of projectDetails.documents" >
                     <td class="mat-cell">{{ document.documentName }}</td>
                     <td class="mat-cell">{{ document.fileType }}</td>
-                    <td class="mat-cell">{{ document.uploadedBy }}</td>
+                    <td class="mat-cell">{{ document.uploadedBy.name }}</td>
                     <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
                     <td class="mat-cell">
                       <button mat-raised-button type="button" matTooltip="Re-upload" [matTooltipPosition]="'above'"

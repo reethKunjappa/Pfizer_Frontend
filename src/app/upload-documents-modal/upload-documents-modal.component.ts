@@ -108,7 +108,7 @@ export class UploadDocumentsModalComponent implements OnInit {
     console.log("i::", i);
     let count = 0;
     this.uploader.queue[i].formData = this.uploader.queue[i]['some'];
-    this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + this.loggedInUser + '&fileType=' + item.fileType;
+    this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUser) + '&fileType=' + item.fileType;
     console.log("New Url::", this.uploader);
     this.checkUploadAllStatus();
 

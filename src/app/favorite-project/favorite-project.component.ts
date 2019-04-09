@@ -22,7 +22,7 @@ export class FavoriteProjectComponent implements OnInit {
     this.projectViewService.fetchFavoriteProjects({ user : this.projectViewService.loggedInUser }).subscribe(( allFavProjects : any )=>{
       // allFavProjects.forEach(element => {element.favorite = true;});
       this.allFavoriteList = allFavProjects;
-    });  
+    });
   }
 
   ngOnInit() {}
