@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class HistoryComponent implements OnInit {
 
   public historyColHeader = [ 'Actions', 'Updated By', 'Updated On', 'Description' ];
-  public projectDetails = {};
+  public projectDetails = {'projectName': ''};
 
   public historyList = [
     {

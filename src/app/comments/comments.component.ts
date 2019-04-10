@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommentsComponent implements OnInit {
 
-  public projectDetails = {};
+  public projectDetails = {
+    'projectName': ''
+  };
 
   public commentObject = {
     'commentedBy': { 'name': 'XYZ' },

@@ -3,7 +3,7 @@
 </div>
 <div class="mat-dialog-content">
   <form [formGroup]="projectForm" class="mb-0">
-    <fieldset [disabled]="created" [class.disabled]="created">
+    <fieldset>
     <div class="row">
       <div class="col-md-6">                
         <mat-form-field class="example-full-width">
@@ -13,7 +13,7 @@
       </div>
       <div class="col-md-6">
         <mat-form-field class="example-full-width">
-          <mat-select [(ngModel)]="createProjectData.country.name" [disabled]="created" [class.disabled]="created" formControlName="country" placeholder="Country" required>
+          <mat-select [(ngModel)]="createProjectData.country.name" formControlName="country" placeholder="Country" required>
             <mat-select-trigger>
               <span><img src="{{createProjectData.country.id}}" width="20" height="20" /> {{ createProjectData.country.name }}</span>
             </mat-select-trigger>

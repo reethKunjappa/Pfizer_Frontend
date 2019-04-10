@@ -17,7 +17,8 @@ export class ProjectViewService {
   public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
   // public endPointAddress : string = 'http://192.168.0.19:3000';  // Ashish IP
   // public endPointAddress : string = 'http://localhost:5555';
-  // public endPointAddress : string = 'http://34.204.2.145:3005';
+  // public endPointAddress = 'http://34.204.2.145:3005';
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -125,6 +126,61 @@ export class ProjectViewService {
       }),
       // catchError(err => of([]))
     );
+  }
+
+  /* =========================== COMPARE SECTION =========================== */
+  //Get Document
+  getDocument( requestData ): Observable<any> {
+    const url = this.endPointAddress + '/api/labelling/compare';
+    const reqInput = {
+      '_id': requestData
+    }
+    return this.http.post(url, reqInput, this.httpOptions).pipe(
+      map((response: any) => {
+        if ( response.status.code === 0 ) {
+          return response;
+        }
+      })
+    )
+  }
+
+  //getReferenceDocument()
+  getReferenceDocument(requestData): Observable<any> {
+    const url = this.endPointAddress + '';
+    const reqInput = {
+      '_id': requestData
+    }
+    return this.http.post(url, reqInput, this.httpOptions).pipe(
+      map((response: any) => {
+        if ( response.status.code === 0 ) {
+          return response;
+        }
+      })
+    )
+  }
+
+  //Accept Comment
+  acceptComment( commentReq ): Observable<any> {
+    const url = this.endPointAddress + '';
+    return this.http.post(url, commentReq, this.httpOptions).pipe(
+      map((response: any) => {
+        if ( response.status.code === 0 ) {
+          return response;
+        }
+      })
+    )
+  }
+
+  //Reject Comment
+  rejectComment( commentReq ): Observable<any> {
+    const url = this.endPointAddress + '';
+    return this.http.post(url, commentReq, this.httpOptions).pipe(
+      map((response: any) => {
+        if ( response.status.code === 0 ) {
+          return response;
+        }
+      })
+    )
   }
 
 }

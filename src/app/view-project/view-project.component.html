@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 pad-0 text-right">
-        <button mat-raised-button routerLink="/compare" type="submit" class="btn btn-danger">Conflicts</button>
+        <button mat-raised-button (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger">Conflicts</button>
         <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Add
           Documents</button>
       </div>
@@ -22,7 +22,7 @@
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
-                <thead class="text-primary">
+                <thead>
                   <th *ngFor="let header of documentTableHeaders">{{ header }}</th>
                 </thead>
                 <tbody>
@@ -38,12 +38,12 @@
                     <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
                     <td class="mat-cell">
                       <button mat-raised-button type="button" matTooltip="Re-upload" [matTooltipPosition]="'above'"
-                      class="btn btn-primary btn-link btn-sm btn-just-icon">
+                      class="btn btn-link btn-sm btn-just-icon">
                       <i class="material-icons">cloud_upload</i>
                     </button>
                     <button [disabled]="false" mat-raised-button type="button" matTooltip="Download" [matTooltipPosition]="'above'"
-                      class="btn btn-primary btn-link btn-sm btn-just-icon">
-                      <i class="material-icons">cloud_download</i>
+                      class="btn btn-link btn-sm btn-just-icon">
+                      <i class="material-icons">visibility</i>
                     </button>
                     <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
                       class="btn btn-danger btn-link btn-sm btn-just-icon flex">

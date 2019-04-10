@@ -18,7 +18,32 @@ import { CreateProjectModalComponent } from 'app/create-project-modal/create-pro
 export class ProjectComponent implements OnInit {
 
   // Property Declarations
-  public projectTableHeaders : string[] = [ '#', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts']; // 'Id',
+  public projectTableHeaders: any = [
+    {
+    'headerName': 'Project Name',
+    'class': ''
+  },
+  {
+    'headerName': 'Country',
+    'class': ''
+  },
+  {
+    'headerName': 'Created By',
+    'class': ''
+  },
+  {
+    'headerName': 'Created On',
+    'class': ''
+  },
+  {
+    'headerName': 'Conflicts',
+    'class': 'text-center'
+  },
+  {
+    'headerName': 'Actions',
+    'class': 'text-center'
+  }];
+
   public allProjectList : any[] = [];
   public createProjectDialog : any;
 
@@ -44,7 +69,6 @@ export class ProjectComponent implements OnInit {
     });
 
     this.createProjectDialog.afterClosed().subscribe(result => {
-      console.log("Project Comp Close Modal::", result);
       if ( result != undefined && result.status == 'Created') {
         this.router.navigate(['/view', result.data.result._id]);
       }
