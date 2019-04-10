@@ -23,24 +23,25 @@
                                 <tbody>
                                     <tr class="mat-row" *ngFor="let project of allProjectList">
                                         <td class="mat-cell">
-                                            <button *ngIf="!project.favorite" (click)="markFavorite(project)" [disabled]="false"
-                                                        mat-raised-button type="button" matTooltip="Add as Favorite"
-                                                        class="btn btn-link btn-sm btn-just-icon">
-                                                        <i class="fa fa-star-o"></i>
-                                                      </button>
-                                            <button *ngIf="project.favorite" (click)="unMarkFavorite(project)" [disabled]="false"
-                                                mat-raised-button type="button" matTooltip="Remove from Favorite"
+                                            <button *ngIf="!project.favorite" (click)="markFavorite(project)"
+                                                [disabled]="false" mat-raised-button type="button"
+                                                matTooltip="Add as Favorite" class="btn btn-link btn-sm btn-just-icon">
+                                                <i class="fa fa-star-o"></i>
+                                            </button>
+                                            <button *ngIf="project.favorite" (click)="unMarkFavorite(project)"
+                                                [disabled]="false" mat-raised-button type="button"
+                                                matTooltip="Remove from Favorite"
                                                 class="btn btn-link btn-sm btn-just-icon">
                                                 <i class="fa fa-star"></i>
                                             </button>
-                                            <a href="javascript:void(0)" (click)="openProject(project)">{{ project.projectName }}</a></td>
+                                            <a href="javascript:void(0)"
+                                                (click)="openProject(project)">{{ project.projectName }}</a></td>
                                         <td class="mat-cell">{{ project.country.name }}</td>
                                         <td class="mat-cell">{{ project.createdBy.name }}</td>
-                                        <td class="mat-cell">{{ project.createdOn | date : 'dd-MMM-yyyy' }}
-                                        </td>
-                                        <td class="mat-cell">
+                                        <td class="mat-cell">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
+                                        <td class="mat-cell text-center">
                                             <button mat-mini-fab color="warn" [mdePopoverTriggerFor]="appPopover"
-                                                mdePopoverTriggerOn="hover">{{ project.conflicts.number }}</button>
+                                                mdePopoverTriggerOn="hover">{{ project.conflicts.total }}</button>
                                             <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
                                                 <mat-card style="max-width: 300px;padding: 5px;">
                                                     <mat-card-content>
@@ -48,16 +49,16 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td scope="row">Font Conflicts</td>
-                                                                    <td>{{ project.conflicts.types.fontConflicts }}</td>
+                                                                    <td>{{ project.conflicts.types.font }}</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td scope="row">Content Conflicts</td>
-                                                                    <td>{{ project.conflicts.types.contentConflicts }}
+                                                                    <td>{{ project.conflicts.types.content }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td scope="row">Order Conflicts</td>
-                                                                    <td>{{ project.conflicts.types.orderConflicts }}
+                                                                    <td>{{ project.conflicts.types.order }}
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -66,7 +67,7 @@
                                                 </mat-card>
                                             </mde-popover>
                                         </td>
-                                        <th class="mat-cell" scope="row">
+                                        <th class="mat-cell text-center" scope="row">
                                             <!-- <button *ngIf="!project.favorite" (click)="markFavorite(project)"
                                                 [disabled]="false" mat-raised-button type="button" matTooltip="Add as Favorite"
                                                 class="btn btn-link btn-sm btn-just-icon">

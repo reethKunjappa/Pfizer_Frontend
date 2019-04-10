@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -16,6 +16,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 
 // Services Imports
 import { ProjectViewService } from './services/project-view.service';
+import { I1 } from './interceptor';
+import { HttpInterceptorService } from './services/http-interceptor.service';
 
 @NgModule({
   imports: [
@@ -49,6 +51,12 @@ import { ProjectViewService } from './services/project-view.service';
   ],
   providers: [
     ProjectViewService,
+    HttpInterceptorService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: I1,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

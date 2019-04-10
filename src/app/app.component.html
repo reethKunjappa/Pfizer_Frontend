@@ -1,2 +1,4 @@
-
 <router-outlet></router-outlet>
+<div *ngIf="spinner.isVisible() | async" class="spinner" id="processing">
+    <img src="../assets/img/loader/loader.gif" id="loader" />
+</div>

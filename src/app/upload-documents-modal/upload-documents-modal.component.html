@@ -1,5 +1,12 @@
 <div class="mat-dialog-title">
-  <div>Upload Documents</div>
+  <div class="row">
+    <div class="col-6 w-auto">Upload Documents</div>
+    <div class="col-6 w-auto text-right">
+      <button [mat-dialog-close]="true" mat-raised-button type="button" matTooltip="Close" [matTooltipPosition]="'above'" class="btn  btn-link btn-sm btn-just-icon"> 
+        <i class="material-icons">close</i>
+      </button>
+    </div>
+  </div>
 </div>
 <div class="mat-dialog-content">
   <div *ngIf="createProjectData._id != ''" class="row">
@@ -18,7 +25,10 @@
                 <span><i class="material-icons upload-icon">cloud_upload</i></span>
                 <br>
                 <div class="upload-btn-wrapper">
-                  <button class="btn">Browse</button>
+                  <!-- <button class="btn">Browse</button> -->
+                  <button mat-raised-button type="submit"
+                    class="btn btn-primary pull-right">Browse</button>
+                
                   <input type="file" ng2FileSelect [uploader]="uploader" multiple
                     (onFileSelected)="onFileSelected($event)" />
                 </div>
@@ -33,9 +43,9 @@
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Size</th>
+                    <!-- <th scope="col">Size</th> -->
                     <th scope="col">Progress</th>
-                    <th scope="col">Status</th>
+                    <!-- <th scope="col">Status</th> -->
                     <th scope="col">File Type</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -46,7 +56,7 @@
                       class="w-100 d-contents">
                       <th scope="row"><strong>{{ item?.file?.name }}</strong></th>
                       <!-- *ngIf="uploader.isHTML5" -->
-                      <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                      <!-- <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td> -->
                       <!-- *ngIf="uploader.isHTML5" -->
                       <td>
                         <div class="progress" style="margin-bottom: 0;">
@@ -54,11 +64,11 @@
                           </div>
                         </div>
                       </td>
-                      <td>
+                      <!-- <td>
                         <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
                         <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                         <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                      </td>
+                      </td> -->
                       <td>
                         <mat-form-field class="example-full-width">
                           <mat-select [(ngModel)]="item.fileType" (ngModelChange)="setFileType(item,i);disableFileType()"
