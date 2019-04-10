@@ -11,7 +11,6 @@
                 <div class="card">
                     <div class="card-header card-header-primary">
                         <h4 class="card-title">Projects</h4>
-                        <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -68,18 +67,6 @@
                                             </mde-popover>
                                         </td>
                                         <th class="mat-cell text-center" scope="row">
-                                            <!-- <button *ngIf="!project.favorite" (click)="markFavorite(project)"
-                                                [disabled]="false" mat-raised-button type="button" matTooltip="Add as Favorite"
-                                                class="btn btn-link btn-sm btn-just-icon">
-                                                <i class="fa fa-star-o"></i>
-                                            </button>
-                                            <button *ngIf="project.favorite" (click)="unMarkFavorite(project)"
-                                                [disabled]="false" mat-raised-button type="button" matTooltip="Remove from Favorite"
-                                                class="btn btn-link btn-sm btn-just-icon">
-                                                <i class="fa fa-star"></i>
-                                            </button> -->
-                                            <!-- <i *ngIf="!project.favorite" class="fa fa-star-o"></i>                                     -->
-                                            <!-- <i *ngIf="project.favorite" class="fa fa-star"></i> -->
                                             <button [disabled]="false" (click)="openHistory(project)" mat-raised-button
                                                 type="button" matTooltip="History" [matTooltipPosition]="'above'"
                                                 class="btn btn-link btn-sm btn-just-icon">
