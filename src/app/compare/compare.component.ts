@@ -19,7 +19,7 @@ export class CompareComponent implements OnInit {
    comments: any[] = [];
 
    public projectId: any;
-   public projectDetails = {};
+   public projectDetails:any = {};
 
   constructor(public location: Location,  private router: Router, 
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {

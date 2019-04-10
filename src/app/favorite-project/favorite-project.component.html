@@ -5,50 +5,37 @@
         <div class="card">
           <div class="card-header card-header-primary">
             <h4 class="card-title">Favorites</h4>
-            <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
           </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table">
-                <thead class="text-primary text-center">
-                  <th *ngFor="let header of projectTableHeaders">{{ header }}</th>
+                <thead>
+                  <th *ngFor="let header of projectTableHeaders" class="{{header.class}}">{{ header.headerName }}</th>
                 </thead>
                 <tbody>
                   <tr class="mat-row" *ngFor="let project of allFavoriteList">
-                    <th class="mat-cell text-center cursor-pointer" scope="row">
-                      <!-- <i *ngIf="!project.favorite" class="fa fa-star-o"></i>
-                      <i *ngIf="project.favorite" (click)="unMarkFavorite(project)" class="fa fa-star cursor-pointer"></i> -->
-                      <button *ngIf="!project.favorite" (click)="markFavorite(project)" [disabled]="false" mat-raised-button type="button" matTooltip="Unfavorite" [matTooltipPosition]="'above'"
-                          class="btn btn-primary btn-link btn-sm btn-just-icon">
+                    <td class="mat-cell">
+                      <!-- <button *ngIf="!project.favorite" (click)="markFavorite(project)" [disabled]="false"
+                          mat-raised-button type="button" matTooltip="Add as Favorite"
+                          class="btn btn-link btn-sm btn-just-icon">
                           <i class="fa fa-star-o"></i>
+                        </button> -->
+                      <button (click)="unMarkFavorite(project)" [disabled]="false" mat-raised-button type="button"
+                        matTooltip="Remove from Favorite" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="fa fa-star"></i>
                       </button>
-                      <button *ngIf="project.favorite" (click)="unMarkFavorite(project)" [disabled]="false" mat-raised-button type="button" matTooltip="Favorite" [matTooltipPosition]="'above'"
-                          class="btn btn-primary btn-link btn-sm btn-just-icon">
-                          <i class="fa fa-star"></i>
-                      </button>
-                      <!-- <i *ngIf="!project.favorite" class="fa fa-star-o"></i>                                     -->
-                      <!-- <i *ngIf="project.favorite" class="fa fa-star"></i> -->
-                      <button [disabled]="false" (click)="openHistory(project)" mat-raised-button type="button" matTooltip="History" [matTooltipPosition]="'above'"
-                          class="btn btn-primary btn-link btn-sm btn-just-icon">
-                          <i class="material-icons">history</i>
-                      </button>
-                      <button [disabled]="false" (click)="openComments(project)" mat-raised-button type="button" matTooltip="Comments" [matTooltipPosition]="'above'"
-                          class="btn btn-primary btn-link btn-sm btn-just-icon">
-                          <i class="material-icons">question_answer</i>
-                      </button>
-                    </th>
-                    <td class="mat-cell text-center"><a href="javascript:void(0)"
-                        (click)="openProject(project)">{{ project.projectName }}</a></td>
-                    <td class="mat-cell text-center">{{ project.country.name }}</td>
-                    <td class="mat-cell text-center">{{ project.createdBy.name }}</td>
-                    <td class="mat-cell text-center">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
+                      <a href="javascript:void(0)" (click)="openProject(project)">{{ project.projectName }}</a></td>
+                    <td class="mat-cell">{{ project.country.name }}</td>
+                    <td class="mat-cell">{{ project.createdBy.name }}</td>
+                    <td class="mat-cell">{{ project.createdOn | date : 'dd-MMM-yyyy' }}
+                    </td>
                     <td class="mat-cell text-center">
-                      <button mat-mini-fab color="primary" [mdePopoverTriggerFor]="appPopover"
+                      <button mat-mini-fab color="warn" [mdePopoverTriggerFor]="appPopover"
                         mdePopoverTriggerOn="hover">{{ project.conflicts.number }}</button>
                       <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
                         <mat-card style="max-width: 300px;padding: 5px;">
                           <mat-card-content>
-                            <table class="table table-bordered table-sm table-light">
+                            <table class="table table-borderless table-sm table-light">
                               <tbody>
                                 <tr>
                                   <td scope="row">Font Conflicts</td>
@@ -56,11 +43,13 @@
                                 </tr>
                                 <tr>
                                   <td scope="row">Content Conflicts</td>
-                                  <td>{{ project.conflicts.types.contentConflicts }}</td>
+                                  <td>{{ project.conflicts.types.contentConflicts }}
+                                  </td>
                                 </tr>
                                 <tr>
                                   <td scope="row">Order Conflicts</td>
-                                  <td>{{ project.conflicts.types.orderConflicts }}</td>
+                                  <td>{{ project.conflicts.types.orderConflicts }}
+                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -68,6 +57,16 @@
                         </mat-card>
                       </mde-popover>
                     </td>
+                    <th class="mat-cell text-center" scope="row">
+                      <button [disabled]="false" (click)="openHistory(project)" mat-raised-button type="button"
+                        matTooltip="History" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="material-icons">history</i>
+                      </button>
+                      <button [disabled]="false" (click)="openComments(project)" mat-raised-button type="button"
+                        matTooltip="Comments" [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon">
+                        <i class="material-icons">question_answer</i>
+                      </button>
+                    </th>
                   </tr>
                 </tbody>
               </table>
@@ -78,3 +77,65 @@
     </div>
   </div>
 </div>
+
+
+
+<!-- 
+<table class="table">
+    <thead class="text-primary text-center">
+      <th *ngFor="let header of projectTableHeaders">{{ header }}</th>
+    </thead>
+    <tbody>
+      <tr class="mat-row" *ngFor="let project of allFavoriteList">
+        <th class="mat-cell text-center cursor-pointer" scope="row">
+          <button *ngIf="!project.favorite" (click)="markFavorite(project)" [disabled]="false" mat-raised-button type="button" matTooltip="Unfavorite" [matTooltipPosition]="'above'"
+              class="btn btn-primary btn-link btn-sm btn-just-icon">
+              <i class="fa fa-star-o"></i>
+          </button>
+          <button *ngIf="project.favorite" (click)="unMarkFavorite(project)" [disabled]="false" mat-raised-button type="button" matTooltip="Favorite" [matTooltipPosition]="'above'"
+              class="btn btn-primary btn-link btn-sm btn-just-icon">
+              <i class="fa fa-star"></i>
+          </button>
+          <button [disabled]="false" (click)="openHistory(project)" mat-raised-button type="button" matTooltip="History" [matTooltipPosition]="'above'"
+              class="btn btn-primary btn-link btn-sm btn-just-icon">
+              <i class="material-icons">history</i>
+          </button>
+          <button [disabled]="false" (click)="openComments(project)" mat-raised-button type="button" matTooltip="Comments" [matTooltipPosition]="'above'"
+              class="btn btn-primary btn-link btn-sm btn-just-icon">
+              <i class="material-icons">question_answer</i>
+          </button>
+        </th>
+        <td class="mat-cell text-center"><a href="javascript:void(0)"
+            (click)="openProject(project)">{{ project.projectName }}</a></td>
+        <td class="mat-cell text-center">{{ project.country.name }}</td>
+        <td class="mat-cell text-center">{{ project.createdBy.name }}</td>
+        <td class="mat-cell text-center">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
+        <td class="mat-cell text-center">
+          <button mat-mini-fab color="primary" [mdePopoverTriggerFor]="appPopover"
+            mdePopoverTriggerOn="hover">{{ project.conflicts.number }}</button>
+          <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+            <mat-card style="max-width: 300px;padding: 5px;">
+              <mat-card-content>
+                <table class="table table-bordered table-sm table-light">
+                  <tbody>
+                    <tr>
+                      <td scope="row">Font Conflicts</td>
+                      <td>{{ project.conflicts.types.fontConflicts }}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Content Conflicts</td>
+                      <td>{{ project.conflicts.types.contentConflicts }}</td>
+                    </tr>
+                    <tr>
+                      <td scope="row">Order Conflicts</td>
+                      <td>{{ project.conflicts.types.orderConflicts }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </mat-card-content>
+            </mat-card>
+          </mde-popover>
+        </td>
+      </tr>
+    </tbody>
+  </table> -->

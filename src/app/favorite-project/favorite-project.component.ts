@@ -14,8 +14,32 @@ import { ProjectViewService } from 'app/services/project-view.service';
 export class FavoriteProjectComponent implements OnInit {
 
   // Property Declarations
-  public projectTableHeaders : string[] = [ '', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts']; // 'Id',
-  public allFavoriteList : any[] = [];
+  public projectTableHeaders: any = [
+    {
+    'headerName': 'Project Name',
+    'class': ''
+  },
+  {
+    'headerName': 'Country',
+    'class': ''
+  },
+  {
+    'headerName': 'Created By',
+    'class': ''
+  },
+  {
+    'headerName': 'Created On',
+    'class': ''
+  },
+  {
+    'headerName': 'Conflicts',
+    'class': 'text-center'
+  },
+  {
+    'headerName': 'Actions',
+    'class': 'text-center'
+  }];
+  public allFavoriteList: any[] = [];
 
   constructor(private projectViewService : ProjectViewService, private router : Router) { 
     // Favorite API needs to be INtegrated. This is a dummy API  
