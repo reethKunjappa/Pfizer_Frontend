@@ -17,6 +17,7 @@ export class ProjectViewService {
   public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
   // public endPointAddress : string = 'http://192.168.0.19:3000';  // Ashish IP
   // public endPointAddress : string = 'http://localhost:5555';
+  // public endPointAddress : string = 'http://34.204.2.145:3005';
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -47,9 +48,9 @@ export class ProjectViewService {
   }
 
   // Fetch All Project Details API Call
-  fetchAllProjects() : Observable<any> {
+  fetchAllProjects( data : any ) : Observable<any> {
     let url = this.endPointAddress + '/api/labelling/getProjects';
-    return this.http.post<any>( url, null, this.httpOptions)
+    return this.http.post<any>( url, data, this.httpOptions)
     .pipe(
       map((response: any )=> {
         if ( response.status.code == '0' ) {
@@ -101,7 +102,7 @@ export class ProjectViewService {
     .pipe(
       map((response: any )=> {
         if ( response.status.code == '0' ) {
-          return response.result;                
+          return response;                
         }else {
           throw new Error('Value expected!');
         }
@@ -117,7 +118,7 @@ export class ProjectViewService {
     .pipe(
       map((response: any )=> {
         if ( response.status.code == '0' ) {
-          return response.result;                
+          return response;                
         }else {
           throw new Error('Value expected!');
         }

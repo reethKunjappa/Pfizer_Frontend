@@ -14,7 +14,7 @@ import { ProjectViewService } from 'app/services/project-view.service';
 export class FavoriteProjectComponent implements OnInit {
 
   // Property Declarations
-  public projectTableHeaders : string[] = [ '', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts']; // 'Id',
+  public projectTableHeaders : string[] = [ '#', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts']; // 'Id',
   public allFavoriteList : any[] = [];
 
   constructor(private projectViewService : ProjectViewService, private router : Router) { 
@@ -27,21 +27,19 @@ export class FavoriteProjectComponent implements OnInit {
 
   ngOnInit() {}
 
-  markFavorite( projectDetails : any ) {
-    this.projectViewService.markFavorite({
-      user : this.projectViewService.loggedInUser,
-      project: projectDetails._id
-    }).subscribe(( markFavoriteResponse : any ) =>{
-      console.log("markFavoriteResponse", markFavoriteResponse);
-    });
-  }
-
   unMarkFavorite( projectDetails : any ) {
     this.projectViewService.unMarkFavorite({
       user : this.projectViewService.loggedInUser,
       project : projectDetails._id
     }).subscribe((unMarkFavoriteResponse : any)=>{
-      console.log("unMarkFavoriteResponse::",unMarkFavoriteResponse);      
+      if ( unMarkFavoriteResponse.status.code == 0 ) {
+        this.allFavoriteList.map((e)=>{
+          if (e._id == unMarkFavoriteResponse.result.project) {
+            let index = this.allFavoriteList.indexOf(e);
+            this.allFavoriteList.splice(index,1);
+          }
+        });
+      }    
     });
   }
 

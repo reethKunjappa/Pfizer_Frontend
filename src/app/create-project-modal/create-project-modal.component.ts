@@ -51,7 +51,7 @@ export class CreateProjectModalComponent implements OnInit {
   }
 
   createProject() {
-    this.createProjectData.createdBy = this.loggedInUser;
+    this.createProjectData.createdBy = this.projectViewService.loggedInUser; //this.loggedInUser;
     this.projectViewService.createProject(this.createProjectData).subscribe((createStatus: any) => {
       if ( createStatus != "" && createStatus != undefined ) {
         this.statusDialog = this.dialog.open(StatusComponent, {

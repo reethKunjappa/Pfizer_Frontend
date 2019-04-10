@@ -27,15 +27,9 @@ export class ViewProjectComponent implements OnInit {
       if ( params.get('id') != "" && params.get('id') != undefined && params.get('id') != null ) {
         this.projectViewService.openProject( params.get('id') ).subscribe(( projectDetails : any )=>{
           this.projectDetails = projectDetails;
-          console.log("View Comp::",this.projectDetails);
         });        
       }
     });
-
-    // this.projectViewService.openProject( this.projectViewService.projectId ).subscribe(( projectDetails : any )=>{
-    //   this.projectDetails = projectDetails;
-    //   console.log("View Comp::",this.projectDetails);
-    // });
   }
 
   ngOnInit() {}
@@ -48,7 +42,7 @@ export class ViewProjectComponent implements OnInit {
     });
 
     this.uploadDocumentDialog.afterClosed().subscribe(result => {
-      console.log("View Comp Close Modal::", result);
+      // console.log("View Comp Close Modal::", result);
     });
 
     // this.projectViewService.projectID(this.projectDetails);

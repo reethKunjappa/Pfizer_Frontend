@@ -18,12 +18,12 @@ import { CreateProjectModalComponent } from 'app/create-project-modal/create-pro
 export class ProjectComponent implements OnInit {
 
   // Property Declarations
-  public projectTableHeaders : string[] = [ '', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts']; // 'Id',
+  public projectTableHeaders : string[] = [ '#', 'Project Name', 'Country', 'Created By', 'Created On', 'Conflicts']; // 'Id',
   public allProjectList : any[] = [];
   public createProjectDialog : any;
 
   constructor( private projectViewService : ProjectViewService, private router : Router, public dialog: MatDialog ) { 
-    this.projectViewService.fetchAllProjects().subscribe(( allProjects : any )=>{
+    this.projectViewService.fetchAllProjects({ user : this.projectViewService.loggedInUser }).subscribe(( allProjects : any )=>{
       this.allProjectList = allProjects;
     });   
   }
@@ -66,7 +66,13 @@ export class ProjectComponent implements OnInit {
       user : this.projectViewService.loggedInUser,
       project: projectDetails._id
     }).subscribe(( markFavoriteResponse : any ) =>{
-      console.log("markFavoriteResponse", markFavoriteResponse);
+      if ( markFavoriteResponse.status.code == 0 ) {
+        this.allProjectList.map((e)=>{
+          if (e._id == markFavoriteResponse.result.project) {
+            e.favorite = true;
+          }
+        });
+      }      
     });
   }
 
@@ -75,7 +81,22 @@ export class ProjectComponent implements OnInit {
       user : this.projectViewService.loggedInUser,
       project : projectDetails._id
     }).subscribe((unMarkFavoriteResponse : any)=>{
-      console.log("unMarkFavoriteResponse::",unMarkFavoriteResponse);      
+      if ( unMarkFavoriteResponse.status.code == 0 ) {
+        // this.updateFavouriteStatus(unMarkFavoriteResponse.result.project, false);
+        this.allProjectList.map((e)=>{
+          if (e._id == unMarkFavoriteResponse.result.project) {
+            e.favorite = false;
+          }
+        });
+      } 
+    });
+  }
+
+  updateFavouriteStatus(id: string, status: boolean) {
+    this.allProjectList.filter(function (currentValue, index, arr) {
+      if (currentValue._id == id) {
+        arr[index].isFavourite = status;
+      }
     });
   }
 
