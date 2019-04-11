@@ -14,10 +14,10 @@ export class ProjectViewService {
   public _initializeProjectId = this._initializeProjectId$.asObservable();   // asObservable declarations for listening to the
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
 
-  public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
+  // public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
   // public endPointAddress : string = 'http://192.168.0.19:3000';  // Ashish IP
   // public endPointAddress : string = 'http://localhost:5555';
-  // public endPointAddress = 'http://34.204.2.145:3005';
+  public endPointAddress : string = 'http://34.204.2.145:3005';
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -137,7 +137,7 @@ export class ProjectViewService {
     }
     return this.http.post(url, reqInput, this.httpOptions).pipe(
       map((response: any) => {
-        if ( response.status.code === 0 ) {
+        if ( response.status.code === 1 ) {
           return response;
         }
       })

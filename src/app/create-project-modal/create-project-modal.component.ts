@@ -9,6 +9,7 @@ import { CreateProjectData } from '../models/create-project.model';
 
 // Services Imports
 import { ProjectViewService } from '../services/project-view.service';
+import { CountryCodeService } from '../services/country-code.service';
 
 // Component Imports
 import { StatusComponent } from '../status/status.component';
@@ -25,11 +26,13 @@ export class CreateProjectModalComponent implements OnInit {
   // Property Declarations
   public projectForm: FormGroup;
   public createProjectData: CreateProjectData = new CreateProjectData();
-  public countryData: any[] = countries;
+  // public countryData: any[] = countries;
+  public countryData: any[] = [];
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
   public statusDialog : any;
 
-  constructor(private projectViewService: ProjectViewService, public dialogRef: MatDialogRef<CreateProjectModalComponent>, public dialog: MatDialog) {
+  constructor(private projectViewService: ProjectViewService, public dialogRef: MatDialogRef<CreateProjectModalComponent>, public dialog: MatDialog, private countryCodeService : CountryCodeService) {
+    this.countryData = this.countryCodeService.getCountryCodeData();
     // Form Validations Declarations
     this.projectForm = new FormGroup({
       projectName: new FormControl('', Validators.required),

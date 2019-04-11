@@ -1,4 +1,4 @@
-<div class="main-content">
+<div class="main-content" *ngIf="projectDetails != undefined">
   <div class="card mt-0">
     <div class="card-header card-header-primary row">
       <div *ngIf="projectDetails.projectName" class="col-11">
@@ -9,56 +9,57 @@
         </div>
       </div>
       <div class="col-1">
-          <button mat-mini-fab color="warn" [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="hover">{{ projectDetails.conflicts.number }}</button>
-          <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+        <button mat-mini-fab color="warn" [mdePopoverTriggerFor]="appPopover"
+          mdePopoverTriggerOn="hover">{{ projectDetails.conflicts.total }}</button>
+        <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
           <mat-card style="max-width: 300px;padding: 5px;">
-          <mat-card-content>
-          <table class="table table-borderless table-sm table-light">
-              <tbody>
-              <tr>
-                  <td scope="row">Font Conflicts</td>
-                  <td>{{ projectDetails.conflicts.types.fontConflicts }}</td>
-              </tr>
-              <tr>
-                  <td scope="row">Content Conflicts</td>
-                  <td>{{ projectDetails.conflicts.types.contentConflicts }}</td>
-              </tr>
-              <tr>
-                  <td scope="row">Order Conflicts</td>
-                  <td>{{ projectDetails.conflicts.types.orderConflicts }}</td>
-              </tr>
-              </tbody>
-          </table>
-          </mat-card-content>
+            <mat-card-content>
+              <table class="table table-borderless table-sm table-light">
+                <tbody>
+                  <tr>
+                    <td scope="row">Font Conflicts</td>
+                    <td>{{ projectDetails.conflicts.types.font }}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Content Conflicts</td>
+                    <td>{{ projectDetails.conflicts.types.content }}</td>
+                  </tr>
+                  <tr>
+                    <td scope="row">Order Conflicts</td>
+                    <td>{{ projectDetails.conflicts.types.order }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </mat-card-content>
           </mat-card>
-          </mde-popover>
+        </mde-popover>
       </div>
     </div>
 
     <mat-drawer-container class="example-container" style="width:100%;height:90vh">
       <mat-drawer #drawer class="example-sidenav p-0" mode="side" position="end">
         <div class="row mx-1">
-          <div class="card mt-1" *ngFor="let item of sampleRevImages">
-            <img class="card-body" src="{{item.url}}" style="width:100%;height:100%;" />
+          <div class="card mt-1" *ngFor="let item of referenceDocuments">
+            <img class="card-body" src="{{ setUrl(item.destination) }}" style="width:100%;height:100%;" />
           </div>
         </div>
-
       </mat-drawer>
 
       <div class="example-sidenav-content">
         <div id="main">
           <div class="row mx-1">
+            
             <div style="width:70%">
-              <div class="card m-0 mt-1" *ngFor="let item of sampleImages">
-                <img class="card-body" src="{{item.url}}" style="width:100%;height:100%;" />
+              <div class="card m-0 mt-1" *ngFor="let item of projectDetails.documents">
+                <img *ngIf="item.fileType == 'Label'" class="card-body" src="{{ setUrl(item.destination)}}" style="width:100%;height:100%;" />
               </div>
             </div>
-            <div style="width:30%;">
 
-              <div *ngFor="let item of comments" class="card border-info m-1 mr-2">
+            <div style="width:30%;">
+              <div *ngFor="let item of projectDetails.conflicts.comments" class="card border-info m-1 mr-2">
                 <mat-card class="p-2">
                   <mat-card-content class="d-inline-flex mb-0">
-                    <p class="font-2"><span class="font-weight-bold text-dark">Comment:</span> {{item.comment_text}}</p>
+                    <p class="font-2"><span class="font-weight-bold text-dark">Comment:</span> {{item.text}}</p>
                   </mat-card-content>
                   <mat-card-actions>
                     <button mat-raised-button type="button" matTooltip="Accept"
@@ -70,9 +71,10 @@
                       <i class="material-icons">close</i>
                     </button>
                     <button mat-raised-button type="button"
-                      (click)="drawer.toggle();runOnRouteChange();getReferenceDocument();" matTooltip="Refer Document"
+                      (click)="drawer.toggle();getReferenceDocument(item);" matTooltip="Refer Document"
                       class="btn btn-primary btn-link btn-sm btn-just-icon"><i
                         class="material-icons">compare</i></button>
+                        <!-- runOnRouteChange(); -->
                   </mat-card-actions>
                 </mat-card>
               </div>

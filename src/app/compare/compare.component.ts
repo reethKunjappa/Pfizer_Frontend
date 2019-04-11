@@ -17,12 +17,19 @@ export class CompareComponent implements OnInit {
    sampleImages: any[] = [];
    sampleRevImages: any[] = [];
    comments: any[] = [];
+   referenceDocuments : any[] = [];
 
    public projectId: any;
-   public projectDetails:any = {};
+   public projectDetails : any;
 
-  constructor(public location: Location,  private router: Router, 
-    private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
+  constructor(public location: Location,  private router: Router, private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
+    // let x = "C:\Users\Reeth\projects\Pfizer_Backend\fs\94746132-2bb6-4ec9-abe8-700a6f77efa5\Saudi arabia  LPD vs. USPI.doc";
+    // console.log("x:",x.split());
+    this.activatedRoute.paramMap.subscribe(( params : any )=>{
+      this.projectId = params.get('id')
+    });
+
+    this.getDocument();
 
     this.sampleImages = [
       {
@@ -112,28 +119,38 @@ export class CompareComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(( params : any )=>{
-      this.projectId = params.get('id')
-    });
+    // this.activatedRoute.paramMap.subscribe(( params : any )=>{
+    //   this.projectId = params.get('id')
+    // });
 
-    this.getDocument()
-
+    // this.getDocument();
   }
 
   // Get Updated Document
   getDocument() {
-    this.projectViewService.getDocument(this.projectId).subscribe((res) => {
-      this.comments = res.result.conflicts.comments;
-      this.projectDetails = res.result
+    this.projectViewService.getDocument(this.projectId).subscribe((res : any) => {
+      if ( res != undefined && res != "" ) {
+        this.projectDetails = res.result;                 
+        this.comments = res.result.conflicts.comments;
+      }
       console.log(res)
     })
   }
 
   // Get Reference Document
-  getReferenceDocument(){
-    this.projectViewService.getReferenceDocument(this.projectId).subscribe((res) => {
-      console.log(res)
-    })
+  getReferenceDocument( docDetails : any ){
+    console.log("docDetails::",docDetails);
+    this.referenceDocuments = [];
+    this.projectDetails.documents.map((element : any) => {
+      if ( docDetails.referenceDoc.substring(docDetails.referenceDoc.lastIndexOf('\\')+1) == element.documentName ) {
+        this.referenceDocuments.push(element);        
+      }
+      // console.log("elemet:",element);
+    });    
+    // console.log("refer Doc Arr::", this.referenceDocuments);
+    // this.projectViewService.getReferenceDocument(this.projectId).subscribe((res) => {
+    //   console.log(res)
+    // })
   }
 
   // Accept Comment
@@ -148,6 +165,10 @@ export class CompareComponent implements OnInit {
     this.projectViewService.rejectComment(commentReq).subscribe((res) => {
       console.log(res);
     })
+  }
+
+  setUrl( destination : any ) {
+    return this.projectViewService.endPointAddress + destination;
   }
 
 }
