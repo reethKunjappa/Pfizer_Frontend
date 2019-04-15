@@ -12,7 +12,7 @@ import { UploadDocumentsModalComponent } from 'app/upload-documents-modal/upload
 @Component({
   selector: 'app-view-project',
   templateUrl: './view-project.component.html',
-  styleUrls: ['./view-project.component.scss']
+  styleUrls: ['./view-project.component.css']
 })
 
 export class ViewProjectComponent implements OnInit {
@@ -35,22 +35,24 @@ export class ViewProjectComponent implements OnInit {
   ngOnInit() {}
 
   showConflict(projectDetails) {
-    this.router.navigate(['/compare', projectDetails._id]);
+    // this.router.navigate(['/compare', projectDetails._id]);
+    this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
   }
 
   uploadMoreDocuments(){
     this.uploadDocumentDialog = this.dialog.open(UploadDocumentsModalComponent, {
       disableClose: false,//true,
       width: '1000px',          
-      data: { projectDetails : this.projectDetails }
+      data: { projectDetails : this.projectDetails } //, allowMultiple : true
     });
 
-    this.uploadDocumentDialog.afterClosed().subscribe(result => {
-      // console.log("View Comp Close Modal::", result);
-    });
+    this.uploadDocumentDialog.afterClosed().subscribe(result => {});
 
     // this.projectViewService.projectID(this.projectDetails);
     // this.router.navigate(['/create/' + this.projectDetails._id ]);
   }
 
+  showMappingSpec(){
+    this.router.navigate(['/mappingSpec', this.projectDetails._id]);
+  }
 }

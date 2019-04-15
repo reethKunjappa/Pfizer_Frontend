@@ -152,7 +152,7 @@ export class CountryCodeService {
         'flag':'../../assets/countryFlags/bonaire.gif'
       },
       {
-        'name':'Bosnia & Herzegovina',
+        'name':'Bosnia',
         'countryCode':'+387',
         'flag':'../../assets/countryFlags/bosnia_and_herzegovina.gif'
       },

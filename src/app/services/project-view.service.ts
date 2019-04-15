@@ -183,4 +183,69 @@ export class ProjectViewService {
     )
   }
 
+  // View Prooject Conflicts API
+  viewProjectConflicts( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/viewConflictProject';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Comments Sections API's
+  // Get All Comments API  
+  getAllComments( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/getAllComments';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Add Comments API
+  createComments( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/createComments';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Update Comment API Call
+  updateComment( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/updateComments';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
 }

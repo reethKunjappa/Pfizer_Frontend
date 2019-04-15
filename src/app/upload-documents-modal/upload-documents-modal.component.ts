@@ -27,11 +27,13 @@ export class UploadDocumentsModalComponent implements OnInit {
   // public hasAnotherDropZoneOver:boolean = false;
   public fileObject: any;
   public fileSelectOptionDisable: boolean;
+  // public allowMultiple : boolean = true;
+  // public multipleAllow : boolean = false;
 
   constructor(public dialogRef: MatDialogRef<UploadDocumentsModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private projectViewService: ProjectViewService) {
     console.log("UploadDocumentsModalComponent::", data);
     this.createProjectData = data.projectDetails;
-
+    // this.allowMultiple = data.allowMultiple;
     this.fileTypes = [
       { value: 'Label', disable: false },
       { value: 'Reference', disable: false },
@@ -69,7 +71,8 @@ export class UploadDocumentsModalComponent implements OnInit {
       // autoUpload : false,
       // removeAfterUpload : true,
       itemAlias: "files",
-      method: 'POST'
+      method: 'POST',
+      // queueLimit : this.allowMultiple ? 10 : 1,
     });
 
     // Below line mandatory to show binary in header payloads

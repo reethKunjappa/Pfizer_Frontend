@@ -18,7 +18,8 @@
         <div class="card-body"> -->
           <div class="row">
             <div class="col-12 ">
-              <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                <!-- [ng2FileDropAcceptMultiple]="multipleAllow" -->
+              <div ng2FileDrop  [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
                 [uploader]="uploader" (onFileDrop)="onFileSelected($event)" class="well my-drop-zone ">
                 <span class="align-middle">Drop or select the files</span>
                 <br>
@@ -27,8 +28,7 @@
                 <div class="upload-btn-wrapper">
                   <!-- <button class="btn">Browse</button> -->
                   <button mat-raised-button type="submit"
-                    class="btn btn-primary pull-right">Browse</button>
-                
+                    class="btn btn-primary pull-right">Browse</button>              
                   <input type="file" ng2FileSelect [uploader]="uploader" multiple
                     (onFileSelected)="onFileSelected($event)" />
                 </div>
@@ -42,12 +42,12 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">Name</th>
+                    <th scope="col" style="width:55%">Name</th>
                     <!-- <th scope="col">Size</th> -->
-                    <th scope="col">Progress</th>
+                    <th scope="col" style="width:10%">Progress</th>
                     <!-- <th scope="col">Status</th> -->
-                    <th scope="col">File Type</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" style="width:20%">File Type</th>
+                    <th scope="col" style="width:20%">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -70,9 +70,9 @@
                         <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                       </td> -->
                       <td>
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field id="fileTypes" class="example-full-width">
                           <mat-select [(ngModel)]="item.fileType" (ngModelChange)="setFileType(item,i);disableFileType()"
-                            [class.disabled]="item.isUploaded" [disabled]="item.isUploaded" placeholder="File Type" required>
+                            [class.disabled]="item.isUploaded" [disabled]="item.isUploaded" required>
                             <mat-option *ngFor="let file of fileTypes" [value]="file.value"  [disabled]="file.disable" >{{file.value}}</mat-option>
                             <!-- (onSelectionChange)="disableFileType($event, file)" -->
                           </mat-select>
@@ -99,7 +99,7 @@
                 </tbody>
               </table>
               <div>
-                <div>Queue progress:
+                <div style="display:none;">Queue progress:
                   <div class="progress">
                     <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }">
                     </div>

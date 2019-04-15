@@ -81,4 +81,8 @@ export class FavoriteProjectComponent implements OnInit {
     this.router.navigate(['/comments', projectDetails._id]);
   }
 
+  openConflicts( projectDetails : any) {
+    this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
+  }
+
 }

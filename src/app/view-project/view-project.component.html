@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-12 pad-0 text-right">
         <button mat-raised-button (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger">Conflicts</button>
+        <button mat-raised-button (click)="showMappingSpec();" type="submit" class="btn btn-primary" *ngIf="projectDetails.country.name == 'Saudi Arabia'">Show Mapping Spec</button>
         <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Add
           Documents</button>
       </div>
@@ -20,16 +21,16 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="table-responsive">
+            <div id="viewTable" class="table-responsive">
               <table class="table">
                 <thead>
                   <th *ngFor="let header of documentTableHeaders">{{ header }}</th>
                 </thead>
                 <tbody>
-                  <tr class="mat-row mx-auto" *ngIf="projectDetails.documents.length < 1">
-                    <mat-chip-list class="text-center w-100 mx-auto">
-                      <mat-chip color="primary" class="mx-auto" selected>No documents to show.</mat-chip>
-                    </mat-chip-list>                    
+                  <tr *ngIf="projectDetails.documents.length < 1">
+                    <td colspan="5" class="mx-auto text-center">
+                      <div class="badge badge-pill badge-primary p-3">No documents to show.</div>
+                    </td>
                   </tr>
                   <tr class="mat-row" *ngFor="let document of projectDetails.documents" >
                     <td class="mat-cell">{{ document.documentName }}</td>

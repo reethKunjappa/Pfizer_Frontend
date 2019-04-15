@@ -28,6 +28,7 @@ import { UploadDocumentsModalComponent } from '../../upload-documents-modal/uplo
 import { HistoryComponent } from '../../history/history.component';
 import { CommentsComponent } from '../../comments/comments.component';
 import { StatusComponent } from '../../status/status.component';
+import { MappingSpecComponent } from '../../mapping-spec/mapping-spec.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { StatusComponent } from '../../status/status.component';
     UploadDocumentsModalComponent,
     HistoryComponent,
     CommentsComponent,
-    StatusComponent
+    StatusComponent,
+    MappingSpecComponent
   ],
   entryComponents: [
     CreateProjectModalComponent,UploadDocumentsModalComponent,StatusComponent

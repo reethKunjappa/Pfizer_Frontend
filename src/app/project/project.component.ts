@@ -124,4 +124,8 @@ export class ProjectComponent implements OnInit {
     });
   }
 
+  openConflicts( projectDetails : any) {
+    this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
+  }
+
 }

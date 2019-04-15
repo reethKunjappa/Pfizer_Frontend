@@ -2,8 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 pad-0 text-right">
-                <button mat-raised-button (click)="createProject();" type="submit"
-                    class="btn btn-primary">Create</button>
+                <button mat-raised-button (click)="createProject();" type="submit" class="btn btn-primary">Create</button>
             </div>
         </div>
         <div class="row">
@@ -13,13 +12,18 @@
                         <h4 class="card-title">Projects</h4>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div id="projectTable" class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <th *ngFor="let header of projectTableHeaders" class="{{header.class}}">
-                                        {{ header.headerName }}</th>
+                                    {{ header.headerName }}</th>
                                 </thead>
                                 <tbody>
+                                    <tr *ngIf="allProjectList.length < 1">
+                                        <td colspan="5" class="mx-auto text-center">
+                                            <div class="badge badge-pill badge-primary p-3">No projects to show.</div>
+                                        </td>
+                                    </tr>
                                     <tr class="mat-row" *ngFor="let project of allProjectList">
                                         <td class="mat-cell">
                                             <button *ngIf="!project.favorite" (click)="markFavorite(project)"
@@ -33,32 +37,31 @@
                                                 class="btn btn-link btn-sm btn-just-icon">
                                                 <i class="fa fa-star"></i>
                                             </button>
-                                            <a href="javascript:void(0)"
-                                                (click)="openProject(project)">{{ project.projectName }}</a></td>
+                                            <a href="javascript:void(0)" (click)="openProject(project)">{{ project.projectName }}</a></td>
                                         <td class="mat-cell">{{ project.country.name }}</td>
                                         <td class="mat-cell">{{ project.createdBy.name }}</td>
                                         <td class="mat-cell">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
                                         <td class="mat-cell text-center">
-                                            <button mat-mini-fab color="warn" [mdePopoverTriggerFor]="appPopover"
+                                            <button (click)="openConflicts(project)" mat-mini-fab color="warn"
+                                                [mdePopoverTriggerFor]="appPopover"
+                                                [disabled]="project.conflicts.total < 1"
                                                 mdePopoverTriggerOn="hover">{{ project.conflicts.total }}</button>
                                             <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
                                                 <mat-card style="max-width: 300px;padding: 5px;">
                                                     <mat-card-content>
                                                         <table class="table table-borderless table-sm table-light">
                                                             <tbody>
-                                                                <tr>
+                                                                <tr *ngIf="project.conflicts.types.font">
                                                                     <td scope="row">Font Conflicts</td>
                                                                     <td>{{ project.conflicts.types.font }}</td>
                                                                 </tr>
-                                                                <tr>
+                                                                <tr *ngIf="project.conflicts.types.content">
                                                                     <td scope="row">Content Conflicts</td>
-                                                                    <td>{{ project.conflicts.types.content }}
-                                                                    </td>
+                                                                    <td>{{ project.conflicts.types.content }}</td>
                                                                 </tr>
-                                                                <tr>
+                                                                <tr *ngIf="project.conflicts.types.order">
                                                                     <td scope="row">Order Conflicts</td>
-                                                                    <td>{{ project.conflicts.types.order }}
-                                                                    </td>
+                                                                    <td>{{ project.conflicts.types.order }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

@@ -1,0 +1,30 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Mapping Specs</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <th *ngFor="let header of projectTableHeaders" class="{{header.class}}">{{ header.headerName }}</th>
+                </thead>
+                <tbody>
+                  <tr class="mat-row" *ngFor="let sec of mappingSpec">
+                    <td class="mat-cell">{{ sec.lpd_Section }}</td>
+                    <td class="mat-cell">{{ sec.predicted_mapping_content1 }}</td>
+                    <td class="mat-cell">{{ sec.actual_mapping }} </td>
+                    <td class="mat-cell">{{ sec.matching_score_content1 }} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -30,26 +30,24 @@
                     <td class="mat-cell">{{ project.createdOn | date : 'dd-MMM-yyyy' }}
                     </td>
                     <td class="mat-cell text-center">
-                      <button mat-mini-fab color="warn" [mdePopoverTriggerFor]="appPopover"
+                      <button (click)="openConflicts(project)" mat-mini-fab color="warn" [disabled]="project.conflicts.total < 1" [mdePopoverTriggerFor]="appPopover"
                         mdePopoverTriggerOn="hover">{{ project.conflicts.total }}</button>
                       <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
                         <mat-card style="max-width: 300px;padding: 5px;">
                           <mat-card-content>
                             <table class="table table-borderless table-sm table-light">
                               <tbody>
-                                <tr>
+                                <tr *ngIf="project.conflicts.types.font">
                                   <td scope="row">Font Conflicts</td>
                                   <td>{{ project.conflicts.types.font }}</td>
                                 </tr>
-                                <tr>
+                                <tr *ngIf="project.conflicts.types.content">
                                   <td scope="row">Content Conflicts</td>
-                                  <td>{{ project.conflicts.types.content }}
-                                  </td>
+                                  <td>{{ project.conflicts.types.content }}</td>
                                 </tr>
-                                <tr>
+                                <tr *ngIf="project.conflicts.types.order">
                                   <td scope="row">Order Conflicts</td>
-                                  <td>{{ project.conflicts.types.order }}
-                                  </td>
+                                  <td>{{ project.conflicts.types.order }}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -77,65 +75,3 @@
     </div>
   </div>
 </div>
-
-
-
-<!-- 
-<table class="table">
-    <thead class="text-primary text-center">
-      <th *ngFor="let header of projectTableHeaders">{{ header }}</th>
-    </thead>
-    <tbody>
-      <tr class="mat-row" *ngFor="let project of allFavoriteList">
-        <th class="mat-cell text-center cursor-pointer" scope="row">
-          <button *ngIf="!project.favorite" (click)="markFavorite(project)" [disabled]="false" mat-raised-button type="button" matTooltip="Unfavorite" [matTooltipPosition]="'above'"
-              class="btn btn-primary btn-link btn-sm btn-just-icon">
-              <i class="fa fa-star-o"></i>
-          </button>
-          <button *ngIf="project.favorite" (click)="unMarkFavorite(project)" [disabled]="false" mat-raised-button type="button" matTooltip="Favorite" [matTooltipPosition]="'above'"
-              class="btn btn-primary btn-link btn-sm btn-just-icon">
-              <i class="fa fa-star"></i>
-          </button>
-          <button [disabled]="false" (click)="openHistory(project)" mat-raised-button type="button" matTooltip="History" [matTooltipPosition]="'above'"
-              class="btn btn-primary btn-link btn-sm btn-just-icon">
-              <i class="material-icons">history</i>
-          </button>
-          <button [disabled]="false" (click)="openComments(project)" mat-raised-button type="button" matTooltip="Comments" [matTooltipPosition]="'above'"
-              class="btn btn-primary btn-link btn-sm btn-just-icon">
-              <i class="material-icons">question_answer</i>
-          </button>
-        </th>
-        <td class="mat-cell text-center"><a href="javascript:void(0)"
-            (click)="openProject(project)">{{ project.projectName }}</a></td>
-        <td class="mat-cell text-center">{{ project.country.name }}</td>
-        <td class="mat-cell text-center">{{ project.createdBy.name }}</td>
-        <td class="mat-cell text-center">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
-        <td class="mat-cell text-center">
-          <button mat-mini-fab color="primary" [mdePopoverTriggerFor]="appPopover"
-            mdePopoverTriggerOn="hover">{{ project.conflicts.number }}</button>
-          <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
-            <mat-card style="max-width: 300px;padding: 5px;">
-              <mat-card-content>
-                <table class="table table-bordered table-sm table-light">
-                  <tbody>
-                    <tr>
-                      <td scope="row">Font Conflicts</td>
-                      <td>{{ project.conflicts.types.fontConflicts }}</td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Content Conflicts</td>
-                      <td>{{ project.conflicts.types.contentConflicts }}</td>
-                    </tr>
-                    <tr>
-                      <td scope="row">Order Conflicts</td>
-                      <td>{{ project.conflicts.types.orderConflicts }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </mat-card-content>
-            </mat-card>
-          </mde-popover>
-        </td>
-      </tr>
-    </tbody>
-  </table> -->
