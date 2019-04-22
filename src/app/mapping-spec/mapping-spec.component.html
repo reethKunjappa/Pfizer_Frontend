@@ -1,6 +1,11 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
+      <div class="col-12 pad-0 text-right">
+        <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-primary">Back</button>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
@@ -10,14 +15,18 @@
             <div class="table-responsive">
               <table class="table">
                 <thead>
-                  <th *ngFor="let header of projectTableHeaders" class="{{header.class}}">{{ header.headerName }}</th>
+                  <th [ngStyle]="{width: header.width}" *ngFor="let header of projectTableHeaders" class="{{header.class}}">{{ header.headerName }}</th>
                 </thead>
                 <tbody>
                   <tr class="mat-row" *ngFor="let sec of mappingSpec">
                     <td class="mat-cell">{{ sec.lpd_Section }}</td>
                     <td class="mat-cell">{{ sec.predicted_mapping_content1 }}</td>
                     <td class="mat-cell">{{ sec.actual_mapping }} </td>
-                    <td class="mat-cell">{{ sec.matching_score_content1 }} </td>
+                    <td class="mat-cell">
+                      <div [ngClass]="convertToPercent(sec.matching_score_content1) > 80 ? 'btn-success' : convertToPercent(sec.matching_score_content1) < 30 ? 'btn-danger' : 'btn-warning' " class="badge badge-pill btn-success p-3">
+                        {{ convertToPercent(sec.matching_score_content1) }}%
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
               </table>

@@ -1,32 +1,31 @@
+// Dependency Imports
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mapping-spec',
   templateUrl: './mapping-spec.component.html',
-  styleUrls: ['./mapping-spec.component.scss']
+  styleUrls: ['./mapping-spec.component.css']
 })
+
 export class MappingSpecComponent implements OnInit {
 
-  constructor() { }
-  public projectTableHeaders: any = [
-    {
-      'headerName': 'Label',
-      'class': ''
-    },
-    {
-      'headerName': 'Predicted Section',
-      'class': ''
-    },
-    {
-      'headerName': 'Actual Section',
-      'class': ''
-    },
-    {
-      'headerName': 'Confidence Score',
-      'class': ''
-    }];
-  ngOnInit() {
+  // Property Declarations
+  public projectId : string;
+  public projectTableHeaders: any[] = [
+    { 'headerName': 'Label', 'class': '', 'width' : '30%' },
+    { 'headerName': 'Predicted Section', 'class': '', 'width' : '30%' },
+    { 'headerName': 'Actual Section', 'class': '', 'width' : '30%' },
+    { 'headerName': 'Confidence Score', 'class': '', 'width' : '10%' }
+  ];
+
+  constructor(private activatedRoute : ActivatedRoute) { 
+    this.activatedRoute.paramMap.subscribe(( params : any )=>{
+      this.projectId = params.get('id');
+    });
   }
+
+  ngOnInit() {}
 
   mappingSpec= [
     {
@@ -138,7 +137,11 @@ export class MappingSpecComponent implements OnInit {
       "matching_score_content1": 0.0903578401
     }
   ];
-  getMappingSpec = function(){
 
+  getMappingSpec = function(){}
+
+  convertToPercent( value : any ) {
+    return Math.floor( value * 100 ); //+ '%';
   }
+
 }

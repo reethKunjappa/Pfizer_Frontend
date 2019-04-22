@@ -5,7 +5,6 @@ import { FileUploader, FileLikeObject, FileItem, ParsedResponseHeaders } from 'n
 
 // Service Imports
 import { ProjectViewService } from '../services/project-view.service';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-upload-documents-modal',
@@ -20,20 +19,26 @@ export class UploadDocumentsModalComponent implements OnInit {
   public fileTypes: any[] = [];
   public selectedFileType: string = "";
   public disableUploadAll: boolean = true;
-  public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId': 'SHonrao' };
 
   public uploader: FileUploader = null;
   public hasBaseDropZoneOver: boolean = true;
   // public hasAnotherDropZoneOver:boolean = false;
   public fileObject: any;
   public fileSelectOptionDisable: boolean;
-  // public allowMultiple : boolean = true;
+  public allowMultiple: boolean = true;
   // public multipleAllow : boolean = false;
+  public re_upload_documentId: string;
+  public disableDropDown: boolean = false;
+  public reUploadFileType: string;
 
   constructor(public dialogRef: MatDialogRef<UploadDocumentsModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private projectViewService: ProjectViewService) {
     console.log("UploadDocumentsModalComponent::", data);
     this.createProjectData = data.projectDetails;
-    // this.allowMultiple = data.allowMultiple;
+    this.allowMultiple = data.allowMultiple;
+    this.re_upload_documentId = data.documentId ? data.documentId : '';
+    this.reUploadFileType = data.fileType ? data.fileType : '';
+    console.log("reupload::", this.re_upload_documentId);
+
     this.fileTypes = [
       { value: 'Label', disable: false },
       { value: 'Reference', disable: false },
@@ -43,7 +48,6 @@ export class UploadDocumentsModalComponent implements OnInit {
       { value: 'Font Format Spec', disable: false },
     ];
     this.fileTypeOptions();
-
   }
 
   ngOnInit() {
@@ -60,30 +64,43 @@ export class UploadDocumentsModalComponent implements OnInit {
         })
       }
     }
-    console.log("this.fileTypes : ", this.fileTypes);
   }
 
   intializeFileUploader() {
     this.uploader = new FileUploader({
-      // url : this.projectViewService.endPointAddress + '/api/labelling/upload?projectId='+'5c94e323af9df4039c85518c'+'&uploadedBy='+ this.loggedInUser.name +'&fileType=docx',
       url: "",
       disableMultipart: false,
       // autoUpload : false,
       // removeAfterUpload : true,
       itemAlias: "files",
       method: 'POST',
-      // queueLimit : this.allowMultiple ? 10 : 1,
+      queueLimit: this.allowMultiple ? 5 : 1,
     });
-
     // Below line mandatory to show binary in header payloads
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; }
-    // this.uploader.uploadItem = (value : FileItem) => {
-    //   console.log("uploadItem::",value);
-    // }
+    // this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; }
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+      if (!this.allowMultiple) {
+        file['fileType'] = this.reUploadFileType;
+        file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
+        this.disableDropDown = true;
+      }
+    };
+
+    // this.uploader.uploadItem = (value : FileItem) => { console.log("uploadItem::",value); }
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      if (JSON.parse(response).status.code == '0') {
-        this.createProjectData.documents.push(JSON.parse(response).result);
+      if (JSON.parse(response).status.code == 0) {
+        if (this.allowMultiple) {
+          this.createProjectData.documents.push(JSON.parse(response).result);
+        } else {
+          this.createProjectData.documents.map((e) => {
+            if (e._id == this.re_upload_documentId) {
+              let index = this.createProjectData.documents.indexOf(e);
+              this.createProjectData.documents.splice(index, 1, JSON.parse(response).result);
+            }
+          });
+        }
       }
     };
   }
@@ -107,27 +124,17 @@ export class UploadDocumentsModalComponent implements OnInit {
   }
 
   setFileType(item, i) {
-    console.log("item::", item);
-    console.log("i::", i);
     let count = 0;
     this.uploader.queue[i].formData = this.uploader.queue[i]['some'];
-    this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUser) + '&fileType=' + item.fileType;
-    console.log("New Url::", this.uploader);
+    if (!this.allowMultiple) {
+      this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + item.fileType + '&documentId=' + this.re_upload_documentId;
+    } else {
+      this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + item.fileType;
+    }
     this.checkUploadAllStatus();
-
-    // this.uploader.queue.forEach((element : any)=>{
-    //   if ( element.fileType == 'Label' ) {
-    //     count++;
-    //   }      
-    // });
-    // if (count > 0) {
-
-    // }
   }
 
-  disabledSelectOption(array) {
-
-  }
+  disabledSelectOption(array) { }
 
   // Toggling Disable Status of UploadAll button
   checkUploadAllStatus() {
@@ -146,18 +153,6 @@ export class UploadDocumentsModalComponent implements OnInit {
   }
 
   disableFileType(event, file) {
-    console.log("event in disableFileType: ", event);
-    console.log("file in disableFileType: ", file);
-
-    /* this.createProjectData.documents.filter((value) => {
-      if (value.fileType == "Label") {
-        this.fileTypes.filter((value) => {
-          if (value.value == "Label")
-            value.disable = true;
-        })
-      }
-      // value.disable = true;
-    }) */
     if (!this.fileSelectOptionDisable) {
       this.uploader.queue.map((e) => {
         if (e.hasOwnProperty('fileType')) {
@@ -166,17 +161,15 @@ export class UploadDocumentsModalComponent implements OnInit {
               if (value.value == "Label")
                 value.disable = true;
             });
-          } else{
+          } else {
             this.fileTypes.filter((value) => {
               if (value.value == "Label")
                 value.disable = false;
             });
           }
         }
-
       })
     }
-    console.log("this.uploader.queue : ", this.uploader.queue);
   }
 
 }

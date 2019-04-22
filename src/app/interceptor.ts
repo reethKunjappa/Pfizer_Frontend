@@ -21,7 +21,13 @@ export class I1 implements HttpInterceptor {
           this.spinnerService.hide();
         }
       },
-      (err: any) => {}
+      (err: any) => {
+        if ( err ) {
+          this.spinnerService.hide();
+          alert(err.message);
+        }
+      }
     );
+
   }
 }

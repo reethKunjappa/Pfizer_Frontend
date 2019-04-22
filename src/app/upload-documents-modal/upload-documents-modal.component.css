@@ -26,16 +26,6 @@
   display: inline-block;
 }
 
-/* .upload-btn-wrapper .btn {
-  border: 2px solid gray;
-  color: gray;
-  background-color: white;
-  padding: 0px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-} */
-
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
   position: absolute;

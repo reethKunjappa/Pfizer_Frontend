@@ -1,39 +1,47 @@
+// Dependency Imports
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+// Service Imports
+import { ProjectViewService } from '../services/project-view.service';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.scss']
+  styleUrls: ['./history.component.css']
 })
+
 export class HistoryComponent implements OnInit {
 
-  public historyColHeader = [ 'Actions', 'Updated By', 'Updated On', 'Description' ];
-  public projectDetails = {'projectName': ''};
-
-  public historyList = [
-    {
-      'action': 'Update',
-      'updatedBy': {'name': 'XYZ'},
-      'updatedOn': '2019-03-27T10:08:01.823Z',
-      'description': 'Abcds dsknc kldslvn lksdvnkldvn lknvlk sdnlk'
-    },
-    {
-      'action': 'Reupload',
-      'updatedBy': {'name': 'XYZ'},
-      'updatedOn': '2019-03-27T10:08:01.823Z',
-      'description': 'Abcds dsknc kldslvn lksdvnkldvn lknvlk sdnlk'
-    },
-    {
-      'action': 'Update',
-      'updatedBy': {'name': 'XYZ'},
-      'updatedOn': '2019-03-27T10:08:01.823Z',
-      'description': 'Abcds dsknc kldslvn lksdvnkldvn lknvlk sdnlk'
-    }
+  public historyColHeader = [ 
+    { 'headerName' : 'Actions', 'width' : '20%' },
+    { 'headerName' : 'Action By', 'width' : '20%' },
+    { 'headerName' : 'Action On', 'width' : '16%' },
+    { 'headerName' : 'Description', 'width' : '44%' },
   ];
+  public projectId : string;
+  public auditHistoryList : any[] = [];
+  public projectDetails : any;
 
-  constructor() { }
+  constructor( private activatedRoute : ActivatedRoute, private projectViewService : ProjectViewService ) { 
+    this.activatedRoute.paramMap.subscribe((params : any) => {
+      this.projectId = params.get('id');
+      this.projectViewService.getProjectAuditHistory({ "project._id" : this.projectId }).subscribe(( projectAuditHistoryResp : any ) => {
+        console.log("projectAuditHistoryResp::", projectAuditHistoryResp);
+        if ( projectAuditHistoryResp.status.code === 0 ) {
+          this.auditHistoryList = projectAuditHistoryResp.result;
+        }
+      });
+      
+      this.projectViewService.openProject(this.projectId).subscribe(( viewProjectResponse : any ) => {
+        if ( viewProjectResponse != undefined && viewProjectResponse != "" ) {
+          this.projectDetails = viewProjectResponse;
+        }
+      });
 
-  ngOnInit() {
+    });
   }
+
+  ngOnInit() {}
 
 }

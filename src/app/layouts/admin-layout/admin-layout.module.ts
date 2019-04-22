@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MdePopoverModule } from '@material-extended/mde';
 import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTooltipModule,MatSelectModule,MatCardModule,MatSidenavModule,MatDialogModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { MaterialModule } from 'app/material.module';
 
@@ -49,7 +50,8 @@ import { MappingSpecComponent } from '../../mapping-spec/mapping-spec.component'
     MdePopoverModule,
     MatDialogModule,
     MatChipsModule,
-    MaterialModule
+    MaterialModule,
+    MatBadgeModule,
   ],
   declarations: [
     DashboardComponent,

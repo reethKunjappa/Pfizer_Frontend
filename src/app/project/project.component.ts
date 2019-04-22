@@ -19,100 +19,81 @@ export class ProjectComponent implements OnInit {
 
   // Property Declarations
   public projectTableHeaders: any = [
-    {
-    'headerName': 'Project Name',
-    'class': ''
-  },
-  {
-    'headerName': 'Country',
-    'class': ''
-  },
-  {
-    'headerName': 'Created By',
-    'class': ''
-  },
-  {
-    'headerName': 'Created On',
-    'class': ''
-  },
-  {
-    'headerName': 'Conflicts',
-    'class': 'text-center'
-  },
-  {
-    'headerName': 'Actions',
-    'class': 'text-center'
-  }];
+    { 'headerName': 'Project Name', 'width': '30%' },
+    { 'headerName': 'Country', 'width': '15%' },
+    { 'headerName': 'Created By', 'width': '20%' },
+    { 'headerName': 'Created On', 'width': '15%' },
+    { 'headerName': 'Conflicts', 'class': 'text-center', 'width' : '10%' },
+    { 'headerName': 'Actions', 'class': 'text-center', 'width' : '10%' }
+  ];
 
-  public allProjectList : any[] = [];
-  public createProjectDialog : any;
+  public allProjectList: any[] = [];
+  public createProjectDialog: any;
 
-  constructor( private projectViewService : ProjectViewService, private router : Router, public dialog: MatDialog ) { 
-    this.projectViewService.fetchAllProjects({ user : this.projectViewService.loggedInUser }).subscribe(( allProjects : any )=>{
+  constructor(private projectViewService: ProjectViewService, private router: Router, public dialog: MatDialog) {
+    this.projectViewService.fetchAllProjects({ user: this.projectViewService.loggedInUser }).subscribe((allProjects: any) => {
       this.allProjectList = allProjects;
-    });   
+    });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  openProject(projectDetails : any){
+  openProject(projectDetails: any) {
     this.projectViewService.projectID(projectDetails);
     this.projectViewService._initializeProjectId$.next(projectDetails);
     this.router.navigate(['/view', projectDetails._id]);
   }
 
-  createProject(){
+  createProject() {
     this.createProjectDialog = this.dialog.open(CreateProjectModalComponent, {
       disableClose: false,//true,
-      width: '650px',          
+      width: '650px',
       data: {}
     });
 
     this.createProjectDialog.afterClosed().subscribe(result => {
-      if ( result != undefined && result.status == 'Created') {
+      if (result != undefined && result.status == 'Created') {
         this.router.navigate(['/view', result.data.result._id]);
       }
     });
-    // this.projectViewService.projectID({ '_id' : "" });
-    // this.router.navigate(['/create',{}]);
   }
 
-  openHistory( projectDetails : any ) {
-    this.router.navigate(['/history', projectDetails._id]);    
+  openHistory(projectDetails: any) {
+    this.router.navigate(['/history', projectDetails._id]);
   }
 
-  openComments( projectDetails : any ) {
+  openComments(projectDetails: any) {
     this.router.navigate(['/comments', projectDetails._id]);
   }
 
-  markFavorite( projectDetails : any ) {
+  markFavorite(projectDetails: any) {
     this.projectViewService.markFavorite({
-      user : this.projectViewService.loggedInUser,
+      user: this.projectViewService.loggedInUser,
       project: projectDetails._id
-    }).subscribe(( markFavoriteResponse : any ) =>{
-      if ( markFavoriteResponse.status.code == 0 ) {
-        this.allProjectList.map((e)=>{
+    }).subscribe((markFavoriteResponse: any) => {
+      if (markFavoriteResponse.status.code == 0) {
+        this.allProjectList.map((e) => {
           if (e._id == markFavoriteResponse.result.project) {
             e.favorite = true;
           }
         });
-      }      
+      }
     });
   }
 
-  unMarkFavorite( projectDetails : any ) {
+  unMarkFavorite(projectDetails: any) {
     this.projectViewService.unMarkFavorite({
-      user : this.projectViewService.loggedInUser,
-      project : projectDetails._id
-    }).subscribe((unMarkFavoriteResponse : any)=>{
-      if ( unMarkFavoriteResponse.status.code == 0 ) {
+      user: this.projectViewService.loggedInUser,
+      project: projectDetails._id
+    }).subscribe((unMarkFavoriteResponse: any) => {
+      if (unMarkFavoriteResponse.status.code == 0) {
         // this.updateFavouriteStatus(unMarkFavoriteResponse.result.project, false);
-        this.allProjectList.map((e)=>{
+        this.allProjectList.map((e) => {
           if (e._id == unMarkFavoriteResponse.result.project) {
             e.favorite = false;
           }
         });
-      } 
+      }
     });
   }
 
@@ -124,7 +105,7 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  openConflicts( projectDetails : any) {
+  openConflicts(projectDetails: any) {
     this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
   }
 

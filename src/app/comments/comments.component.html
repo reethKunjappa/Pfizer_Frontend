@@ -10,9 +10,9 @@
         <div class="card">
           <div class="card-header card-header-primary">
             <div>
-                <!-- *ngIf="projectDetails.projectName" -->
+              <!-- *ngIf="projectDetails.projectName" -->
               <h4 class="card-title">Comments</h4>
-                <!-- <h4 class="card-title">{{projectDetails.projectName}}</h4> -->
+              <!-- <h4 class="card-title">{{projectDetails.projectName}}</h4> -->
               <!-- <div class="card-category">
                 <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
                   Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
@@ -27,12 +27,15 @@
                     <mat-panel-title>Add Comment</mat-panel-title>
                   </mat-expansion-panel-header>
                   <mat-form-field>
-                    <textarea matInput rows="5" placeholder="Add a comment" name="comment" [(ngModel)]="createProjectComment.commentedText"></textarea>
+                    <textarea matInput rows="5" placeholder="Add a comment" name="comment"
+                      [(ngModel)]="createProjectComment.commentedText"></textarea>
                   </mat-form-field>
                   <div class="row">
                     <div class="col-12 pad-0 text-right">
-                      <button mat-raised-button type="submit" class="btn btn-primary" (click)="addComment();">Add</button>
-                      <button mat-raised-button type="submit" class="btn btn-danger" (click)="cancelComment()">Cancel</button>
+                      <button mat-raised-button type="submit" class="btn btn-primary"
+                        (click)="addComment();">Add</button>
+                      <button mat-raised-button type="submit" class="btn btn-danger"
+                        (click)="cancelComment()">Cancel</button>
                     </div>
                   </div>
                 </mat-expansion-panel>
@@ -42,22 +45,30 @@
             <div *ngFor="let comment of commentsList;let i = index">
               <div class="card">
                 <div class="card-header" style="background-color: #e3b8f1">
-                  <span class="font-weight-bold">{{comment.commentedBy.name}}</span> | <span>{{comment.commentedOn | date : 'dd-MMM-yyyy h:mm a'}}</span>
+                  <span class="font-weight-bold">{{comment.commentedBy.name}}</span> |
+                  <span>{{comment.commentedOn | date : 'dd-MMM-yyyy h:mm a'}}</span>
                   <span class="float-right">
-                    <button mat-button class="btn btn-primary btn-link btn-sm btn-just-icon mat-raised-button" color="primary" (click)="editComment(comment, i)" mattooltip="Edit Comment"><i class="material-icons">edit</i></button>
-                    <button mat-button class="btn btn-primary btn-link btn-sm btn-just-icon mat-raised-button" color="warn" (click)="removeComment(comment,i)" mattooltip="Remove Comment"><i class="material-icons">close</i></button>
+                    <button mat-button class="btn btn-primary btn-link btn-sm btn-just-icon mat-raised-button"
+                      color="primary" (click)="editComment(comment, i)" mattooltip="Edit Comment"><i
+                        class="material-icons">edit</i></button>
+                    <button mat-button class="btn btn-primary btn-link btn-sm btn-just-icon mat-raised-button"
+                      color="warn" (click)="removeComment(comment,i)" mattooltip="Remove Comment"><i
+                        class="material-icons">close</i></button>
                   </span>
                 </div>
                 <div class="card-body">
                   <pre *ngIf="i != selectedIndex">{{comment.commentedText}}</pre>
                   <form *ngIf="i == selectedIndex">
                     <mat-form-field>
-                      <textarea matInput rows="3" placeholder="Add a comment" name="comment" [(ngModel)]="comment.commentedText"></textarea>
+                      <textarea matInput rows="3" placeholder="Add a comment" name="comment"
+                        [(ngModel)]="comment.commentedText"></textarea>
                     </mat-form-field>
                     <div class="row">
                       <div class="col-12 pad-0 text-right">
-                        <button mat-raised-button type="submit" class="btn btn-primary" (click)="saveComment(comment, i)">Save</button>
-                        <button mat-raised-button type="submit" class="btn btn-danger" (click)="cancelUpdateComment(comment, i)">Cancel</button>
+                        <button mat-raised-button type="submit" class="btn btn-primary"
+                          (click)="saveComment(comment, i)">Save</button>
+                        <button mat-raised-button type="submit" class="btn btn-danger"
+                          (click)="cancelUpdateComment(comment, i)">Cancel</button>
                       </div>
                     </div>
                   </form>

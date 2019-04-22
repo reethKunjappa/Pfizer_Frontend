@@ -1,11 +1,12 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 pad-0 text-right">
-        <button mat-raised-button (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger">Conflicts</button>
-        <button mat-raised-button (click)="showMappingSpec();" type="submit" class="btn btn-primary" *ngIf="projectDetails.country.name == 'Saudi Arabia'">Show Mapping Spec</button>
-        <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Add
-          Documents</button>
+      <div class="col-12 pad-0 text-right" *ngIf="projectDetails.documents" >
+        <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Add Documents</button>
+        <button mat-raised-button [disabled]="projectDetails.documents.length < 1" (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger">Review Label</button>
+        <button mat-raised-button [disabled]="projectDetails.documents.length < 1 || !projectDetails.conflicted" (click)="viewConflict(projectDetails)" type="submit" class="btn btn-danger">View Conflicts</button>
+        <button mat-raised-button *ngIf="projectDetails.country.name == 'Saudi Arabia'" (click)="showMappingSpec();" type="submit" class="btn btn-primary" >Show Mapping Spec</button>
+        <!-- *ngIf="projectDetails.country.name == 'Saudi Arabia'" -->
       </div>
     </div>
     <div class="row">
@@ -24,9 +25,9 @@
             <div id="viewTable" class="table-responsive">
               <table class="table">
                 <thead>
-                  <th *ngFor="let header of documentTableHeaders">{{ header }}</th>
+                  <th [ngStyle]="{width: header.width}" *ngFor="let header of documentTableHeaders" class="{{ header.class }}">{{ header.headerName }}</th>
                 </thead>
-                <tbody>
+                <tbody *ngIf="projectDetails.documents">
                   <tr *ngIf="projectDetails.documents.length < 1">
                     <td colspan="5" class="mx-auto text-center">
                       <div class="badge badge-pill badge-primary p-3">No documents to show.</div>
@@ -38,15 +39,15 @@
                     <td class="mat-cell">{{ document.uploadedBy.name }}</td>
                     <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
                     <td class="mat-cell">
-                      <button mat-raised-button type="button" matTooltip="Re-upload" [matTooltipPosition]="'above'"
+                      <button (click)="reUploadDocument(document)" mat-raised-button type="button" matTooltip="Re-upload" [matTooltipPosition]="'above'"
                       class="btn btn-link btn-sm btn-just-icon">
                       <i class="material-icons">cloud_upload</i>
                     </button>
-                    <button [disabled]="false" mat-raised-button type="button" matTooltip="Download" [matTooltipPosition]="'above'"
+                    <button (click)="downloadDocument(document)" mat-raised-button type="button" matTooltip="Download" [matTooltipPosition]="'above'"
                       class="btn btn-link btn-sm btn-just-icon">
-                      <i class="material-icons">visibility</i>
+                      <i class="material-icons">cloud_download</i>
                     </button>
-                    <button mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
+                    <button (click)="deleteDocument(document)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
                       class="btn btn-danger btn-link btn-sm btn-just-icon flex">
                       <i class="material-icons">delete</i>
                     </button>

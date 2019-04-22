@@ -42,7 +42,6 @@ export class CommentsComponent implements OnInit {
   getAllComments() {
     this.projectViewService.getAllComments({ 'projectId' : this.projectId }).subscribe(( allCommentsResponse : any ) => {
       if ( allCommentsResponse != undefined && allCommentsResponse != "" ) {
-        // console.log("allCommentsResponse::",allCommentsResponse);
         this.commentsList = allCommentsResponse.result;
         // this.commentsListStore = Object.assign([], this.commentsList);
         this.commentsListStore = allCommentsResponse.result.map((item)=>{
@@ -81,7 +80,6 @@ export class CommentsComponent implements OnInit {
   saveComment( comment, index ) {
     comment.commentedBy = this.projectViewService.loggedInUser;
     this.projectViewService.updateComment(comment).subscribe(( updateCommentResponse : any ) => {
-      // console.log("updateCommentResponse::",updateCommentResponse);
       if ( updateCommentResponse.status.code === 0 ) {
         this.commentsList[index] = updateCommentResponse.result;
         // this.commentsListStore[index] = updateCommentResponse.result;

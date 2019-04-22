@@ -15,7 +15,7 @@ export class ProjectViewService {
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
 
   // public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
-  // public endPointAddress : string = 'http://192.168.0.19:3000';  // Ashish IP
+  // public endPointAddress : string = 'http://192.168.0.19:3009';  // Ashish IP or port 3000
   // public endPointAddress : string = 'http://localhost:5555';
   public endPointAddress : string = 'http://34.204.2.145:3005';
 
@@ -247,5 +247,54 @@ export class ProjectViewService {
       // catchError(err => of([]))
     );
   }
+
+  // Delete Document API Call
+  deleteDocument( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/deleteDocument';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;              
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Get Project Audit History API call
+  getProjectAuditHistory( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/auditHistory';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;              
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // Accept & Reject Document Comments API Call
+  acceptRejectDocumentsComments( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/commentAck';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;              
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
 
 }

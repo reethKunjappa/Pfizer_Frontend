@@ -2,7 +2,8 @@
   <div class="row">
     <div class="col-6 w-auto">Upload Documents</div>
     <div class="col-6 w-auto text-right">
-      <button [mat-dialog-close]="true" mat-raised-button type="button" matTooltip="Close" [matTooltipPosition]="'above'" class="btn  btn-link btn-sm btn-just-icon"> 
+      <button [mat-dialog-close]="true" mat-raised-button type="button" matTooltip="Close"
+        [matTooltipPosition]="'above'" class="btn  btn-link btn-sm btn-just-icon">
         <i class="material-icons">close</i>
       </button>
     </div>
@@ -11,117 +12,110 @@
 <div class="mat-dialog-content">
   <div *ngIf="createProjectData._id != ''" class="row">
     <div class="col-md-12">
-      <!-- <div class="card">
-        <div class="card-header card-header-primary">
-          <h4 class="card-title">Upload Project Document</h4>
-        </div>
-        <div class="card-body"> -->
-          <div class="row">
-            <div class="col-12 ">
-                <!-- [ng2FileDropAcceptMultiple]="multipleAllow" -->
-              <div ng2FileDrop  [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
-                [uploader]="uploader" (onFileDrop)="onFileSelected($event)" class="well my-drop-zone ">
-                <span class="align-middle">Drop or select the files</span>
-                <br>
-                <span><i class="material-icons upload-icon">cloud_upload</i></span>
-                <br>
-                <div class="upload-btn-wrapper">
-                  <!-- <button class="btn">Browse</button> -->
-                  <button mat-raised-button type="submit"
-                    class="btn btn-primary pull-right">Browse</button>              
-                  <input type="file" ng2FileSelect [uploader]="uploader" multiple
-                    (onFileSelected)="onFileSelected($event)" />
-                </div>
-              </div>
+      <div class="row">
+        <div class="col-12 ">
+          <!-- [ng2FileDropAcceptMultiple]="multipleAllow" -->
+          <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+            [uploader]="uploader" (onFileDrop)="onFileSelected($event)" class="well my-drop-zone ">
+            <span class="align-middle">Drop or select the files</span>
+            <br>
+            <span><i class="material-icons upload-icon">cloud_upload</i></span>
+            <br>
+            <div class="upload-btn-wrapper">
+              <button mat-raised-button type="submit" class="btn btn-primary pull-right">Browse</button>
+              <input type="file" ng2FileSelect [uploader]="uploader" multiple="allowMultiple"
+                (onFileSelected)="onFileSelected($event)" />
             </div>
           </div>
-          <br>
-          <br>
-          <div class="row">
-            <div class="col-12">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col" style="width:55%">Name</th>
-                    <!-- <th scope="col">Size</th> -->
-                    <th scope="col" style="width:10%">Progress</th>
-                    <!-- <th scope="col">Status</th> -->
-                    <th scope="col" style="width:20%">File Type</th>
-                    <th scope="col" style="width:20%">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of uploader.queue; let i=index;" [class.bg-light]="item.isUploaded">
-                    <fieldset id="uploadSection" [class.disabled]="item.isUploaded" [disabled]="item.isUploaded"
-                      class="w-100 d-contents">
-                      <th scope="row"><strong>{{ item?.file?.name }}</strong></th>
-                      <!-- *ngIf="uploader.isHTML5" -->
-                      <!-- <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td> -->
-                      <!-- *ngIf="uploader.isHTML5" -->
-                      <td>
-                        <div class="progress" style="margin-bottom: 0;">
-                          <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }">
-                          </div>
-                        </div>
-                      </td>
-                      <!-- <td>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col" style="width:55%">Name</th>
+                <!-- <th scope="col">Size</th> -->
+                <th scope="col" style="width:10%">Progress</th>
+                <!-- <th scope="col">Status</th> -->
+                <th scope="col" style="width:20%">File Type</th>
+                <th scope="col" style="width:20%">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of uploader.queue; let i=index;" [class.bg-light]="item.isUploaded">
+                <fieldset id="uploadSection" [class.disabled]="item.isUploaded" [disabled]="item.isUploaded"
+                  class="w-100 d-contents">
+                  <th scope="row">{{ item?.file?.name }}</th>
+                  <!-- *ngIf="uploader.isHTML5" -->
+                  <!-- <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td> -->
+                  <!-- *ngIf="uploader.isHTML5" -->
+                  <td>
+                    <div class="progress" style="margin-bottom: 0;">
+                      <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                  </td>
+                  <!-- <td>
                         <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
                         <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
                         <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
                       </td> -->
-                      <td>
-                        <mat-form-field id="fileTypes" class="example-full-width">
-                          <mat-select [(ngModel)]="item.fileType" (ngModelChange)="setFileType(item,i);disableFileType()"
-                            [class.disabled]="item.isUploaded" [disabled]="item.isUploaded" required>
-                            <mat-option *ngFor="let file of fileTypes" [value]="file.value"  [disabled]="file.disable" >{{file.value}}</mat-option>
-                            <!-- (onSelectionChange)="disableFileType($event, file)" -->
-                          </mat-select>
-                        </mat-form-field>
-                      </td>
-                      <td class="td-actions text-left">
-                        <button (click)="item.upload()" [class.disabled]="!item.fileType || item.isUploaded" [disabled]="!item.fileType || item.isUploaded"
-                          mat-raised-button type="button" matTooltip="Upload" [matTooltipPosition]="'above'"
-                          class="btn btn-primary btn-link btn-sm btn-just-icon">
-                          <i class="material-icons">cloud_upload</i>
-                        </button>
-                        <button (click)="item.cancel()" [disabled]="false" mat-raised-button type="button"
-                          matTooltip="Cancel" [matTooltipPosition]="'above'"
-                          class="btn btn-primary btn-link btn-sm btn-just-icon">
-                          <i class="material-icons">close</i>
-                        </button>
-                        <button (click)="item.remove();disableFileType()" mat-raised-button type="button" matTooltip="Remove"
-                          [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-sm btn-just-icon flex">
-                          <i class="material-icons">delete</i>
-                        </button>
-                      </td>
-                    </fieldset>
-                  </tr>
-                </tbody>
-              </table>
-              <div>
-                <div style="display:none;">Queue progress:
-                  <div class="progress">
-                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }">
-                    </div>
-                  </div>
+                  <td class="p-0">
+                    <mat-form-field id="fileTypes" class="example-full-width">
+                      <mat-select [(ngModel)]="item.fileType" (ngModelChange)="setFileType(item,i);disableFileType()"
+                        [class.disabled]="item.isUploaded" [disabled]="item.isUploaded || disableDropDown" required>
+                        <mat-option *ngFor="let file of fileTypes" [value]="file.value" [disabled]="file.disable">
+                          {{file.value}}</mat-option>
+                        <!-- (onSelectionChange)="disableFileType($event, file)" -->
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                  <td class="td-actions text-left">
+                    <button (click)="item.upload()" [class.disabled]="!item.fileType || item.isUploaded"
+                      [disabled]="!item.fileType || item.isUploaded" mat-raised-button type="button" matTooltip="Upload"
+                      [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                      <i class="material-icons">cloud_upload</i>
+                    </button>
+                    <button (click)="item.cancel()" [disabled]="false" mat-raised-button type="button"
+                      matTooltip="Cancel" [matTooltipPosition]="'above'"
+                      class="btn btn-primary btn-link btn-sm btn-just-icon">
+                      <i class="material-icons">close</i>
+                    </button>
+                    <button (click)="item.remove();disableFileType()" mat-raised-button type="button"
+                      matTooltip="Remove" [matTooltipPosition]="'above'"
+                      class="btn btn-danger btn-link btn-sm btn-just-icon flex">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </fieldset>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <div style="display:none;">Queue progress:
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }">
                 </div>
-                <button type="button" class="btn btn-danger btn-s pull-right" (click)="uploader.clearQueue()" [class.disabled]="!uploader.queue.length"
-                  [disabled]="!uploader.queue.length">
-                  <span class="glyphicon glyphicon-trash"></span> Remove all
-                </button>
-                <button type="button" class="btn btn-warning btn-s pull-right" (click)="uploader.cancelAll()" [class.disabled]="!uploader.isUploading"
-                  [disabled]="!uploader.isUploading">
-                  <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
-                </button>
-                <button type="button" class="btn btn-success btn-s pull-right" (click)="uploader.uploadAll()" [class.disabled]="disableUploadAll || !uploader.getNotUploadedItems().length"
-                  [disabled]="disableUploadAll || !uploader.getNotUploadedItems().length">
-                  <span class="glyphicon glyphicon-upload"></span> Upload all
-                </button>
               </div>
             </div>
+            <button type="button" class="btn btn-danger btn-s pull-right" (click)="uploader.clearQueue()"
+              [class.disabled]="!uploader.queue.length" [disabled]="!uploader.queue.length">
+              <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+            <button type="button" class="btn btn-warning btn-s pull-right" (click)="uploader.cancelAll()"
+              [class.disabled]="!uploader.isUploading" [disabled]="!uploader.isUploading">
+              <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+            </button>
+            <button type="button" class="btn btn-success btn-s pull-right" (click)="uploader.uploadAll()"
+              [class.disabled]="disableUploadAll || !uploader.getNotUploadedItems().length"
+              [disabled]="disableUploadAll || !uploader.getNotUploadedItems().length">
+              <span class="glyphicon glyphicon-upload"></span> Upload all
+            </button>
           </div>
-        <!-- </div>
-      </div> -->
+        </div>
+      </div>
     </div>
   </div>
 </div>

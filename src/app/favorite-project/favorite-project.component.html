@@ -10,7 +10,7 @@
             <div class="table-responsive">
               <table class="table">
                 <thead>
-                  <th *ngFor="let header of projectTableHeaders" class="{{header.class}}">{{ header.headerName }}</th>
+                  <th [ngStyle]="{width: header.width}" *ngFor="let header of projectTableHeaders" class="{{header.class}}">{{ header.headerName }}</th>
                 </thead>
                 <tbody>
                   <tr class="mat-row" *ngFor="let project of allFavoriteList">

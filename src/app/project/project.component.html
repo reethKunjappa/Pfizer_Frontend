@@ -2,7 +2,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 pad-0 text-right">
-                <button mat-raised-button (click)="createProject();" type="submit" class="btn btn-primary">Create</button>
+                <button mat-raised-button (click)="createProject();" type="submit"
+                    class="btn btn-primary">Create</button>
             </div>
         </div>
         <div class="row">
@@ -15,8 +16,8 @@
                         <div id="projectTable" class="table-responsive">
                             <table class="table">
                                 <thead>
-                                    <th *ngFor="let header of projectTableHeaders" class="{{header.class}}">
-                                    {{ header.headerName }}</th>
+                                    <th [ngStyle]="{width: header.width}" *ngFor="let header of projectTableHeaders"
+                                        class="{{ header.class }}">{{ header.headerName }}</th>
                                 </thead>
                                 <tbody>
                                     <tr *ngIf="allProjectList.length < 1">
@@ -37,7 +38,8 @@
                                                 class="btn btn-link btn-sm btn-just-icon">
                                                 <i class="fa fa-star"></i>
                                             </button>
-                                            <a href="javascript:void(0)" (click)="openProject(project)">{{ project.projectName }}</a></td>
+                                            <a href="javascript:void(0)"
+                                                (click)="openProject(project)">{{ project.projectName }}</a></td>
                                         <td class="mat-cell">{{ project.country.name }}</td>
                                         <td class="mat-cell">{{ project.createdBy.name }}</td>
                                         <td class="mat-cell">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
