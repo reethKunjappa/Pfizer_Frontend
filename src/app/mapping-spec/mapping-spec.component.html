@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 pad-0 text-right">
-        <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-primary">Back</button>
+        <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-spec">Back</button>
       </div>
     </div>
     <div class="row">
@@ -20,11 +20,11 @@
                 <tbody>
                   <tr class="mat-row" *ngFor="let sec of mappingSpec">
                     <td class="mat-cell">{{ sec.lpd_Section }}</td>
-                    <td class="mat-cell">{{ sec.predicted_mapping_content1 }}</td>
-                    <td class="mat-cell">{{ sec.actual_mapping }} </td>
+                    <td class="mat-cell">{{ sec.final_matched }}</td>
+                    <!-- <td class="mat-cell">{{ sec.actual_mapping }} </td> -->
                     <td class="mat-cell">
-                      <div [ngClass]="convertToPercent(sec.matching_score_content1) > 80 ? 'btn-success' : convertToPercent(sec.matching_score_content1) < 30 ? 'btn-danger' : 'btn-warning' " class="badge badge-pill btn-success p-3">
-                        {{ convertToPercent(sec.matching_score_content1) }}%
+                      <div [ngClass]="convertToPercent(sec.confidence_score) > 80 ? 'btn-success' : convertToPercent(sec.confidence_score) < 30 ? 'btn-danger' : 'btn-warning' " class="badge badge-pill btn-success" style="padding:10px !important;">
+                        {{ convertToPercent(sec.confidence_score) }}
                       </div>
                     </td>
                   </tr>

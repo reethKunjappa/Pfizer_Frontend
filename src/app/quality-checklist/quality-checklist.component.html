@@ -1,0 +1,47 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 pad-0 text-right">
+        <button mat-raised-button type="submit" class="btn btn-spec">Back</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div *ngIf="projectDetails">
+              <h4 class="card-title">{{projectDetails.projectName}}</h4>
+              <div class="card-category">
+                <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
+                  Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <th [ngStyle]="{width: header.width}" *ngFor="let header of documentTableHeaders" class="{{ header.class }}">{{ header.headerName }}</th>
+                </thead>
+                <tbody *ngIf="checkListData">
+                  <tr *ngIf="checkListData.length < 1">
+                    <td colspan="5" class="mx-auto text-center">
+                      <div class="badge badge-pill badge-primary p-3">No records to show.</div>
+                    </td>
+                  </tr>
+                  <tr class="mat-row" *ngFor="let checkData of checkListData">
+                    <td class="mat-cell">{{ checkData.quality_check }}</td>
+                    <td class="mat-cell">
+                      <i *ngIf="checkData.status" class="material-icons" style="color: lightgreen !important;font-size: xx-large;">check</i>
+                      <i *ngIf="!checkData.status" class="material-icons">remove</i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

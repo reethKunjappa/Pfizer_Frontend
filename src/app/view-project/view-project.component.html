@@ -2,11 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 pad-0 text-right" *ngIf="projectDetails.documents" >
-        <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary">Add Documents</button>
-        <button mat-raised-button [disabled]="projectDetails.documents.length < 1" (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger">Review Label</button>
-        <button mat-raised-button [disabled]="projectDetails.documents.length < 1 || !projectDetails.conflicted" (click)="viewConflict(projectDetails)" type="submit" class="btn btn-danger">View Conflicts</button>
-        <button mat-raised-button *ngIf="projectDetails.country.name == 'Saudi Arabia'" (click)="showMappingSpec();" type="submit" class="btn btn-primary" >Show Mapping Spec</button>
+        <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary btn-spec">Add Documents</button>
+        <button mat-raised-button [disabled]="projectDetails.documents.length < 1" (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger btn-spec">Review Label</button>
+        <button mat-raised-button [disabled]="projectDetails.documents.length < 1 || !projectDetails.conflicted" (click)="viewConflict(projectDetails)" type="submit" class="btn btn-danger btn-spec">View Conflicts</button>
+        <button mat-raised-button *ngIf="projectDetails.country.name == 'Saudi Arabia'" (click)="showMappingSpec(projectDetails.documents);" type="submit" class="btn btn-primary btn-spec" >Show Mapping Spec</button>
         <!-- *ngIf="projectDetails.country.name == 'Saudi Arabia'" -->
+        <button mat-raised-button  (click)="showCheckList(projectDetails)" type="submit" class="btn btn-danger btn-spec">QC Report</button>
+        <!-- [disabled]="projectDetails.documents.length < 1" -->
       </div>
     </div>
     <div class="row">
@@ -39,16 +41,21 @@
                     <td class="mat-cell">{{ document.uploadedBy.name }}</td>
                     <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
                     <td class="mat-cell">
-                      <button (click)="reUploadDocument(document)" mat-raised-button type="button" matTooltip="Re-upload" [matTooltipPosition]="'above'"
-                      class="btn btn-link btn-sm btn-just-icon">
+                    <button (click)="reUploadDocument(document)" mat-raised-button type="button" matTooltip="Re-upload" [matTooltipPosition]="'above'"
+                      class="btn btn-link  btn-just-icon"> 
+                      <!-- btn-sm -->
                       <i class="material-icons">cloud_upload</i>
                     </button>
                     <button (click)="downloadDocument(document)" mat-raised-button type="button" matTooltip="Download" [matTooltipPosition]="'above'"
-                      class="btn btn-link btn-sm btn-just-icon">
+                      class="btn btn-link btn-just-icon" *ngIf="document.mimetype != 'application/pdf'">
                       <i class="material-icons">cloud_download</i>
                     </button>
+                    <button (click)="viewDocument(document)" style="color:#0275d8 !important;" mat-raised-button type="button" matTooltip="View" [matTooltipPosition]="'above'"
+                      class="btn btn-link btn-just-icon" *ngIf="document.mimetype == 'application/pdf'">
+                      <i class="material-icons">visibility</i>
+                    </button>
                     <button (click)="deleteDocument(document)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
-                      class="btn btn-danger btn-link btn-sm btn-just-icon flex">
+                      class="btn btn-danger btn-link btn-just-icon flex">
                       <i class="material-icons">delete</i>
                     </button>
                     </td>

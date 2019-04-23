@@ -1,6 +1,6 @@
 // Dependency Imports
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart, ActivatedRoute, Params } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
 
 // Service Imports
@@ -52,7 +52,13 @@ export class CompareComponent implements OnInit {
         this.comments = res.result.conflicts.comments;
         this.projectDetails.documents.map(a => {
           if (a.fileType == 'Label') {
-            this.url = 'https://docs.google.com/gview?url=http://34.204.2.145:3005' + a.destination + '&embedded=true'
+            // this.url = this.projectViewService.endPointAddress + a.destination;
+            if ( a.hasOwnProperty('pdfPath') ) {
+              let labelDocUrl = this.projectViewService.endPointAddress + a.pdfPath.destination;
+              setTimeout(()=>{
+                document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
+              },1000);
+            }              
           }
         })
       }

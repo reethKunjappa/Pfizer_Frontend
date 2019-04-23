@@ -22,7 +22,7 @@
             <span><i class="material-icons upload-icon">cloud_upload</i></span>
             <br>
             <div class="upload-btn-wrapper">
-              <button mat-raised-button type="submit" class="btn btn-primary pull-right">Browse</button>
+              <button mat-raised-button type="submit" class="btn btn-primary pull-right btn-spec">Browse</button>
               <input type="file" ng2FileSelect [uploader]="uploader" multiple="allowMultiple"
                 (onFileSelected)="onFileSelected($event)" />
             </div>
@@ -40,7 +40,7 @@
                 <!-- <th scope="col">Size</th> -->
                 <th scope="col" style="width:10%">Progress</th>
                 <!-- <th scope="col">Status</th> -->
-                <th scope="col" style="width:20%">File Type</th>
+                <th scope="col" style="width:20%">File Type*</th>
                 <th scope="col" style="width:20%">Action</th>
               </tr>
             </thead>
@@ -49,19 +49,11 @@
                 <fieldset id="uploadSection" [class.disabled]="item.isUploaded" [disabled]="item.isUploaded"
                   class="w-100 d-contents">
                   <th scope="row">{{ item?.file?.name }}</th>
-                  <!-- *ngIf="uploader.isHTML5" -->
-                  <!-- <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td> -->
-                  <!-- *ngIf="uploader.isHTML5" -->
                   <td>
                     <div class="progress" style="margin-bottom: 0;">
                       <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
                     </div>
                   </td>
-                  <!-- <td>
-                        <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                        <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                        <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-                      </td> -->
                   <td class="p-0">
                     <mat-form-field id="fileTypes" class="example-full-width">
                       <mat-select [(ngModel)]="item.fileType" (ngModelChange)="setFileType(item,i);disableFileType()"
@@ -100,15 +92,15 @@
                 </div>
               </div>
             </div>
-            <button type="button" class="btn btn-danger btn-s pull-right" (click)="uploader.clearQueue()"
+            <button type="button" class="btn btn-danger btn-s pull-right btn-spec" (click)="uploader.clearQueue()"
               [class.disabled]="!uploader.queue.length" [disabled]="!uploader.queue.length">
               <span class="glyphicon glyphicon-trash"></span> Remove all
             </button>
-            <button type="button" class="btn btn-warning btn-s pull-right" (click)="uploader.cancelAll()"
+            <button type="button" class="btn btn-warning btn-s pull-right btn-spec" (click)="uploader.cancelAll()"
               [class.disabled]="!uploader.isUploading" [disabled]="!uploader.isUploading">
               <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
             </button>
-            <button type="button" class="btn btn-success btn-s pull-right" (click)="uploader.uploadAll()"
+            <button type="button" class="btn btn-success btn-s pull-right btn-spec" (click)="uploader.uploadAll()"
               [class.disabled]="disableUploadAll || !uploader.getNotUploadedItems().length"
               [disabled]="disableUploadAll || !uploader.getNotUploadedItems().length">
               <span class="glyphicon glyphicon-upload"></span> Upload all

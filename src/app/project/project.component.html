@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-12 pad-0 text-right">
                 <button mat-raised-button (click)="createProject();" type="submit"
-                    class="btn btn-primary">Create</button>
+                    class="btn btn-primary btn-spec">Create</button>
             </div>
         </div>
         <div class="row">
@@ -21,7 +21,7 @@
                                 </thead>
                                 <tbody>
                                     <tr *ngIf="allProjectList.length < 1">
-                                        <td colspan="5" class="mx-auto text-center">
+                                        <td colspan="6" class="mx-auto text-center">
                                             <div class="badge badge-pill badge-primary p-3">No projects to show.</div>
                                         </td>
                                     </tr>

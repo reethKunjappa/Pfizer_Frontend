@@ -9,8 +9,8 @@
   </div>
 </div>
 <div class="mat-dialog-actions" style="display:block !important;">
-  <button class="btn btn-primary pull-right" *ngIf="data.showSubmit" (click)="modalSubmit();" mat-raised-button
+  <button class="btn btn-primary pull-right btn-spec" *ngIf="data.showSubmit" (click)="modalSubmit();" mat-raised-button
     [mat-dialog-close]="true">{{ data.submitText }}</button>
-  <button class="btn btn-default pull-right" *ngIf="data.showCancel" (click)="modalCancel();" mat-raised-button
+  <button class="btn btn-default pull-right btn-spec" *ngIf="data.showCancel" (click)="modalCancel();" mat-raised-button
     [mat-dialog-close]="true" style="margin-right:10px;">{{ data.cancelText }}</button>
 </div>

@@ -1,9 +1,9 @@
 <div class="main-content" *ngIf="projectDetails != undefined">
   <div class="row">
     <div class="col-12 pad-0 text-right">
-      <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-primary">Back</button>
+      <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-spec">Back</button>
       <button mat-raised-button (click)="acceptRejectDocumentsComments();" [disabled]="updateCommentsArray.length < 1"
-        type="submit" class="btn btn-danger">Update Document</button>
+        type="submit" class="btn btn-danger btn-spec">Update Document</button>
     </div>
   </div>
   <div class="row">

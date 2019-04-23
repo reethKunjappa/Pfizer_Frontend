@@ -8,6 +8,7 @@ import { FavoriteProjectComponent } from 'app/favorite-project/favorite-project.
 import { HistoryComponent } from 'app/history/history.component';
 import { CommentsComponent } from 'app/comments/comments.component';
 import { MappingSpecComponent } from 'app/mapping-spec/mapping-spec.component';
+import { QualityChecklistComponent } from 'app/quality-checklist/quality-checklist.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -25,4 +26,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'comments/:id', component: CommentsComponent },
     { path: 'mappingSpec', component: MappingSpecComponent },
     { path: 'mappingSpec/:id', component: MappingSpecComponent },
+    { path: 'checklist', component: QualityChecklistComponent },
+    { path: 'checklist/:id', component: QualityChecklistComponent },
 ];

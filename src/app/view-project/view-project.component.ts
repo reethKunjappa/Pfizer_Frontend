@@ -28,7 +28,6 @@ export class ViewProjectComponent implements OnInit {
   public projectDetails: any = {};
   public uploadDocumentDialog: any;
   public reUploadDocumentDialog: any;
-  // public projectLength : boolean = false;
 
   constructor(private projectViewService: ProjectViewService, private router: Router, private activatedRoute: ActivatedRoute, public dialog: MatDialog) {
     this.activatedRoute.paramMap.subscribe((params: any) => {
@@ -56,7 +55,22 @@ export class ViewProjectComponent implements OnInit {
     this.uploadDocumentDialog.afterClosed().subscribe(result => { });
   }
 
-  showMappingSpec() {
+  showMappingSpec(doc) {
+    console.log("doc",doc);
+    var inputResponse = {
+      "label_filepath" : "",
+      "reference_filepath": []
+    }
+    
+    for(var i = 0 ; i < doc.length;i++){
+      if(doc[i].fileType == 'Label'){
+        inputResponse.label_filepath = doc[i].destination;
+      }else if(doc[i].fileType == 'Reference'){
+        inputResponse.reference_filepath.push(doc[i].destination);
+      }
+    }
+    this.projectViewService._initializeMappingSpec$.next(inputResponse); 
+    this.projectViewService.mappingFileData = inputResponse;   
     this.router.navigate(['/mappingSpec', this.projectDetails._id]);
   }
 
@@ -77,17 +91,17 @@ export class ViewProjectComponent implements OnInit {
 
   // Download a document
   downloadDocument(documentDetails: any) {
-    console.log(documentDetails);
-    // var a = document.createElement('a');
-    // a.href = this.projectViewService.endPointAddress + documentDetails.destination;
-    // a.download = documentDetails.documentName;
-    // a.click();
+      const pdfUrl = (window.URL).createObjectURL(new Blob([this.projectViewService.endPointAddress + documentDetails.destination], { type: 'application/pdf' }));
+      const anchor = document.createElement('a');
+      anchor.href = pdfUrl;
+      anchor.setAttribute("download", documentDetails.documentName);
+      anchor.click();   
+  }
 
-    const pdfUrl = (window.URL).createObjectURL(new Blob([this.projectViewService.endPointAddress + documentDetails.destination], { type: 'application/pdf' }));
-    const anchor = document.createElement('a');
-    anchor.href = pdfUrl;
-    anchor.setAttribute("download", documentDetails.documentName);
-    anchor.click();
+  // View a document
+  viewDocument(documentDetails: any) {
+    console.log(documentDetails);
+    window.open(this.projectViewService.endPointAddress + documentDetails.destination, '_blank');
   }
 
   deleteDocument(documentDetails: any) {
@@ -101,6 +115,11 @@ export class ViewProjectComponent implements OnInit {
         });
       }
     });
+  }
+
+  showCheckList( projectDetails : any ) {
+    console.log("showCheckList::",projectDetails);
+    this.router.navigate([ '/checklist', projectDetails._id ]);
   }
 
 }

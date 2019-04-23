@@ -30,6 +30,7 @@ import { HistoryComponent } from '../../history/history.component';
 import { CommentsComponent } from '../../comments/comments.component';
 import { StatusComponent } from '../../status/status.component';
 import { MappingSpecComponent } from '../../mapping-spec/mapping-spec.component';
+import { QualityChecklistComponent } from '../../quality-checklist/quality-checklist.component';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { MappingSpecComponent } from '../../mapping-spec/mapping-spec.component'
     HistoryComponent,
     CommentsComponent,
     StatusComponent,
-    MappingSpecComponent
+    MappingSpecComponent,
+    QualityChecklistComponent
   ],
   entryComponents: [
     CreateProjectModalComponent,UploadDocumentsModalComponent,StatusComponent

@@ -12,13 +12,20 @@ export class ProjectViewService {
 
   public _initializeProjectId$: BehaviorSubject<any> = new BehaviorSubject<any>('');
   public _initializeProjectId = this._initializeProjectId$.asObservable();   // asObservable declarations for listening to the
+
+  public _initializeMappingSpec$: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  public _initializeMappingSpec = this._initializeMappingSpec$.asObservable();   // asObservable declarations for listening to the
+
+  public mappingFileData : any = {};
+
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
 
-  // public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
+  public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
   // public endPointAddress : string = 'http://192.168.0.19:3009';  // Ashish IP or port 3000
   // public endPointAddress : string = 'http://localhost:5555';
-  public endPointAddress : string = 'http://34.204.2.145:3005';
-
+  // public endPointAddress : string = 'http://192.168.0.125:5555' //Sunil IP
+  // public endPointAddress : string = 'http://54.164.151.252:3005';
+  
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -296,5 +303,37 @@ export class ProjectViewService {
     );
   }
 
+  // getCheckListData
+  // FETCH Checllist API CALL
+  getCheckListData( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/checkList';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;              
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // GET MAPPING SPEC'S DATA 
+  getMappingSpec( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/getMappingSpec';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;              
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
 
 }
