@@ -23,12 +23,10 @@ export class CompareComponent implements OnInit {
 
   public projectId: any;
   public projectDetails: any;
-  public updateCommentsArray : any[] = [];
-  public selectedIndex : number = -1;
+  public updateCommentsArray: any[] = [];
+  public selectedIndex: number = -1;
 
-  constructor(public location: Location, private router: Router, private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService ) {
-    // let x = "C:\Users\Reeth\projects\Pfizer_Backend\fs\94746132-2bb6-4ec9-abe8-700a6f77efa5\Saudi arabia  LPD vs. USPI.doc";
-    // console.log("x:",x.split());
+  constructor(public location: Location, private router: Router, private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
     this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
       this.viewType = params.get('view');
@@ -42,44 +40,47 @@ export class CompareComponent implements OnInit {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   // Get Updated Document
   getDocument() {
     this.projectViewService.getDocument(this.projectId).subscribe((res: any) => {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
-        this.comments = res.result.conflicts.comments;
-        this.projectDetails.documents.map(a => {
+        this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
-            // this.url = this.projectViewService.endPointAddress + a.destination;
-            if ( a.hasOwnProperty('pdfPath') ) {
-              let labelDocUrl = this.projectViewService.endPointAddress + a.pdfPath.destination;
-              setTimeout(()=>{
+            if (a.hasOwnProperty('pdfPath')) {
+              let labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
+              setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
-              },1000);
-            }              
+              }, 1000);
+            }
           }
-        })
+        });
       }
     })
+  }
+
+  convertToUTF8(url) {
+    url = encodeURIComponent(url);
+    var urlSplit = url.split('%2F');
+    url = urlSplit.join('/');
+    return url;
   }
 
   viewDocuments() {
     this.projectViewService.viewProjectConflicts({ '_id': this.projectId }).subscribe((res: any) => {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
-        this.comments = res.result.conflicts.comments;
-        this.comments.map((c) => { c['commentStatus'] = "" });
-        this.projectDetails.documents.map(a => {
-          console.log(a);          
-          if ( a.fileType == 'Label' ) {
-            if ( a.hasOwnProperty('pdfPath') ) {
-              let labelDocUrl = this.projectViewService.endPointAddress + a.pdfPath.destination;
-              setTimeout(()=>{
+        this.comments = res.result.comments;
+        this.projectDetails.project.documents.map(a => {
+          if (a.fileType == 'Label') {
+            if (a.hasOwnProperty('pdfPath')) {
+              let labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
+              setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
-              },1000);
-            }              
+              }, 1000);
+            }
           }
         });
       }
@@ -88,62 +89,54 @@ export class CompareComponent implements OnInit {
 
   // Get Reference Document
   getReferenceDocument(docDetails: any) {
-    console.log("docDetails::", docDetails);
     this.referenceDocuments = [];
-    this.projectDetails.documents.map((element: any) => {
-      if (docDetails.referenceDoc.substring(docDetails.referenceDoc.lastIndexOf('\\') + 1) == element.documentName) {
+    this.projectDetails.project.documents.map((element: any) => {
+      if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) == element.documentName) {
         this.referenceDocuments.push(element);
-        let refDocUrl = this.projectViewService.endPointAddress + element.pdfPath.destination;
-        setTimeout(()=>{
-          document.getElementById('showRefDoc').setAttribute('src', refDocUrl );
-        },1000);
+        let refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);
+        setTimeout(() => {
+          document.getElementById('showRefDoc').setAttribute('src', refDocUrl);
+        }, 1000);
       }
     });
   }
 
   // Accept Comment
-  acceptComment( commentReq, index ) {
-    console.log("Accept::", commentReq, index);
-    this.updateCommentsArray.map((e) => {
-      if ( e._id == commentReq._id ) {
-        this.updateCommentsArray.splice(e, 1);
+  acceptOrRejectComment(action, index) {
+    if (action == 'Accept') {
+      if (this.projectDetails.comments[index].action == '' || this.projectDetails.comments[index].action == null) {
+        this.projectDetails.comments[index].action = 'ACCEPT';
+        this.projectDetails.comments[index]._deleted = true;
+      } else {
+        this.projectDetails.comments[index].action = '';
+        this.projectDetails.comments[index]._deleted = false;
       }
-    });
-    let obj = {};
-    obj['_id'] = commentReq._id;
-    obj['action'] = 'ACCEPT';
-    this.updateCommentsArray.push(obj);
-    this.selectedIndex = index;
-    this.comments[index].commentStatus = "ACCEPT";
-    console.log("A: main::",this.projectDetails.conflicts.comments);
-    console.log("New::",this.updateCommentsArray);
+    }
+    if (action == 'Reject') {
+      if (this.projectDetails.comments[index].action == '' || this.projectDetails.comments[index].action == null) {
+        this.projectDetails.comments[index].action = 'REJECT';
+        this.projectDetails.comments[index]._deleted = true;
+      } else {
+        this.projectDetails.comments[index].action = '';
+        this.projectDetails.comments[index]._deleted = false;
+      }
+    }
   }
 
-  // Reject Comment
-  rejectComment( commentReq, index ) {
-    console.log("Reject::", commentReq, index);
-    this.updateCommentsArray.map((e) => {
-      if ( e._id == commentReq._id ) {
-        this.updateCommentsArray.splice(e, 1);
-      }
-    });
-    let obj = {};
-    obj['_id'] = commentReq._id;
-    obj['action'] = 'REJECT';
-    this.updateCommentsArray.push(obj);
-    this.comments[index].commentStatus = "REJECT";
-    console.log("R: main::",this.projectDetails.conflicts.comments);
-    console.log("New::",this.updateCommentsArray);
-  }
 
   acceptRejectDocumentsComments() {
-    var obj = {};
-    obj['user'] = this.projectViewService.loggedInUser;
-    obj['projectId'] = this.projectDetails._id;
-    obj['comments'] = this.updateCommentsArray;
-    this.projectViewService.acceptRejectDocumentsComments(obj).subscribe((updateDocCommentsResp: any) => {
-      console.log("updateDocCommentsResp::", updateDocCommentsResp);
-    });
+    var obj = {
+      'user': this.projectViewService.loggedInUser,
+      'projectId': this.projectDetails.project._id,
+      'comments': this.projectDetails.comments.filter(comment => (comment.action == 'ACCEPT' || comment.action == 'REJECT'))
+    };
+    if (obj.comments.length) {
+      this.projectViewService.acceptRejectDocumentsComments(obj).subscribe((updateDocCommentsResp: any) => {
+        if (updateDocCommentsResp != undefined && updateDocCommentsResp != "") {
+          this.projectDetails = updateDocCommentsResp.result;
+        }
+      });
+    }
   }
 
   setUrl(destination: any) {

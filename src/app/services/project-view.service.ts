@@ -20,11 +20,12 @@ export class ProjectViewService {
 
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
 
-  public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
+  // public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
+  //public endPointAddress : string = 'http://192.168.1.102:5555';
   // public endPointAddress : string = 'http://192.168.0.19:3009';  // Ashish IP or port 3000
   // public endPointAddress : string = 'http://localhost:5555';
   // public endPointAddress : string = 'http://192.168.0.125:5555' //Sunil IP
-  // public endPointAddress : string = 'http://54.164.151.252:3005';
+   public endPointAddress : string = 'http://54.164.151.252:3005';
   
   private httpOptions = {
     headers: new HttpHeaders({

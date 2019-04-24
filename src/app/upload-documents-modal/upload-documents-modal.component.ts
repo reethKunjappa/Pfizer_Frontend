@@ -32,12 +32,10 @@ export class UploadDocumentsModalComponent implements OnInit {
   public reUploadFileType: string;
 
   constructor(public dialogRef: MatDialogRef<UploadDocumentsModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private projectViewService: ProjectViewService) {
-    console.log("UploadDocumentsModalComponent::", data);
     this.createProjectData = data.projectDetails;
     this.allowMultiple = data.allowMultiple;
     this.re_upload_documentId = data.documentId ? data.documentId : '';
     this.reUploadFileType = data.fileType ? data.fileType : '';
-    console.log("reupload::", this.re_upload_documentId);
 
     this.fileTypes = [
       { value: 'Label', disable: false },
@@ -87,7 +85,7 @@ export class UploadDocumentsModalComponent implements OnInit {
       }
     };
 
-    // this.uploader.uploadItem = (value : FileItem) => { console.log("uploadItem::",value); }
+    // this.uploader.uploadItem = (value : FileItem) => { }
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       if (JSON.parse(response).status.code == 0) {
@@ -106,13 +104,9 @@ export class UploadDocumentsModalComponent implements OnInit {
   }
 
   // Ng2-File-Upload Methods
-  public fileOver(event) {
-    console.log(event);
-  }
+  public fileOver(event) {}
 
-  public fileLeave(event) {
-    console.log(event);
-  }
+  public fileLeave(event) {}
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;

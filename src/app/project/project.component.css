@@ -1,3 +1,7 @@
 #projectTable .table {
     margin-bottom: 0px !important;
 }
+
+#projectTable {
+    overflow: hidden;
+}

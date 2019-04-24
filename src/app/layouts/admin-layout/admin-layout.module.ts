@@ -32,6 +32,7 @@ import { StatusComponent } from '../../status/status.component';
 import { MappingSpecComponent } from '../../mapping-spec/mapping-spec.component';
 import { QualityChecklistComponent } from '../../quality-checklist/quality-checklist.component';
 
+
 @NgModule({
   imports: [
     CommonModule,

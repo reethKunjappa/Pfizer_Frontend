@@ -107,7 +107,8 @@
 
   // flat bg with text color variations
   &.btn-primary {
-    @include bmd-flat-button-variant($btn-primary-bg);
+    // @include bmd-flat-button-variant($btn-primary-bg);
+    @include bmd-flat-button-variant($blue-400);
   }
   &.btn-secondary {
     @include bmd-flat-button-variant($btn-secondary-color);

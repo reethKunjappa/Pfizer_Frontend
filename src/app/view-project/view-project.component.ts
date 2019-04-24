@@ -56,7 +56,6 @@ export class ViewProjectComponent implements OnInit {
   }
 
   showMappingSpec(doc) {
-    console.log("doc",doc);
     var inputResponse = {
       "label_filepath" : "",
       "reference_filepath": []
@@ -64,9 +63,9 @@ export class ViewProjectComponent implements OnInit {
     
     for(var i = 0 ; i < doc.length;i++){
       if(doc[i].fileType == 'Label'){
-        inputResponse.label_filepath = doc[i].destination;
+        inputResponse.label_filepath = doc[i].pdfPath.location;
       }else if(doc[i].fileType == 'Reference'){
-        inputResponse.reference_filepath.push(doc[i].destination);
+        inputResponse.reference_filepath.push(doc[i].pdfPath.location);
       }
     }
     this.projectViewService._initializeMappingSpec$.next(inputResponse); 
@@ -91,16 +90,11 @@ export class ViewProjectComponent implements OnInit {
 
   // Download a document
   downloadDocument(documentDetails: any) {
-      const pdfUrl = (window.URL).createObjectURL(new Blob([this.projectViewService.endPointAddress + documentDetails.destination], { type: 'application/pdf' }));
-      const anchor = document.createElement('a');
-      anchor.href = pdfUrl;
-      anchor.setAttribute("download", documentDetails.documentName);
-      anchor.click();   
+    window.open(this.projectViewService.endPointAddress + documentDetails.destination, '_blank');  
   }
 
   // View a document
   viewDocument(documentDetails: any) {
-    console.log(documentDetails);
     window.open(this.projectViewService.endPointAddress + documentDetails.destination, '_blank');
   }
 
@@ -118,7 +112,6 @@ export class ViewProjectComponent implements OnInit {
   }
 
   showCheckList( projectDetails : any ) {
-    console.log("showCheckList::",projectDetails);
     this.router.navigate([ '/checklist', projectDetails._id ]);
   }
 

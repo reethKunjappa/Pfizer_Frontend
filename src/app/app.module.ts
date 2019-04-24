@@ -18,6 +18,8 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { ProjectViewService } from './services/project-view.service';
 import { I1 } from './interceptor';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { LoginComponent } from './login/login.component';
+
 
 @NgModule({
   imports: [
@@ -39,8 +41,8 @@ import { HttpInterceptorService } from './services/http-interceptor.service';
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent
-
+    AdminLayoutComponent,
+    LoginComponent
   ],
   exports: [
     CommonModule,

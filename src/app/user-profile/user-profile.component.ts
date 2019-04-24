@@ -40,7 +40,6 @@ export class UserProfileComponent implements OnInit {
 
   constructor( private projectViewService: ProjectViewService,  private activatedRoute : ActivatedRoute,  private router : Router) {
     this.activatedRoute.paramMap.subscribe(( params : any )=>{
-      console.log("Params::",params.get('id'));
       if ( params.get('id') != "" && params.get('id') != undefined && params.get('id') != null ) {
         this.projectViewService.openProject(params.get('id')).subscribe((projectDetails: any) => {
           this.createProjectData = projectDetails;
@@ -91,7 +90,6 @@ export class UserProfileComponent implements OnInit {
     // Below line mandatory to show binary in header payloads
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; }
     // this.uploader.uploadItem = (value : FileItem) => {
-    //   console.log("uploadItem::",value);
     // }
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
@@ -115,8 +113,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   setCountry(event, item) {
-    console.log("SetCountry Obj::", item);
-    console.log("event : ", event.isUserInput,event);
     if (event.isUserInput) {
       if (item != "" && item != undefined) {
         // this.createProjectData.country.id = item['iso3'];
@@ -129,13 +125,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   // Ng2-File-Upload Methods
-  public fileOver(event) {
-    console.log(event);
-  }
+  public fileOver(event) {}
 
-  public fileLeave(event) {
-    console.log(event);
-  }
+  public fileLeave(event) {}
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
@@ -149,7 +141,6 @@ export class UserProfileComponent implements OnInit {
   setFileType(item, i) {
     this.uploader.queue[i].formData = this.uploader.queue[i]['some'];
     this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + this.loggedInUser.name + '&fileType=' + item.fileType;
-    console.log("New Url::", this.uploader);
     this.checkUploadAllStatus();
   }
 

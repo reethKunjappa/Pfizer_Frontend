@@ -27,7 +27,6 @@ export class HistoryComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params : any) => {
       this.projectId = params.get('id');
       this.projectViewService.getProjectAuditHistory({ "project._id" : this.projectId }).subscribe(( projectAuditHistoryResp : any ) => {
-        console.log("projectAuditHistoryResp::", projectAuditHistoryResp);
         if ( projectAuditHistoryResp.status.code === 0 ) {
           this.auditHistoryList = projectAuditHistoryResp.result;
         }

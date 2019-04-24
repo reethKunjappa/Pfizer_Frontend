@@ -2,41 +2,42 @@
   <div class="row">
     <div class="col-12 pad-0 text-right">
       <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-spec">Back</button>
-      <button mat-raised-button (click)="acceptRejectDocumentsComments();" [disabled]="updateCommentsArray.length < 1"
-        type="submit" class="btn btn-danger btn-spec">Update Document</button>
+      <button mat-raised-button (click)="acceptRejectDocumentsComments();" type="submit"
+        class="btn btn-danger btn-spec">Update Document</button>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-primary row">
-          <div *ngIf="projectDetails.projectName" class="col-11">
-            <h4 class="card-title">{{projectDetails.projectName}}</h4>
+          <div *ngIf="projectDetails.project.projectName" class="col-11">
+            <h4 class="card-title">{{projectDetails.project.projectName}}</h4>
             <div class="card-category">
-              <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
-                Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
+              <span>Country : {{ projectDetails.project.country.name }} | Created By :
+                {{ projectDetails.project.createdBy.name }} |
+                Created On : {{ projectDetails.project.createdOn | date : 'dd-MMM-yyyy' }}</span>
             </div>
           </div>
           <div class="col-1">
-            <button mat-mini-fab color="warn" [disabled]="projectDetails.conflicts.total < 1"
+            <button mat-mini-fab color="warn" [disabled]="projectDetails.project.conflicts.total < 1"
               [mdePopoverTriggerFor]="appPopover"
-              mdePopoverTriggerOn="hover">{{ projectDetails.conflicts.total }}</button>
+              mdePopoverTriggerOn="hover">{{ projectDetails.project.conflicts.total }}</button>
             <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
               <mat-card style="max-width: 300px;padding: 5px;">
                 <mat-card-content>
                   <table class="table table-borderless table-sm table-light">
                     <tbody>
-                      <tr *ngIf="projectDetails.conflicts.types.font">
+                      <tr *ngIf="projectDetails.project.conflicts.types.font">
                         <td scope="row">Font Conflicts</td>
-                        <td>{{ projectDetails.conflicts.types.font }}</td>
+                        <td>{{ projectDetails.project.conflicts.types.font }}</td>
                       </tr>
-                      <tr *ngIf="projectDetails.conflicts.types.content">
+                      <tr *ngIf="projectDetails.project.conflicts.types.content">
                         <td scope="row">Content Conflicts</td>
-                        <td>{{ projectDetails.conflicts.types.content }}</td>
+                        <td>{{ projectDetails.project.conflicts.types.content }}</td>
                       </tr>
-                      <tr *ngIf="projectDetails.conflicts.types.order">
+                      <tr *ngIf="projectDetails.project.conflicts.types.order">
                         <td scope="row">Order Conflicts</td>
-                        <td>{{ projectDetails.conflicts.types.order }}</td>
+                        <td>{{ projectDetails.project.conflicts.types.order }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -64,27 +65,30 @@
                   </div>
                 </div>
 
-                <div style="width:30%;">
-                  <div *ngFor="let item of projectDetails.conflicts.comments;let i = index"
-                    class="card border-info m-1 mr-2">
-                    <mat-card class="p-2" id="{{ i }}"
-                      [ngClass]="item.commentStatus == 'ACCEPT' ? 'btn-success' :  (item.commentStatus == 'REJECT' ? 'btn-danger' : '' )">
-                      <mat-card-content class="d-inline-flex mb-0">
-                        <p class="font-2"><span class="font-weight-bold text-dark">Comment{{i}}:</span> {{item.text}}
-                        </p>
+                <div style="width:29%;">
+                  <div *ngFor="let item of projectDetails.comments;let i = index" class="card border-info m-1 mr-2">
+                    <mat-card class="p-2" id="{{ i }}">
+                      <mat-card-content class="mb-0">
+                        <div class="small"
+                          [ngClass]="item.action == 'ACCEPT' ? 'btn-success pl-2 rounded' :  (item.action == 'REJECT' ? 'btn-danger pl-2 rounded' : '' )">
+                          {{item.conflict_type}} CONFLICT</div>
+                        <hr style="margin: 0.5rem 0" />
+                        <div class="small">{{item.comment_text}}</div>
                       </mat-card-content>
                       <mat-card-actions class="text-right">
                         <button mat-raised-button type="button" matTooltip="Accept"
-                          class="btn btn-success btn-link btn-sm btn-just-icon" (click)="acceptComment(item, i);">
+                          class="btn btn-success btn-link btn-sm btn-just-icon"
+                          (click)="acceptOrRejectComment('Accept',i)">
                           <i class="material-icons">check</i>
                         </button>
                         <button mat-raised-button type="button" matTooltip="Reject"
-                          class="btn btn-danger btn-link btn-sm btn-just-icon" (click)="rejectComment(item, i)">
+                          class="btn btn-danger btn-link btn-sm btn-just-icon"
+                          (click)="acceptOrRejectComment('Reject',i)">
                           <i class="material-icons">close</i>
                         </button>
                         <button mat-raised-button type="button" (click)="drawer.toggle();getReferenceDocument(item, i);"
                           matTooltip="Refer Document" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                          <i class="material-icons">compare</i></button>
+                          <i class="material-icons">find_in_page</i></button>
                         <!-- runOnRouteChange(); -->
                       </mat-card-actions>
                     </mat-card>

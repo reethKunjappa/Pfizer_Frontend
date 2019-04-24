@@ -33,6 +33,9 @@ export class CommentsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(( params : any )=>{
       this.projectId = params.get('id');
       this.getAllComments();
+      this.projectViewService.openProject(this.projectId).subscribe((projectDetails: any) => {
+        this.projectDetails = projectDetails;              
+      });
     });
   }
 
@@ -56,7 +59,6 @@ export class CommentsComponent implements OnInit {
     this.createProjectComment.commentedBy = this.projectViewService.loggedInUser;
     this.createProjectComment.projectId = this.projectId;
     this.projectViewService.createComments(this.createProjectComment).subscribe(( addCommentResponse : any )=>{
-      // console.log("addCommentResponse::",addCommentResponse);
       if ( addCommentResponse != undefined && addCommentResponse != "" ) {
         this.commentsList.push(addCommentResponse.result);
         this.commentsListStore.push(addCommentResponse.result);

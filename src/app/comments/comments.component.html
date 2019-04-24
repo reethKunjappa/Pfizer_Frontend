@@ -9,14 +9,13 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <div>
-              <!-- *ngIf="projectDetails.projectName" -->
+            <div *ngIf="projectDetails.projectName">
               <h4 class="card-title">Comments</h4>
-              <!-- <h4 class="card-title">{{projectDetails.projectName}}</h4> -->
-              <!-- <div class="card-category">
+              <h4 class="card-title">{{projectDetails.projectName}}</h4>
+              <div class="card-category">
                 <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
                   Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
-              </div> -->
+              </div>
             </div>
           </div>
           <div class="card-body">
@@ -32,9 +31,9 @@
                   </mat-form-field>
                   <div class="row">
                     <div class="col-12 pad-0 text-right">
-                      <button mat-raised-button type="submit" class="btn btn-primary"
+                      <button mat-raised-button type="submit" class="btn btn-primary btn-spec"
                         (click)="addComment();">Add</button>
-                      <button mat-raised-button type="submit" class="btn btn-danger"
+                      <button mat-raised-button type="submit" class="btn btn-danger btn-spec"
                         (click)="cancelComment()">Cancel</button>
                     </div>
                   </div>
@@ -65,9 +64,9 @@
                     </mat-form-field>
                     <div class="row">
                       <div class="col-12 pad-0 text-right">
-                        <button mat-raised-button type="submit" class="btn btn-primary"
+                        <button mat-raised-button type="submit" class="btn btn-primary btn-spec"
                           (click)="saveComment(comment, i)">Save</button>
-                        <button mat-raised-button type="submit" class="btn btn-danger"
+                        <button mat-raised-button type="submit" class="btn btn-danger btn-spec"
                           (click)="cancelUpdateComment(comment, i)">Cancel</button>
                       </div>
                     </div>
