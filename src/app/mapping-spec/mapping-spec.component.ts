@@ -33,7 +33,7 @@ export class MappingSpecComponent implements OnInit {
       if (mappingSpecData != undefined && mappingSpecData != "") {
         this.fileData = mappingSpecData;
         this.projectViewService.getMappingSpec(this.fileData).subscribe((getMappingSpecResp: any) => {
-          this.mappingSpec = getMappingSpecResp.result;
+          this.mappingSpec = JSON.parse(getMappingSpecResp.result);
         });
       }
     }); 
