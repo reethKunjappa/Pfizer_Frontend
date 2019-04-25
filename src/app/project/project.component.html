@@ -54,16 +54,20 @@
                                                         <table class="table table-borderless table-sm table-light">
                                                             <tbody>
                                                                 <tr *ngIf="project.conflicts.types.font">
-                                                                    <td scope="row">Font Conflicts</td>
-                                                                    <td>{{ project.conflicts.types.font }}</td>
+                                                                    <td style="padding:5px;">Font Conflicts</td>
+                                                                    <td style="padding:5px;">{{ project.conflicts.types.font }}</td>
                                                                 </tr>
                                                                 <tr *ngIf="project.conflicts.types.content">
-                                                                    <td scope="row">Content Conflicts</td>
-                                                                    <td>{{ project.conflicts.types.content }}</td>
+                                                                    <td style="padding:5px;">Content Conflicts</td>
+                                                                    <td style="padding:5px;">{{ project.conflicts.types.content }}</td>
                                                                 </tr>
                                                                 <tr *ngIf="project.conflicts.types.order">
-                                                                    <td scope="row">Order Conflicts</td>
-                                                                    <td>{{ project.conflicts.types.order }}</td>
+                                                                    <td style="padding:5px;">Order Conflicts</td>
+                                                                    <td style="padding:5px;">{{ project.conflicts.types.order }}</td>
+                                                                </tr>
+                                                                <tr *ngIf="project.conflicts.types.spell_grammar">
+                                                                    <td style="padding:5px;">Spell Check Conflicts</td>
+                                                                    <td style="padding:5px;">{{ project.conflicts.types.spell_grammar }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
