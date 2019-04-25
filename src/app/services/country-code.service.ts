@@ -11,1266 +11,1277 @@ export class CountryCodeService {
 
   constructor() { 
     this.countryCodeData = [
-      {
-        'name':'Afghanistan',
-        'countryCode':'+91',
-        'flag':'../../assets/countryFlags/afghanistan.gif'
-      },
-      {
-        'name':'Aland Islands',
-        'countryCode':'+358',
-        'flag':'../../assets/countryFlags/aland_islands.gif'
-      },
-      {
-        'name':'Albania',
-        'countryCode':'+355',
-        'flag':'../../assets/countryFlags/albania.gif'
-      },
-      {
-        'name':'Algeria',
-        'countryCode':'+213',
-        'flag':'../../assets/countryFlags/algeria.gif'
-      },
-      {
-        'name':'American Samoa',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/american_samoa.gif'
-      },
-      {
-        'name':'Andorra',
-        'countryCode':'+376',
-        'flag':'../../assets/countryFlags/andorra.gif'
-      },
-      {
-        'name':'Angola',
-        'countryCode':'+244',
-        'flag':'../../assets/countryFlags/angola.gif'
-      },
-      {
-        'name':'Anguilla',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/anguilla.gif'
-      },
-      {
-        'name':'Antarctica',
-        'countryCode':'+672',
-        'flag':'../../assets/countryFlags/antarctica.gif'
-      },
-      {
-        'name':'Antigua & Barbuda',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/antigua_and_barbuda.gif'
-      },
-      {
-        'name':'Argentina',
-        'countryCode':'+54',
-        'flag':'../../assets/countryFlags/argentina.gif'
-      },
-      {
-        'name':'Armenia',
-        'countryCode':'+374',
-        'flag':'../../assets/countryFlags/armenia.gif'
-      },
-      {
-        'name':'Aruba',
-        'countryCode':'+297',
-        'flag':'../../assets/countryFlags/aruba.gif'
-      },
-      {
-        'name':'Australia',
-        'countryCode':'+61',
-        'flag':'../../assets/countryFlags/australia.gif'
-      },
-      {
-        'name':'Austria',
-        'countryCode':'+43',
-        'flag':'../../assets/countryFlags/austria.gif'
-      },
-      {
-        'name':'Azerbaijan',
-        'countryCode':'+994',
-        'flag':'../../assets/countryFlags/azerbaijan.gif'
-      },
-      {
-        'name':'Bahamas',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/bahamas.gif'
-      },
-      {
-        'name':'Bahrain',
-        'countryCode':'+973',
-        'flag':'../../assets/countryFlags/bahrain.gif'
-      },
-      {
-        'name':'Bangladesh',
-        'countryCode':'+880',
-        'flag':'../../assets/countryFlags/bangladesh.gif'
-      },
-      {
-        'name':'Barbados',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/barbados.gif'
-      },
-      {
-        'name':'Belarus',
-        'countryCode':'+375',
-        'flag':'../../assets/countryFlags/belarus.gif'
-      },
-      {
-        'name':'Belgium',
-        'countryCode':'+32',
-        'flag':'../../assets/countryFlags/belgium.gif'
-      },
-      {
-        'name':'Belize',
-        'countryCode':'+501',
-        'flag':'../../assets/countryFlags/belize.gif'
-      },
-      {
-        'name':'Benin',
-        'countryCode':'+229',
-        'flag':'../../assets/countryFlags/benin.gif'
-      },
-      {
-        'name':'Bermuda',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/bermuda.gif'
-      },
-      {
-        'name':'Bhutan',
-        'countryCode':'+975',
-        'flag':'../../assets/countryFlags/bhutan.gif'
-      },
-      {
-        'name':'Bolivia',
-        'countryCode':'+591',
-        'flag':'../../assets/countryFlags/bolivia.gif'
-      },
-      {
-        'name':'Bonaire',
-        'countryCode':'+599',
-        'flag':'../../assets/countryFlags/bonaire.gif'
-      },
-      {
-        'name':'Bosnia',
-        'countryCode':'+387',
-        'flag':'../../assets/countryFlags/bosnia_and_herzegovina.gif'
-      },
-      {
-        'name':'Botswana',
-        'countryCode':'+267',
-        'flag':'../../assets/countryFlags/botswana.gif'
-      },
-      {
-        'name':'Bouvet Island',
-        'countryCode':'+55',
-        'flag':'../../assets/countryFlags/bouvet_island.gif'
-      },
-      {
-        'name':'Brazil',
-        'countryCode':'+55',
-        'flag':'../../assets/countryFlags/brazil.gif'
-      },
-      {
-        'name':'British Indian Ocean Territory',
-        'countryCode':'+246',
-        'flag':'../../assets/countryFlags/british_indian_ocean_territory.gif'
-      },
-      {
-        'name':'Brunei',
-        'countryCode':'+673',
-        'flag':'../../assets/countryFlags/brunei.gif'
-      },
-      {
-        'name':'Bulgaria',
-        'countryCode':'+359',
-        'flag':'../../assets/countryFlags/bulgaria.gif'
-      },
-      {
-        'name':'Burkina Faso',
-        'countryCode':'+226',
-        'flag':'../../assets/countryFlags/burkina_faso.gif'
-      },
-      {
-        'name':'Burundi',
-        'countryCode':'+257',
-        'flag':'../../assets/countryFlags/burundi.gif'
-      },
-      {
-        'name':'Cambodia',
-        'countryCode':'+855',
-        'flag':'../../assets/countryFlags/cambodia.gif'
-      },
-      {
-        'name':'Cameroon',
-        'countryCode':'+237',
-        'flag':'../../assets/countryFlags/cameroon.gif'
-      },
-      {
-        'name':'Canada',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/canada.gif'
-      },
-      {
-        'name':'Cape Verde',
-        'countryCode':'+238',
-        'flag':'../../assets/countryFlags/cape_verde.gif'
-      },
-      {
-        'name':'Cayman Islands',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/cayman_islands.gif'
-      },
-      {
-        'name':'Central African Republic',
-        'countryCode':'+236',
-        'flag':'../../assets/countryFlags/central_african_republic.gif'
-      },
-      {
-        'name':'Chad',
-        'countryCode':'+235',
-        'flag':'../../assets/countryFlags/chad.gif'
-      },
-      {
-        'name':'Chile',
-        'countryCode':'+56',
-        'flag':'../../assets/countryFlags/chile.gif'
-      },
-      {
-        'name':'China',
-        'countryCode':'+86',
-        'flag':'../../assets/countryFlags/china.gif'
-      },
-      {
-        'name':'Christmas Island',
-        'countryCode':'+61',
-        'flag':'../../assets/countryFlags/christmas_island.gif'
-      },
-      {
-        'name':'Cocos Islands',
-        'countryCode':'+891',
-        'flag':'../../assets/countryFlags/cocos_islands.gif'
-      },
-      {
-        'name':'Colombia',
-        'countryCode':'+57',
-        'flag':'../../assets/countryFlags/colombia.gif'
-      },
-      {
-        'name':'Comoros',
-        'countryCode':'+269',
-        'flag':'../../assets/countryFlags/comoros.gif'
-      },
-      {
-        'name':'Cook Islands',
-        'countryCode':'+682',
-        'flag':'../../assets/countryFlags/cook_islands.gif'
-      },
-      {
-        'name':'Costa Rica',
-        'countryCode':'+506',
-        'flag':'../../assets/countryFlags/costa_rica.gif'
-      },
-      {
-        'name':'Cote D Ivoire',
-        'countryCode':'+225',
-        'flag':'../../assets/countryFlags/cote_d_Ivoire.gif'
-      },
-      {
-        'name':'Croatia',
-        'countryCode':'+385',
-        'flag':'../../assets/countryFlags/croatia.gif'
-      },
-      {
-        'name':'Cuba',
-        'countryCode':'+53',
-        'flag':'../../assets/countryFlags/cuba.gif'
-      },
-      {
-        'name':'Curacao',
-        'countryCode':'+599',
-        'flag':'../../assets/countryFlags/curacao.gif'
-      },
-      {
-        'name':'Cyprus',
-        'countryCode':'+357',
-        'flag':'../../assets/countryFlags/cyprus.gif'
-      },
-      {
-        'name':'Czech Republic',
-        'countryCode':'+420',
-        'flag':'../../assets/countryFlags/czech_republic.gif'
-      },
-      {
-        'name':'Democratic Republic of Congo',
-        'countryCode':'+243',
-        'flag':'../../assets/countryFlags/democratic_republic_of_the_congo.gif'
-      },
-      {
-        'name':'Denmark',
-        'countryCode':'+45',
-        'flag':'../../assets/countryFlags/denmark.gif'
-      },
-      {
-        'name':'Djibouti',
-        'countryCode':'+253',
-        'flag':'../../assets/countryFlags/djibouti.gif'
-      },
-      {
-        'name':'Dominica',
-        'countryCode':'+10',
-        'flag':'../../assets/countryFlags/dominica.gif'
-      },
-      {
-        'name':'Dominican Republic',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/dominican_republic.gif'
-      },
-      {
-        'name':'East Timor',
-        'countryCode':'+670',
-        'flag':'../../assets/countryFlags/east_timor.gif'
-      },
-      {
-        'name':'Ecuador',
-        'countryCode':'+593',
-        'flag':'../../assets/countryFlags/ecuador.gif'
-      },
-      {
-        'name':'Egypt',
-        'countryCode':'+20',
-        'flag':'../../assets/countryFlags/egypt.gif'
-      },
-      {
-        'name':'El Salvador',
-        'countryCode':'+503',
-        'flag':'../../assets/countryFlags/el_salvador.gif'
-      },
-      {
-        'name':'England',
-        'countryCode':'+44',
-        'flag':'../../assets/countryFlags/england.gif'
-      },
-      {
-        'name':'Equatorial Guinea',
-        'countryCode':'+240',
-        'flag':'../../assets/countryFlags/equatorial_guinea.gif'
-      },
-      {
-        'name':'Eritrea',
-        'countryCode':'+291',
-        'flag':'../../assets/countryFlags/eritrea.gif'
-      },
-      {
-        'name':'Estonia',
-        'countryCode':'+372',
-        'flag':'../../assets/countryFlags/estonia.gif'
-      },
-      {
-        'name':'Ethiopia',
-        'countryCode':'+251',
-        'flag':'../../assets/countryFlags/ethiopia.gif'
-      },
-      {
-        'name':'Falkland Islands',
-        'countryCode':'+500',
-        'flag':'../../assets/countryFlags/falkland_islands.gif'
-      },
-      {
-        'name':'Faroe Islands',
-        'countryCode':'+298',
-        'flag':'../../assets/countryFlags/faroe_islands.gif'
-      },
-      {
-        'name':'Fiji',
-        'countryCode':'+679',
-        'flag':'../../assets/countryFlags/fiji.gif'
-      },
-      {
-        'name':'Finland',
-        'countryCode':'+358',
-        'flag':'../../assets/countryFlags/finland.gif'
-      },
-      {
-        'name':'France',
-        'countryCode':'+33',
-        'flag':'../../assets/countryFlags/france.gif'
-      },
-      {
-        'name':'French Guiana',
-        'countryCode':'+594',
-        'flag':'../../assets/countryFlags/french_guiana.gif'
-      },
-      {
-        'name':'French Polynesia',
-        'countryCode':'+689',
-        'flag':'../../assets/countryFlags/french_polynesia.gif'
-      },
-      {
-        'name':'French Southern Territories',
-        'countryCode':'+262',
-        'flag':'../../assets/countryFlags/french_southern_territories.gif'
-      },
-      {
-        'name':'Gabon',
-        'countryCode':'+241',
-        'flag':'../../assets/countryFlags/gabon.gif'
-      },
-      {
-        'name':'Gambia',
-        'countryCode':'+220',
-        'flag':'../../assets/countryFlags/gambia.gif'
-      },
-      {
-        'name':'Georgia',
-        'countryCode':'+995',
-        'flag':'../../assets/countryFlags/georgia.gif'
-      },
-      {
-        'name':'Germany',
-        'countryCode':'+49',
-        'flag':'../../assets/countryFlags/germany.gif'
-      },
-      {
-        'name':'Ghana',
-        'countryCode':'+233',
-        'flag':'../../assets/countryFlags/ghana.gif'
-      },
-      {
-        'name':'Gibraltar',
-        'countryCode':'+350',
-        'flag':'../../assets/countryFlags/gibraltar.gif'
-      },
-      {
-        'name':'Greece',
-        'countryCode':'+30',
-        'flag':'../../assets/countryFlags/greece.gif'
-      },
-      {
-        'name':'Greenland',
-        'countryCode':'+299',
-        'flag':'../../assets/countryFlags/greenland.gif'
-      },
-      {
-        'name':'Grenada',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/grenada.gif'
-      },
-      {
-        'name':'Guadeloupe',
-        'countryCode':'+590',
-        'flag':'../../assets/countryFlags/guadeloupe.gif'
-      },
-      {
-        'name':'Guam',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/guam.gif'
-      },
-      {
-        'name':'Guatemala',
-        'countryCode':'+502',
-        'flag':'../../assets/countryFlags/guatemala.gif'
-      },
-      {
-        'name':'Guernsey',
-        'countryCode':'+44',
-        'flag':'../../assets/countryFlags/guernsey.gif'
-      },
-      {
-        'name':'Guinea Bissau',
-        'countryCode':'+245',
-        'flag':'../../assets/countryFlags/guinea_bissau.gif'
-      },
-      {
-        'name':'Guinea',
-        'countryCode':'+224',
-        'flag':'../../assets/countryFlags/guinea.gif'
-      },
-      {
-        'name':'Guyana',
-        'countryCode':'+592',
-        'flag':'../../assets/countryFlags/guyana.gif'
-      },
-      {
-        'name':'Haiti',
-        'countryCode':'+509',
-        'flag':'../../assets/countryFlags/haiti.gif'
-      },
-      {
-        'name':'Heard Island & McDonald Islands',
-        'countryCode':'+0',
-        'flag':'../../assets/countryFlags/heard_island_and_mcdonald_islands.gif'
-      },
-      {
-        'name':'Honduras',
-        'countryCode':'+504',
-        'flag':'../../assets/countryFlags/honduras.gif'
-      },
-      {
-        'name':'Hong Kong',
-        'countryCode':'+852',
-        'flag':'../../assets/countryFlags/hong_kong.gif'
-      },
-      {
-        'name':'Hungary',
-        'countryCode':'+36',
-        'flag':'../../assets/countryFlags/hungary.gif'
-      },
-      {
-        'name':'Iceland',
-        'countryCode':'+354',
-        'flag':'../../assets/countryFlags/iceland.gif'
-      },
-      {
-        'name':'India',
-        'countryCode':'+91',
-        'flag':'../../assets/countryFlags/india.gif'
-      },
-      {
-        'name':'Indonesia',
-        'countryCode':'+62',
-        'flag':'../../assets/countryFlags/indonesia.gif'
-      },
-      {
-        'name':'Iran',
-        'countryCode':'+98',
-        'flag':'../../assets/countryFlags/iran.gif'
-      },
-      {
-        'name':'Iraq',
-        'countryCode':'+964',
-        'flag':'../../assets/countryFlags/iraq.gif'
-      },
-      {
-        'name':'Ireland',
-        'countryCode':'+353',
-        'flag':'../../assets/countryFlags/ireland.gif'
-      },
-      {
-        'name':'Isle Of Man',
-        'countryCode':'+44',
-        'flag':'../../assets/countryFlags/isle_of_man.gif'
-      },
-      {
-        'name':'Israel',
-        'countryCode':'+972',
-        'flag':'../../assets/countryFlags/israel.gif'
-      },
-      {
-        'name':'Italy',
-        'countryCode':'+39',
-        'flag':'../../assets/countryFlags/italy.gif'
-      },
-      {
-        'name':'Jamaica',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/jamaica.gif'
-      },
-      {
-        'name':'Japan',
-        'countryCode':'+81',
-        'flag':'../../assets/countryFlags/japan.gif'
-      },
-      {
-        'name':'Jersey',
-        'countryCode':'+44',
-        'flag':'../../assets/countryFlags/jersey.gif'
-      },
-      {
-        'name':'Jordan',
-        'countryCode':'+962',
-        'flag':'../../assets/countryFlags/jordan.gif'
-      },
-      {
-        'name':'Kazakhstan',
-        'countryCode':'+7',
-        'flag':'../../assets/countryFlags/kazakhstan.gif'
-      },
-      {
-        'name':'Kenya',
-        'countryCode':'+254',
-        'flag':'../../assets/countryFlags/kenya.gif'
-      },
-      {
-        'name':'Kiribati',
-        'countryCode':'+686',
-        'flag':'../../assets/countryFlags/kiribati.gif'
-      },
-      {
-        'name':'North Korea',
-        'countryCode':'+850',
-        'flag':'../../assets/countryFlags/korea_north.gif'
-      },
-      {
-        'name':'South Korea',
-        'countryCode':'+82',
-        'flag':'../../assets/countryFlags/korea_south.gif'
-      },
-      {
-        'name':'Kosovo',
-        'countryCode':'+383',
-        'flag':'../../assets/countryFlags/kosovo.gif'
-      },
-      {
-        'name':'Kuwait',
-        'countryCode':'+965',
-        'flag':'../../assets/countryFlags/kuwait.gif'
-      },
-      {
-        'name':'Kyrgyzstan',
-        'countryCode':'+996',
-        'flag':'../../assets/countryFlags/kyrgyzstan.gif'
-      },
-      {
-        'name':'Laos',
-        'countryCode':'+856',
-        'flag':'../../assets/countryFlags/laos.gif'
-      },
-      {
-        'name':'Latvia',
-        'countryCode':'+371',
-        'flag':'../../assets/countryFlags/latvia.gif'
-      },
-      {
-        'name':'Lebanon',
-        'countryCode':'+961',
-        'flag':'../../assets/countryFlags/lebanon.gif'
-      },
-      {
-        'name':'Lesotho',
-        'countryCode':'+266',
-        'flag':'../../assets/countryFlags/lesotho.gif'
-      },
-      {
-        'name':'Liberia',
-        'countryCode':'+231',
-        'flag':'../../assets/countryFlags/liberia.gif'
-      },
-      {
-        'name':'Libya',
-        'countryCode':'+218',
-        'flag':'../../assets/countryFlags/libya.gif'
-      },
-      {
-        'name':'Liechtenstein',
-        'countryCode':'+423',
-        'flag':'../../assets/countryFlags/liechtenstein.gif'
-      },
-      {
-        'name':'Lithuania',
-        'countryCode':'+370',
-        'flag':'../../assets/countryFlags/lithuania.gif'
-      },
-      {
-        'name':'Luxembourg',
-        'countryCode':'+352',
-        'flag':'../../assets/countryFlags/luxembourg.gif'
-      },
-      {
-        'name':'Macau',
-        'countryCode':'+853',
-        'flag':'../../assets/countryFlags/macao.gif'
-      },
-      {
-        'name':'Macedonia',
-        'countryCode':'+389',
-        'flag':'../../assets/countryFlags/macedonia.gif'
-      },
-      {
-        'name':'Madagascar',
-        'countryCode':'+261',
-        'flag':'../../assets/countryFlags/madagascar.gif'
-      },
-      {
-        'name':'Malawi',
-        'countryCode':'+265',
-        'flag':'../../assets/countryFlags/malawi.gif'
-      },
-      {
-        'name':'Malaysia',
-        'countryCode':'+60',
-        'flag':'../../assets/countryFlags/malaysia.gif'
-      },
-      {
-        'name':'Maldives',
-        'countryCode':'+960',
-        'flag':'../../assets/countryFlags/maldives.gif'
-      },
-      {
-        'name':'Mali',
-        'countryCode':'+223',
-        'flag':'../../assets/countryFlags/mali.gif'
-      },
-      {
-        'name':'Malta',
-        'countryCode':'+356',
-        'flag':'../../assets/countryFlags/malta.gif'
-      },
-      {
-        'name':'Marshall Islands',
-        'countryCode':'+692',
-        'flag':'../../assets/countryFlags/marshall_islands.gif'
-      },
-      {
-        'name':'Martinique',
-        'countryCode':'+596',
-        'flag':'../../assets/countryFlags/martinique.gif'
-      },
-      {
-        'name':'Mauritania',
-        'countryCode':'+222',
-        'flag':'../../assets/countryFlags/mauritania.gif'
-      },
-      {
-        'name':'Mauritius',
-        'countryCode':'+230',
-        'flag':'../../assets/countryFlags/mauritius.gif'
-      },
-      {
-        'name':'Mayotte',
-        'countryCode':'+262',
-        'flag':'../../assets/countryFlags/mayotte.gif'
-      },
-      {
-        'name':'Mexico',
-        'countryCode':'+52',
-        'flag':'../../assets/countryFlags/mexico.gif'
-      },
-      {
-        'name':'Micronesia',
-        'countryCode':'+691',
-        'flag':'../../assets/countryFlags/micronesia.gif'
-      },
-      {
-        'name':'Moldova',
-        'countryCode':'+373',
-        'flag':'../../assets/countryFlags/moldova.gif'
-      },
-      {
-        'name':'Monaco',
-        'countryCode':'+377',
-        'flag':'../../assets/countryFlags/monaco.gif'
-      },
-      {
-        'name':'Mongolia',
-        'countryCode':'+976',
-        'flag':'../../assets/countryFlags/mongolia.gif'
-      },
-      {
-        'name':'Montenegro',
-        'countryCode':'+382',
-        'flag':'../../assets/countryFlags/montenegro.gif'
-      },
-      {
-        'name':'Montserrat',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/montserrat.gif'
-      },
-      {
-        'name':'Morocco',
-        'countryCode':'+212',
-        'flag':'../../assets/countryFlags/morocco.gif'
-      },
-      {
-        'name':'Mozambique',
-        'countryCode':'+258',
-        'flag':'../../assets/countryFlags/mozambique.gif'
-      },
-      {
-        'name':'Myanmar',
-        'countryCode':'+95',
-        'flag':'../../assets/countryFlags/myanmar.gif'
-      },
-      {
-        'name':'Namibia',
-        'countryCode':'+264',
-        'flag':'../../assets/countryFlags/namibia.gif'
-      },
-      {
-        'name':'Nauru',
-        'countryCode':'+674',
-        'flag':'../../assets/countryFlags/nauru.gif'
-      },
-      {
-        'name':'Nepal',
-        'countryCode':'+977',
-        'flag':'../../assets/countryFlags/nepal.gif'
-      },
-      {
-        'name':'Netherlands',
-        'countryCode':'+31',
-        'flag':'../../assets/countryFlags/netherlands.gif'
-      },
-      {
-        'name':'New Caledonia',
-        'countryCode':'+687',
-        'flag':'../../assets/countryFlags/new_caledonia.gif'
-      },
-      {
-        'name':'New Zealand',
-        'countryCode':'+64',
-        'flag':'../../assets/countryFlags/new_zealand.gif'
-      },
-      {
-        'name':'Nicaragua',
-        'countryCode':'+505',
-        'flag':'../../assets/countryFlags/nicaragua.gif'
-      },
-      {
-        'name':'Niger',
-        'countryCode':'+227',
-        'flag':'../../assets/countryFlags/niger.gif'
-      },
-      {
-        'name':'Nigeria',
-        'countryCode':'+234',
-        'flag':'../../assets/countryFlags/nigeria.gif'
-      },
-      {
-        'name':'Niue',
-        'countryCode':'+683',
-        'flag':'../../assets/countryFlags/niue.gif'
-      },
-      {
-        'name':'Norfolk Island',
-        'countryCode':'+672',
-        'flag':'../../assets/countryFlags/norfolk_island.gif'
-      },
-      {
-        'name':'Northern Mariana Islands',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/northern_mariana_islands.gif'
-      },
-      {
-        'name':'Norway',
-        'countryCode':'+47',
-        'flag':'../../assets/countryFlags/norway.gif'
-      },
-      {
-        'name':'Oman',
-        'countryCode':'+968',
-        'flag':'../../assets/countryFlags/oman.gif'
-      },
-      {
-        'name':'Pakistan',
-        'countryCode':'+92',
-        'flag':'../../assets/images/pakistan.jpg'
-      },
-      {
-        'name':'Palau',
-        'countryCode':'+680',
-        'flag':'../../assets/countryFlags/palau.gif'
-      },
-      {
-        'name':'Palestinian Territory',
-        'countryCode':'+970',
-        'flag':'../../assets/countryFlags/palestinian_territory.gif'
-      },
-      {
-        'name':'Panama',
-        'countryCode':'+507',
-        'flag':'../../assets/countryFlags/panama.gif'
-      },
-      {
-        'name':'Papua New Guinea',
-        'countryCode':'+675',
-        'flag':'../../assets/countryFlags/papua_new_guinea.gif'
-      },
-      {
-        'name':'Paraguay',
-        'countryCode':'+595',
-        'flag':'../../assets/countryFlags/paraguay.gif'
-      },
-      {
-        'name':'Peru',
-        'countryCode':'+51',
-        'flag':'../../assets/countryFlags/peru.gif'
-      },
-      {
-        'name':'Philippines',
-        'countryCode':'+63',
-        'flag':'../../assets/countryFlags/philippines.gif'
-      },
-      {
-        'name':'Pitcairn Islands',
-        'countryCode':'+64',
-        'flag':'../../assets/countryFlags/pitcairn_islands.gif'
-      },
-      {
-        'name':'Poland',
-        'countryCode':'+48',
-        'flag':'../../assets/countryFlags/poland.gif'
-      },
-      {
-        'name':'Portugal',
-        'countryCode':'+351',
-        'flag':'../../assets/countryFlags/portugal.gif'
-      },
-      {
-        'name':'Puerto Rico',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/puerto_rico.gif'
-      },
-      {
-        'name':'Qatar',
-        'countryCode':'+974',
-        'flag':'../../assets/countryFlags/qatar.gif'
-      },
-      {
-        'name':'Republic of China',
-        'countryCode':'+86',
-        'flag':'../../assets/countryFlags/republic_of_china.gif'
-      },
-      {
-        'name':'Republic Of Congo',
-        'countryCode':'+242',
-        'flag':'../../assets/countryFlags/republic_of_the_congo.gif'
-      },
-      {
-        'name':'Reunion',
-        'countryCode':'+262',
-        'flag':'../../assets/countryFlags/reunion.gif'
-      },
-      {
-        'name':'Romania',
-        'countryCode':'+40',
-        'flag':'../../assets/countryFlags/romania.gif'
-      },
-      {
-        'name':'Russia',
-        'countryCode':'+7',
-        'flag':'../../assets/countryFlags/russia.gif'
-      },
-      {
-        'name':'Rwanda',
-        'countryCode':'+250',
-        'flag':'../../assets/countryFlags/rwanda.gif'
-      },
-      {
-        'name':'Saint Barthelemy',
-        'countryCode':'+590',
-        'flag':'../../assets/countryFlags/saint_barthelemy.gif'
-      },
-      {
-        'name':'Saint Helena',
-        'countryCode':'+290',
-        'flag':'../../assets/countryFlags/saint_helena.gif'
-      },
-      {
-        'name':'Saint Kitts & Nevis',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/saint_kitts_and_nevis.gif'
-      },
-      {
-        'name':'Saint Lucia',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/saint_lucia.gif'
-      },
-      {
-        'name':'Saint Martin',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/saint_martin.gif'
-      },
-      {
-        'name':'Saint Pierre & Miquelon',
-        'countryCode':'+508',
-        'flag':'../../assets/countryFlags/saint_pierre_and_miquelon.gif'
-      },
-      {
-        'name':'Saint Vincent & Grenadines',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/saint_vincent_and_the_grenadines.gif'
-      },
-      {
-        'name':'Samoa',
-        'countryCode':'+685',
-        'flag':'../../assets/countryFlags/samoa.gif'
-      },
-      {
-        'name':'San Marino',
-        'countryCode':'+378',
-        'flag':'../../assets/countryFlags/san_marino.gif'
-      },
-      {
-        'name':'Sao Tome & Principe',
-        'countryCode':'+239',
-        'flag':'../../assets/countryFlags/sao_tome_and_principe.gif'
-      },
+      // Remove the first two and uncomment the rest later when needed. - Shashank
       {
         'name':'Saudi Arabia',
         'countryCode':'+966',
         'flag':'../../assets/countryFlags/saudi_arabia.gif'
       },
       {
-        'name':'Scotland',
-        'countryCode':'+44',
-        'flag':'../../assets/countryFlags/scotland.gif'
-      },
-      {
-        'name':'Senegal',
-        'countryCode':'+221',
-        'flag':'../../assets/countryFlags/senegal.gif'
-      },
-      {
-        'name':'Serbia',
-        'countryCode':'+381',
-        'flag':'../../assets/countryFlags/serbia.gif'
-      },
-      {
-        'name':'Seychelles',
-        'countryCode':'+248',
-        'flag':'../../assets/countryFlags/seychelles.gif'
-      },
-      {
-        'name':'Sierra Leone',
-        'countryCode':'+232',
-        'flag':'../../assets/countryFlags/sierra_leone.gif'
-      },
-      {
-        'name':'Singapore',
-        'countryCode':'+65',
-        'flag':'../../assets/countryFlags/singapore.gif'
-      },
-      {
-        'name':'Sint Maarten',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/sint_maarten.gif'
-      },
-      {
-        'name':'Slovakia',
-        'countryCode':'+421',
-        'flag':'../../assets/countryFlags/slovakia.gif'
-      },
-      {
-        'name':'Slovenia',
-        'countryCode':'+386',
-        'flag':'../../assets/countryFlags/slovenia.gif'
-      },
-      {
-        'name':'Solomon Islands',
-        'countryCode':'+677',
-        'flag':'../../assets/countryFlags/solomon_islands.gif'
-      },
-      {
-        'name':'Somalia',
-        'countryCode':'+252',
-        'flag':'../../assets/countryFlags/somalia.gif'
-      },
-      {
-        'name':'South Africa',
-        'countryCode':'+27',
-        'flag':'../../assets/countryFlags/south_africa.gif'
-      },
-      {
-        'name':'South Georgia & Sandwich Islands',
-        'countryCode':'+500',
-        'flag':'../../assets/countryFlags/south_georgia_and_the_south_sandwich_islands.gif'
-      },
-      {
-        'name':'South Sudan',
-        'countryCode':'+211',
-        'flag':'../../assets/countryFlags/south_sudan.gif'
-      },
-      {
-        'name':'Spain',
-        'countryCode':'+34',
-        'flag':'../../assets/countryFlags/spain.gif'
-      },
-      {
-        'name':'Sri Lanka',
-        'countryCode':'+94',
-        'flag':'../../assets/countryFlags/sri_lanka.gif'
-      },
-      {
-        'name':'Sudan',
-        'countryCode':'+249',
-        'flag':'../../assets/countryFlags/sudan.gif'
-      },
-      {
-        'name':'Suriname',
-        'countryCode':'+597',
-        'flag':'../../assets/countryFlags/suriname.gif'
-      },
-      {
-        'name':'Svalbard & Jan Mayen',
-        'countryCode':'+47',
-        'flag':'../../assets/countryFlags/svalbard_and_jan_mayen.gif'
-      },
-      {
-        'name':'Swaziland',
-        'countryCode':'+268',
-        'flag':'../../assets/countryFlags/swaziland.gif'
-      },
-      {
-        'name':'Sweden',
-        'countryCode':'+46',
-        'flag':'../../assets/countryFlags/sweden.gif'
-      },
-      {
-        'name':'Switzerland',
-        'countryCode':'+41',
-        'flag':'../../assets/countryFlags/switzerland.gif'
-      },
-      {
-        'name':'Syria',
-        'countryCode':'+963',
-        'flag':'../../assets/countryFlags/syria.gif'
-      },
-      {
-        'name':'Tajikistan',
-        'countryCode':'+992',
-        'flag':'../../assets/countryFlags/tajikistan.gif'
-      },
-      {
-        'name':'Tanzania',
-        'countryCode':'+255',
-        'flag':'../../assets/countryFlags/tanzania.gif'
-      },
-      {
-        'name':'Thailand',
-        'countryCode':'+66',
-        'flag':'../../assets/countryFlags/thailand.gif'
-      },
-      {
-        'name':'Togo',
-        'countryCode':'+228',
-        'flag':'../../assets/countryFlags/togo.gif'
-      },
-      {
-        'name':'Tokelau',
-        'countryCode':'+690',
-        'flag':'../../assets/countryFlags/tokelau.gif'
-      },
-      {
-        'name':'Tonga',
-        'countryCode':'+676',
-        'flag':'../../assets/countryFlags/tonga.gif'
-      },
-      {
-        'name':'Trinidad & Tobago',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/trinidad_and_tobago.gif'
-      },
-      {
-        'name':'Tunisia',
-        'countryCode':'+216',
-        'flag':'../../assets/countryFlags/tunisia.gif'
-      },
-      {
-        'name':'Turkey',
-        'countryCode':'+90',
-        'flag':'../../assets/countryFlags/turkey.gif'
-      },
-      {
-        'name':'Turkmenistan',
-        'countryCode':'+993',
-        'flag':'../../assets/countryFlags/turkmenistan.gif'
-      },
-      {
-        'name':'Turks & Caico Islands',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/turks_and_caico_islands.gif'
-      },
-      {
-        'name':'Tuvalu',
-        'countryCode':'+688',
-        'flag':'../../assets/countryFlags/tuvalu.gif'
-      },
-      {
-        'name':'Uganda',
-        'countryCode':'+256',
-        'flag':'../../assets/countryFlags/uganda.gif'
-      },
-      {
-        'name':'Ukraine',
-        'countryCode':'+380',
-        'flag':'../../assets/countryFlags/ukraine.gif'
-      },
-      {
-        'name':'United Arab Emirates',
-        'countryCode':'+971',
-        'flag':'../../assets/countryFlags/united_arab_emirates.gif'
-      },
-      {
-        'name':'United Kingdom',
-        'countryCode':'+44',
-        'flag':'../../assets/countryFlags/united_kingdom.gif'
-      },
-      {
-        'name':'United States of America',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/united_states_of_america.gif'
-      },
-      {
-        'name':'Uruguay',
-        'countryCode':'+598',
-        'flag':'../../assets/countryFlags/uruguay.gif'
-      },
-      {
-        'name':'Uzbekistan',
-        'countryCode':'+998',
-        'flag':'../../assets/countryFlags/uzbekistan.gif'
-      },
-      {
-        'name':'Vanuatu',
-        'countryCode':'+678',
-        'flag':'../../assets/countryFlags/vanuatu.gif'
-      },
-      {
-        'name':'Vatican City',
-        'countryCode':'+379',
-        'flag':'../../assets/countryFlags/vatican_city.gif'
-      },
-      {
-        'name':'Venezuela',
-        'countryCode':'+58',
-        'flag':'../../assets/countryFlags/venezuela.gif'
-      },
-      {
-        'name':'Vietnam',
-        'countryCode':'+84',
-        'flag':'../../assets/countryFlags/vietnam.gif'
-      },
-      {
-        'name':'Virgin Islands British',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/virgin_islands_british.gif'
-      },
-      {
-        'name':'Virgin Islands US',
-        'countryCode':'+1',
-        'flag':'../../assets/countryFlags/virgin_islands_us.gif'
-      },
-      {
-        'name':'Wales',
-        'countryCode':'+44',
-        'flag':'../../assets/countryFlags/wales.gif'
-      },
-      {
-        'name':'Wallis & Futuna',
-        'countryCode':'+681',
-        'flag':'../../assets/countryFlags/wallis_and_futuna.gif'
-      },
-      {
-        'name':'Western Sahara',
-        'countryCode':'+212',
-        'flag':'../../assets/countryFlags/western_sahara.gif'
-      },
-      {
-        'name':'Yemen',
-        'countryCode':'+967',
-        'flag':'../../assets/countryFlags/yemen.gif'
-      },
-      {
-        'name':'Zambia',
-        'countryCode':'+260',
-        'flag':'../../assets/countryFlags/zambia.gif'
-      },
-      {
-        'name':'Zimbabwe',
-        'countryCode':'+263',
-        'flag':'../../assets/countryFlags/zimbabwe.gif'
+        'name':'Bosnia',
+        'countryCode':'+387',
+        'flag':'../../assets/countryFlags/bosnia_and_herzegovina.gif'
       }
+      // {
+      //   'name':'Afghanistan',
+      //   'countryCode':'+91',
+      //   'flag':'../../assets/countryFlags/afghanistan.gif'
+      // },
+      // {
+      //   'name':'Aland Islands',
+      //   'countryCode':'+358',
+      //   'flag':'../../assets/countryFlags/aland_islands.gif'
+      // },
+      // {
+      //   'name':'Albania',
+      //   'countryCode':'+355',
+      //   'flag':'../../assets/countryFlags/albania.gif'
+      // },
+      // {
+      //   'name':'Algeria',
+      //   'countryCode':'+213',
+      //   'flag':'../../assets/countryFlags/algeria.gif'
+      // },
+      // {
+      //   'name':'American Samoa',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/american_samoa.gif'
+      // },
+      // {
+      //   'name':'Andorra',
+      //   'countryCode':'+376',
+      //   'flag':'../../assets/countryFlags/andorra.gif'
+      // },
+      // {
+      //   'name':'Angola',
+      //   'countryCode':'+244',
+      //   'flag':'../../assets/countryFlags/angola.gif'
+      // },
+      // {
+      //   'name':'Anguilla',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/anguilla.gif'
+      // },
+      // {
+      //   'name':'Antarctica',
+      //   'countryCode':'+672',
+      //   'flag':'../../assets/countryFlags/antarctica.gif'
+      // },
+      // {
+      //   'name':'Antigua & Barbuda',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/antigua_and_barbuda.gif'
+      // },
+      // {
+      //   'name':'Argentina',
+      //   'countryCode':'+54',
+      //   'flag':'../../assets/countryFlags/argentina.gif'
+      // },
+      // {
+      //   'name':'Armenia',
+      //   'countryCode':'+374',
+      //   'flag':'../../assets/countryFlags/armenia.gif'
+      // },
+      // {
+      //   'name':'Aruba',
+      //   'countryCode':'+297',
+      //   'flag':'../../assets/countryFlags/aruba.gif'
+      // },
+      // {
+      //   'name':'Australia',
+      //   'countryCode':'+61',
+      //   'flag':'../../assets/countryFlags/australia.gif'
+      // },
+      // {
+      //   'name':'Austria',
+      //   'countryCode':'+43',
+      //   'flag':'../../assets/countryFlags/austria.gif'
+      // },
+      // {
+      //   'name':'Azerbaijan',
+      //   'countryCode':'+994',
+      //   'flag':'../../assets/countryFlags/azerbaijan.gif'
+      // },
+      // {
+      //   'name':'Bahamas',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/bahamas.gif'
+      // },
+      // {
+      //   'name':'Bahrain',
+      //   'countryCode':'+973',
+      //   'flag':'../../assets/countryFlags/bahrain.gif'
+      // },
+      // {
+      //   'name':'Bangladesh',
+      //   'countryCode':'+880',
+      //   'flag':'../../assets/countryFlags/bangladesh.gif'
+      // },
+      // {
+      //   'name':'Barbados',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/barbados.gif'
+      // },
+      // {
+      //   'name':'Belarus',
+      //   'countryCode':'+375',
+      //   'flag':'../../assets/countryFlags/belarus.gif'
+      // },
+      // {
+      //   'name':'Belgium',
+      //   'countryCode':'+32',
+      //   'flag':'../../assets/countryFlags/belgium.gif'
+      // },
+      // {
+      //   'name':'Belize',
+      //   'countryCode':'+501',
+      //   'flag':'../../assets/countryFlags/belize.gif'
+      // },
+      // {
+      //   'name':'Benin',
+      //   'countryCode':'+229',
+      //   'flag':'../../assets/countryFlags/benin.gif'
+      // },
+      // {
+      //   'name':'Bermuda',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/bermuda.gif'
+      // },
+      // {
+      //   'name':'Bhutan',
+      //   'countryCode':'+975',
+      //   'flag':'../../assets/countryFlags/bhutan.gif'
+      // },
+      // {
+      //   'name':'Bolivia',
+      //   'countryCode':'+591',
+      //   'flag':'../../assets/countryFlags/bolivia.gif'
+      // },
+      // {
+      //   'name':'Bonaire',
+      //   'countryCode':'+599',
+      //   'flag':'../../assets/countryFlags/bonaire.gif'
+      // },
+      // // {
+      // //   'name':'Bosnia',
+      // //   'countryCode':'+387',
+      // //   'flag':'../../assets/countryFlags/bosnia_and_herzegovina.gif'
+      // // },
+      // {
+      //   'name':'Botswana',
+      //   'countryCode':'+267',
+      //   'flag':'../../assets/countryFlags/botswana.gif'
+      // },
+      // {
+      //   'name':'Bouvet Island',
+      //   'countryCode':'+55',
+      //   'flag':'../../assets/countryFlags/bouvet_island.gif'
+      // },
+      // {
+      //   'name':'Brazil',
+      //   'countryCode':'+55',
+      //   'flag':'../../assets/countryFlags/brazil.gif'
+      // },
+      // {
+      //   'name':'British Indian Ocean Territory',
+      //   'countryCode':'+246',
+      //   'flag':'../../assets/countryFlags/british_indian_ocean_territory.gif'
+      // },
+      // {
+      //   'name':'Brunei',
+      //   'countryCode':'+673',
+      //   'flag':'../../assets/countryFlags/brunei.gif'
+      // },
+      // {
+      //   'name':'Bulgaria',
+      //   'countryCode':'+359',
+      //   'flag':'../../assets/countryFlags/bulgaria.gif'
+      // },
+      // {
+      //   'name':'Burkina Faso',
+      //   'countryCode':'+226',
+      //   'flag':'../../assets/countryFlags/burkina_faso.gif'
+      // },
+      // {
+      //   'name':'Burundi',
+      //   'countryCode':'+257',
+      //   'flag':'../../assets/countryFlags/burundi.gif'
+      // },
+      // {
+      //   'name':'Cambodia',
+      //   'countryCode':'+855',
+      //   'flag':'../../assets/countryFlags/cambodia.gif'
+      // },
+      // {
+      //   'name':'Cameroon',
+      //   'countryCode':'+237',
+      //   'flag':'../../assets/countryFlags/cameroon.gif'
+      // },
+      // {
+      //   'name':'Canada',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/canada.gif'
+      // },
+      // {
+      //   'name':'Cape Verde',
+      //   'countryCode':'+238',
+      //   'flag':'../../assets/countryFlags/cape_verde.gif'
+      // },
+      // {
+      //   'name':'Cayman Islands',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/cayman_islands.gif'
+      // },
+      // {
+      //   'name':'Central African Republic',
+      //   'countryCode':'+236',
+      //   'flag':'../../assets/countryFlags/central_african_republic.gif'
+      // },
+      // {
+      //   'name':'Chad',
+      //   'countryCode':'+235',
+      //   'flag':'../../assets/countryFlags/chad.gif'
+      // },
+      // {
+      //   'name':'Chile',
+      //   'countryCode':'+56',
+      //   'flag':'../../assets/countryFlags/chile.gif'
+      // },
+      // {
+      //   'name':'China',
+      //   'countryCode':'+86',
+      //   'flag':'../../assets/countryFlags/china.gif'
+      // },
+      // {
+      //   'name':'Christmas Island',
+      //   'countryCode':'+61',
+      //   'flag':'../../assets/countryFlags/christmas_island.gif'
+      // },
+      // {
+      //   'name':'Cocos Islands',
+      //   'countryCode':'+891',
+      //   'flag':'../../assets/countryFlags/cocos_islands.gif'
+      // },
+      // {
+      //   'name':'Colombia',
+      //   'countryCode':'+57',
+      //   'flag':'../../assets/countryFlags/colombia.gif'
+      // },
+      // {
+      //   'name':'Comoros',
+      //   'countryCode':'+269',
+      //   'flag':'../../assets/countryFlags/comoros.gif'
+      // },
+      // {
+      //   'name':'Cook Islands',
+      //   'countryCode':'+682',
+      //   'flag':'../../assets/countryFlags/cook_islands.gif'
+      // },
+      // {
+      //   'name':'Costa Rica',
+      //   'countryCode':'+506',
+      //   'flag':'../../assets/countryFlags/costa_rica.gif'
+      // },
+      // {
+      //   'name':'Cote D Ivoire',
+      //   'countryCode':'+225',
+      //   'flag':'../../assets/countryFlags/cote_d_Ivoire.gif'
+      // },
+      // {
+      //   'name':'Croatia',
+      //   'countryCode':'+385',
+      //   'flag':'../../assets/countryFlags/croatia.gif'
+      // },
+      // {
+      //   'name':'Cuba',
+      //   'countryCode':'+53',
+      //   'flag':'../../assets/countryFlags/cuba.gif'
+      // },
+      // {
+      //   'name':'Curacao',
+      //   'countryCode':'+599',
+      //   'flag':'../../assets/countryFlags/curacao.gif'
+      // },
+      // {
+      //   'name':'Cyprus',
+      //   'countryCode':'+357',
+      //   'flag':'../../assets/countryFlags/cyprus.gif'
+      // },
+      // {
+      //   'name':'Czech Republic',
+      //   'countryCode':'+420',
+      //   'flag':'../../assets/countryFlags/czech_republic.gif'
+      // },
+      // {
+      //   'name':'Democratic Republic of Congo',
+      //   'countryCode':'+243',
+      //   'flag':'../../assets/countryFlags/democratic_republic_of_the_congo.gif'
+      // },
+      // {
+      //   'name':'Denmark',
+      //   'countryCode':'+45',
+      //   'flag':'../../assets/countryFlags/denmark.gif'
+      // },
+      // {
+      //   'name':'Djibouti',
+      //   'countryCode':'+253',
+      //   'flag':'../../assets/countryFlags/djibouti.gif'
+      // },
+      // {
+      //   'name':'Dominica',
+      //   'countryCode':'+10',
+      //   'flag':'../../assets/countryFlags/dominica.gif'
+      // },
+      // {
+      //   'name':'Dominican Republic',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/dominican_republic.gif'
+      // },
+      // {
+      //   'name':'East Timor',
+      //   'countryCode':'+670',
+      //   'flag':'../../assets/countryFlags/east_timor.gif'
+      // },
+      // {
+      //   'name':'Ecuador',
+      //   'countryCode':'+593',
+      //   'flag':'../../assets/countryFlags/ecuador.gif'
+      // },
+      // {
+      //   'name':'Egypt',
+      //   'countryCode':'+20',
+      //   'flag':'../../assets/countryFlags/egypt.gif'
+      // },
+      // {
+      //   'name':'El Salvador',
+      //   'countryCode':'+503',
+      //   'flag':'../../assets/countryFlags/el_salvador.gif'
+      // },
+      // {
+      //   'name':'England',
+      //   'countryCode':'+44',
+      //   'flag':'../../assets/countryFlags/england.gif'
+      // },
+      // {
+      //   'name':'Equatorial Guinea',
+      //   'countryCode':'+240',
+      //   'flag':'../../assets/countryFlags/equatorial_guinea.gif'
+      // },
+      // {
+      //   'name':'Eritrea',
+      //   'countryCode':'+291',
+      //   'flag':'../../assets/countryFlags/eritrea.gif'
+      // },
+      // {
+      //   'name':'Estonia',
+      //   'countryCode':'+372',
+      //   'flag':'../../assets/countryFlags/estonia.gif'
+      // },
+      // {
+      //   'name':'Ethiopia',
+      //   'countryCode':'+251',
+      //   'flag':'../../assets/countryFlags/ethiopia.gif'
+      // },
+      // {
+      //   'name':'Falkland Islands',
+      //   'countryCode':'+500',
+      //   'flag':'../../assets/countryFlags/falkland_islands.gif'
+      // },
+      // {
+      //   'name':'Faroe Islands',
+      //   'countryCode':'+298',
+      //   'flag':'../../assets/countryFlags/faroe_islands.gif'
+      // },
+      // {
+      //   'name':'Fiji',
+      //   'countryCode':'+679',
+      //   'flag':'../../assets/countryFlags/fiji.gif'
+      // },
+      // {
+      //   'name':'Finland',
+      //   'countryCode':'+358',
+      //   'flag':'../../assets/countryFlags/finland.gif'
+      // },
+      // {
+      //   'name':'France',
+      //   'countryCode':'+33',
+      //   'flag':'../../assets/countryFlags/france.gif'
+      // },
+      // {
+      //   'name':'French Guiana',
+      //   'countryCode':'+594',
+      //   'flag':'../../assets/countryFlags/french_guiana.gif'
+      // },
+      // {
+      //   'name':'French Polynesia',
+      //   'countryCode':'+689',
+      //   'flag':'../../assets/countryFlags/french_polynesia.gif'
+      // },
+      // {
+      //   'name':'French Southern Territories',
+      //   'countryCode':'+262',
+      //   'flag':'../../assets/countryFlags/french_southern_territories.gif'
+      // },
+      // {
+      //   'name':'Gabon',
+      //   'countryCode':'+241',
+      //   'flag':'../../assets/countryFlags/gabon.gif'
+      // },
+      // {
+      //   'name':'Gambia',
+      //   'countryCode':'+220',
+      //   'flag':'../../assets/countryFlags/gambia.gif'
+      // },
+      // {
+      //   'name':'Georgia',
+      //   'countryCode':'+995',
+      //   'flag':'../../assets/countryFlags/georgia.gif'
+      // },
+      // {
+      //   'name':'Germany',
+      //   'countryCode':'+49',
+      //   'flag':'../../assets/countryFlags/germany.gif'
+      // },
+      // {
+      //   'name':'Ghana',
+      //   'countryCode':'+233',
+      //   'flag':'../../assets/countryFlags/ghana.gif'
+      // },
+      // {
+      //   'name':'Gibraltar',
+      //   'countryCode':'+350',
+      //   'flag':'../../assets/countryFlags/gibraltar.gif'
+      // },
+      // {
+      //   'name':'Greece',
+      //   'countryCode':'+30',
+      //   'flag':'../../assets/countryFlags/greece.gif'
+      // },
+      // {
+      //   'name':'Greenland',
+      //   'countryCode':'+299',
+      //   'flag':'../../assets/countryFlags/greenland.gif'
+      // },
+      // {
+      //   'name':'Grenada',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/grenada.gif'
+      // },
+      // {
+      //   'name':'Guadeloupe',
+      //   'countryCode':'+590',
+      //   'flag':'../../assets/countryFlags/guadeloupe.gif'
+      // },
+      // {
+      //   'name':'Guam',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/guam.gif'
+      // },
+      // {
+      //   'name':'Guatemala',
+      //   'countryCode':'+502',
+      //   'flag':'../../assets/countryFlags/guatemala.gif'
+      // },
+      // {
+      //   'name':'Guernsey',
+      //   'countryCode':'+44',
+      //   'flag':'../../assets/countryFlags/guernsey.gif'
+      // },
+      // {
+      //   'name':'Guinea Bissau',
+      //   'countryCode':'+245',
+      //   'flag':'../../assets/countryFlags/guinea_bissau.gif'
+      // },
+      // {
+      //   'name':'Guinea',
+      //   'countryCode':'+224',
+      //   'flag':'../../assets/countryFlags/guinea.gif'
+      // },
+      // {
+      //   'name':'Guyana',
+      //   'countryCode':'+592',
+      //   'flag':'../../assets/countryFlags/guyana.gif'
+      // },
+      // {
+      //   'name':'Haiti',
+      //   'countryCode':'+509',
+      //   'flag':'../../assets/countryFlags/haiti.gif'
+      // },
+      // {
+      //   'name':'Heard Island & McDonald Islands',
+      //   'countryCode':'+0',
+      //   'flag':'../../assets/countryFlags/heard_island_and_mcdonald_islands.gif'
+      // },
+      // {
+      //   'name':'Honduras',
+      //   'countryCode':'+504',
+      //   'flag':'../../assets/countryFlags/honduras.gif'
+      // },
+      // {
+      //   'name':'Hong Kong',
+      //   'countryCode':'+852',
+      //   'flag':'../../assets/countryFlags/hong_kong.gif'
+      // },
+      // {
+      //   'name':'Hungary',
+      //   'countryCode':'+36',
+      //   'flag':'../../assets/countryFlags/hungary.gif'
+      // },
+      // {
+      //   'name':'Iceland',
+      //   'countryCode':'+354',
+      //   'flag':'../../assets/countryFlags/iceland.gif'
+      // },
+      // {
+      //   'name':'India',
+      //   'countryCode':'+91',
+      //   'flag':'../../assets/countryFlags/india.gif'
+      // },
+      // {
+      //   'name':'Indonesia',
+      //   'countryCode':'+62',
+      //   'flag':'../../assets/countryFlags/indonesia.gif'
+      // },
+      // {
+      //   'name':'Iran',
+      //   'countryCode':'+98',
+      //   'flag':'../../assets/countryFlags/iran.gif'
+      // },
+      // {
+      //   'name':'Iraq',
+      //   'countryCode':'+964',
+      //   'flag':'../../assets/countryFlags/iraq.gif'
+      // },
+      // {
+      //   'name':'Ireland',
+      //   'countryCode':'+353',
+      //   'flag':'../../assets/countryFlags/ireland.gif'
+      // },
+      // {
+      //   'name':'Isle Of Man',
+      //   'countryCode':'+44',
+      //   'flag':'../../assets/countryFlags/isle_of_man.gif'
+      // },
+      // {
+      //   'name':'Israel',
+      //   'countryCode':'+972',
+      //   'flag':'../../assets/countryFlags/israel.gif'
+      // },
+      // {
+      //   'name':'Italy',
+      //   'countryCode':'+39',
+      //   'flag':'../../assets/countryFlags/italy.gif'
+      // },
+      // {
+      //   'name':'Jamaica',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/jamaica.gif'
+      // },
+      // {
+      //   'name':'Japan',
+      //   'countryCode':'+81',
+      //   'flag':'../../assets/countryFlags/japan.gif'
+      // },
+      // {
+      //   'name':'Jersey',
+      //   'countryCode':'+44',
+      //   'flag':'../../assets/countryFlags/jersey.gif'
+      // },
+      // {
+      //   'name':'Jordan',
+      //   'countryCode':'+962',
+      //   'flag':'../../assets/countryFlags/jordan.gif'
+      // },
+      // {
+      //   'name':'Kazakhstan',
+      //   'countryCode':'+7',
+      //   'flag':'../../assets/countryFlags/kazakhstan.gif'
+      // },
+      // {
+      //   'name':'Kenya',
+      //   'countryCode':'+254',
+      //   'flag':'../../assets/countryFlags/kenya.gif'
+      // },
+      // {
+      //   'name':'Kiribati',
+      //   'countryCode':'+686',
+      //   'flag':'../../assets/countryFlags/kiribati.gif'
+      // },
+      // {
+      //   'name':'North Korea',
+      //   'countryCode':'+850',
+      //   'flag':'../../assets/countryFlags/korea_north.gif'
+      // },
+      // {
+      //   'name':'South Korea',
+      //   'countryCode':'+82',
+      //   'flag':'../../assets/countryFlags/korea_south.gif'
+      // },
+      // {
+      //   'name':'Kosovo',
+      //   'countryCode':'+383',
+      //   'flag':'../../assets/countryFlags/kosovo.gif'
+      // },
+      // {
+      //   'name':'Kuwait',
+      //   'countryCode':'+965',
+      //   'flag':'../../assets/countryFlags/kuwait.gif'
+      // },
+      // {
+      //   'name':'Kyrgyzstan',
+      //   'countryCode':'+996',
+      //   'flag':'../../assets/countryFlags/kyrgyzstan.gif'
+      // },
+      // {
+      //   'name':'Laos',
+      //   'countryCode':'+856',
+      //   'flag':'../../assets/countryFlags/laos.gif'
+      // },
+      // {
+      //   'name':'Latvia',
+      //   'countryCode':'+371',
+      //   'flag':'../../assets/countryFlags/latvia.gif'
+      // },
+      // {
+      //   'name':'Lebanon',
+      //   'countryCode':'+961',
+      //   'flag':'../../assets/countryFlags/lebanon.gif'
+      // },
+      // {
+      //   'name':'Lesotho',
+      //   'countryCode':'+266',
+      //   'flag':'../../assets/countryFlags/lesotho.gif'
+      // },
+      // {
+      //   'name':'Liberia',
+      //   'countryCode':'+231',
+      //   'flag':'../../assets/countryFlags/liberia.gif'
+      // },
+      // {
+      //   'name':'Libya',
+      //   'countryCode':'+218',
+      //   'flag':'../../assets/countryFlags/libya.gif'
+      // },
+      // {
+      //   'name':'Liechtenstein',
+      //   'countryCode':'+423',
+      //   'flag':'../../assets/countryFlags/liechtenstein.gif'
+      // },
+      // {
+      //   'name':'Lithuania',
+      //   'countryCode':'+370',
+      //   'flag':'../../assets/countryFlags/lithuania.gif'
+      // },
+      // {
+      //   'name':'Luxembourg',
+      //   'countryCode':'+352',
+      //   'flag':'../../assets/countryFlags/luxembourg.gif'
+      // },
+      // {
+      //   'name':'Macau',
+      //   'countryCode':'+853',
+      //   'flag':'../../assets/countryFlags/macao.gif'
+      // },
+      // {
+      //   'name':'Macedonia',
+      //   'countryCode':'+389',
+      //   'flag':'../../assets/countryFlags/macedonia.gif'
+      // },
+      // {
+      //   'name':'Madagascar',
+      //   'countryCode':'+261',
+      //   'flag':'../../assets/countryFlags/madagascar.gif'
+      // },
+      // {
+      //   'name':'Malawi',
+      //   'countryCode':'+265',
+      //   'flag':'../../assets/countryFlags/malawi.gif'
+      // },
+      // {
+      //   'name':'Malaysia',
+      //   'countryCode':'+60',
+      //   'flag':'../../assets/countryFlags/malaysia.gif'
+      // },
+      // {
+      //   'name':'Maldives',
+      //   'countryCode':'+960',
+      //   'flag':'../../assets/countryFlags/maldives.gif'
+      // },
+      // {
+      //   'name':'Mali',
+      //   'countryCode':'+223',
+      //   'flag':'../../assets/countryFlags/mali.gif'
+      // },
+      // {
+      //   'name':'Malta',
+      //   'countryCode':'+356',
+      //   'flag':'../../assets/countryFlags/malta.gif'
+      // },
+      // {
+      //   'name':'Marshall Islands',
+      //   'countryCode':'+692',
+      //   'flag':'../../assets/countryFlags/marshall_islands.gif'
+      // },
+      // {
+      //   'name':'Martinique',
+      //   'countryCode':'+596',
+      //   'flag':'../../assets/countryFlags/martinique.gif'
+      // },
+      // {
+      //   'name':'Mauritania',
+      //   'countryCode':'+222',
+      //   'flag':'../../assets/countryFlags/mauritania.gif'
+      // },
+      // {
+      //   'name':'Mauritius',
+      //   'countryCode':'+230',
+      //   'flag':'../../assets/countryFlags/mauritius.gif'
+      // },
+      // {
+      //   'name':'Mayotte',
+      //   'countryCode':'+262',
+      //   'flag':'../../assets/countryFlags/mayotte.gif'
+      // },
+      // {
+      //   'name':'Mexico',
+      //   'countryCode':'+52',
+      //   'flag':'../../assets/countryFlags/mexico.gif'
+      // },
+      // {
+      //   'name':'Micronesia',
+      //   'countryCode':'+691',
+      //   'flag':'../../assets/countryFlags/micronesia.gif'
+      // },
+      // {
+      //   'name':'Moldova',
+      //   'countryCode':'+373',
+      //   'flag':'../../assets/countryFlags/moldova.gif'
+      // },
+      // {
+      //   'name':'Monaco',
+      //   'countryCode':'+377',
+      //   'flag':'../../assets/countryFlags/monaco.gif'
+      // },
+      // {
+      //   'name':'Mongolia',
+      //   'countryCode':'+976',
+      //   'flag':'../../assets/countryFlags/mongolia.gif'
+      // },
+      // {
+      //   'name':'Montenegro',
+      //   'countryCode':'+382',
+      //   'flag':'../../assets/countryFlags/montenegro.gif'
+      // },
+      // {
+      //   'name':'Montserrat',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/montserrat.gif'
+      // },
+      // {
+      //   'name':'Morocco',
+      //   'countryCode':'+212',
+      //   'flag':'../../assets/countryFlags/morocco.gif'
+      // },
+      // {
+      //   'name':'Mozambique',
+      //   'countryCode':'+258',
+      //   'flag':'../../assets/countryFlags/mozambique.gif'
+      // },
+      // {
+      //   'name':'Myanmar',
+      //   'countryCode':'+95',
+      //   'flag':'../../assets/countryFlags/myanmar.gif'
+      // },
+      // {
+      //   'name':'Namibia',
+      //   'countryCode':'+264',
+      //   'flag':'../../assets/countryFlags/namibia.gif'
+      // },
+      // {
+      //   'name':'Nauru',
+      //   'countryCode':'+674',
+      //   'flag':'../../assets/countryFlags/nauru.gif'
+      // },
+      // {
+      //   'name':'Nepal',
+      //   'countryCode':'+977',
+      //   'flag':'../../assets/countryFlags/nepal.gif'
+      // },
+      // {
+      //   'name':'Netherlands',
+      //   'countryCode':'+31',
+      //   'flag':'../../assets/countryFlags/netherlands.gif'
+      // },
+      // {
+      //   'name':'New Caledonia',
+      //   'countryCode':'+687',
+      //   'flag':'../../assets/countryFlags/new_caledonia.gif'
+      // },
+      // {
+      //   'name':'New Zealand',
+      //   'countryCode':'+64',
+      //   'flag':'../../assets/countryFlags/new_zealand.gif'
+      // },
+      // {
+      //   'name':'Nicaragua',
+      //   'countryCode':'+505',
+      //   'flag':'../../assets/countryFlags/nicaragua.gif'
+      // },
+      // {
+      //   'name':'Niger',
+      //   'countryCode':'+227',
+      //   'flag':'../../assets/countryFlags/niger.gif'
+      // },
+      // {
+      //   'name':'Nigeria',
+      //   'countryCode':'+234',
+      //   'flag':'../../assets/countryFlags/nigeria.gif'
+      // },
+      // {
+      //   'name':'Niue',
+      //   'countryCode':'+683',
+      //   'flag':'../../assets/countryFlags/niue.gif'
+      // },
+      // {
+      //   'name':'Norfolk Island',
+      //   'countryCode':'+672',
+      //   'flag':'../../assets/countryFlags/norfolk_island.gif'
+      // },
+      // {
+      //   'name':'Northern Mariana Islands',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/northern_mariana_islands.gif'
+      // },
+      // {
+      //   'name':'Norway',
+      //   'countryCode':'+47',
+      //   'flag':'../../assets/countryFlags/norway.gif'
+      // },
+      // {
+      //   'name':'Oman',
+      //   'countryCode':'+968',
+      //   'flag':'../../assets/countryFlags/oman.gif'
+      // },
+      // {
+      //   'name':'Pakistan',
+      //   'countryCode':'+92',
+      //   'flag':'../../assets/images/pakistan.jpg'
+      // },
+      // {
+      //   'name':'Palau',
+      //   'countryCode':'+680',
+      //   'flag':'../../assets/countryFlags/palau.gif'
+      // },
+      // {
+      //   'name':'Palestinian Territory',
+      //   'countryCode':'+970',
+      //   'flag':'../../assets/countryFlags/palestinian_territory.gif'
+      // },
+      // {
+      //   'name':'Panama',
+      //   'countryCode':'+507',
+      //   'flag':'../../assets/countryFlags/panama.gif'
+      // },
+      // {
+      //   'name':'Papua New Guinea',
+      //   'countryCode':'+675',
+      //   'flag':'../../assets/countryFlags/papua_new_guinea.gif'
+      // },
+      // {
+      //   'name':'Paraguay',
+      //   'countryCode':'+595',
+      //   'flag':'../../assets/countryFlags/paraguay.gif'
+      // },
+      // {
+      //   'name':'Peru',
+      //   'countryCode':'+51',
+      //   'flag':'../../assets/countryFlags/peru.gif'
+      // },
+      // {
+      //   'name':'Philippines',
+      //   'countryCode':'+63',
+      //   'flag':'../../assets/countryFlags/philippines.gif'
+      // },
+      // {
+      //   'name':'Pitcairn Islands',
+      //   'countryCode':'+64',
+      //   'flag':'../../assets/countryFlags/pitcairn_islands.gif'
+      // },
+      // {
+      //   'name':'Poland',
+      //   'countryCode':'+48',
+      //   'flag':'../../assets/countryFlags/poland.gif'
+      // },
+      // {
+      //   'name':'Portugal',
+      //   'countryCode':'+351',
+      //   'flag':'../../assets/countryFlags/portugal.gif'
+      // },
+      // {
+      //   'name':'Puerto Rico',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/puerto_rico.gif'
+      // },
+      // {
+      //   'name':'Qatar',
+      //   'countryCode':'+974',
+      //   'flag':'../../assets/countryFlags/qatar.gif'
+      // },
+      // {
+      //   'name':'Republic of China',
+      //   'countryCode':'+86',
+      //   'flag':'../../assets/countryFlags/republic_of_china.gif'
+      // },
+      // {
+      //   'name':'Republic Of Congo',
+      //   'countryCode':'+242',
+      //   'flag':'../../assets/countryFlags/republic_of_the_congo.gif'
+      // },
+      // {
+      //   'name':'Reunion',
+      //   'countryCode':'+262',
+      //   'flag':'../../assets/countryFlags/reunion.gif'
+      // },
+      // {
+      //   'name':'Romania',
+      //   'countryCode':'+40',
+      //   'flag':'../../assets/countryFlags/romania.gif'
+      // },
+      // {
+      //   'name':'Russia',
+      //   'countryCode':'+7',
+      //   'flag':'../../assets/countryFlags/russia.gif'
+      // },
+      // {
+      //   'name':'Rwanda',
+      //   'countryCode':'+250',
+      //   'flag':'../../assets/countryFlags/rwanda.gif'
+      // },
+      // {
+      //   'name':'Saint Barthelemy',
+      //   'countryCode':'+590',
+      //   'flag':'../../assets/countryFlags/saint_barthelemy.gif'
+      // },
+      // {
+      //   'name':'Saint Helena',
+      //   'countryCode':'+290',
+      //   'flag':'../../assets/countryFlags/saint_helena.gif'
+      // },
+      // {
+      //   'name':'Saint Kitts & Nevis',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/saint_kitts_and_nevis.gif'
+      // },
+      // {
+      //   'name':'Saint Lucia',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/saint_lucia.gif'
+      // },
+      // {
+      //   'name':'Saint Martin',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/saint_martin.gif'
+      // },
+      // {
+      //   'name':'Saint Pierre & Miquelon',
+      //   'countryCode':'+508',
+      //   'flag':'../../assets/countryFlags/saint_pierre_and_miquelon.gif'
+      // },
+      // {
+      //   'name':'Saint Vincent & Grenadines',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/saint_vincent_and_the_grenadines.gif'
+      // },
+      // {
+      //   'name':'Samoa',
+      //   'countryCode':'+685',
+      //   'flag':'../../assets/countryFlags/samoa.gif'
+      // },
+      // {
+      //   'name':'San Marino',
+      //   'countryCode':'+378',
+      //   'flag':'../../assets/countryFlags/san_marino.gif'
+      // },
+      // {
+      //   'name':'Sao Tome & Principe',
+      //   'countryCode':'+239',
+      //   'flag':'../../assets/countryFlags/sao_tome_and_principe.gif'
+      // },
+      // // {
+      // //   'name':'Saudi Arabia',
+      // //   'countryCode':'+966',
+      // //   'flag':'../../assets/countryFlags/saudi_arabia.gif'
+      // // },
+      // {
+      //   'name':'Scotland',
+      //   'countryCode':'+44',
+      //   'flag':'../../assets/countryFlags/scotland.gif'
+      // },
+      // {
+      //   'name':'Senegal',
+      //   'countryCode':'+221',
+      //   'flag':'../../assets/countryFlags/senegal.gif'
+      // },
+      // {
+      //   'name':'Serbia',
+      //   'countryCode':'+381',
+      //   'flag':'../../assets/countryFlags/serbia.gif'
+      // },
+      // {
+      //   'name':'Seychelles',
+      //   'countryCode':'+248',
+      //   'flag':'../../assets/countryFlags/seychelles.gif'
+      // },
+      // {
+      //   'name':'Sierra Leone',
+      //   'countryCode':'+232',
+      //   'flag':'../../assets/countryFlags/sierra_leone.gif'
+      // },
+      // {
+      //   'name':'Singapore',
+      //   'countryCode':'+65',
+      //   'flag':'../../assets/countryFlags/singapore.gif'
+      // },
+      // {
+      //   'name':'Sint Maarten',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/sint_maarten.gif'
+      // },
+      // {
+      //   'name':'Slovakia',
+      //   'countryCode':'+421',
+      //   'flag':'../../assets/countryFlags/slovakia.gif'
+      // },
+      // {
+      //   'name':'Slovenia',
+      //   'countryCode':'+386',
+      //   'flag':'../../assets/countryFlags/slovenia.gif'
+      // },
+      // {
+      //   'name':'Solomon Islands',
+      //   'countryCode':'+677',
+      //   'flag':'../../assets/countryFlags/solomon_islands.gif'
+      // },
+      // {
+      //   'name':'Somalia',
+      //   'countryCode':'+252',
+      //   'flag':'../../assets/countryFlags/somalia.gif'
+      // },
+      // {
+      //   'name':'South Africa',
+      //   'countryCode':'+27',
+      //   'flag':'../../assets/countryFlags/south_africa.gif'
+      // },
+      // {
+      //   'name':'South Georgia & Sandwich Islands',
+      //   'countryCode':'+500',
+      //   'flag':'../../assets/countryFlags/south_georgia_and_the_south_sandwich_islands.gif'
+      // },
+      // {
+      //   'name':'South Sudan',
+      //   'countryCode':'+211',
+      //   'flag':'../../assets/countryFlags/south_sudan.gif'
+      // },
+      // {
+      //   'name':'Spain',
+      //   'countryCode':'+34',
+      //   'flag':'../../assets/countryFlags/spain.gif'
+      // },
+      // {
+      //   'name':'Sri Lanka',
+      //   'countryCode':'+94',
+      //   'flag':'../../assets/countryFlags/sri_lanka.gif'
+      // },
+      // {
+      //   'name':'Sudan',
+      //   'countryCode':'+249',
+      //   'flag':'../../assets/countryFlags/sudan.gif'
+      // },
+      // {
+      //   'name':'Suriname',
+      //   'countryCode':'+597',
+      //   'flag':'../../assets/countryFlags/suriname.gif'
+      // },
+      // {
+      //   'name':'Svalbard & Jan Mayen',
+      //   'countryCode':'+47',
+      //   'flag':'../../assets/countryFlags/svalbard_and_jan_mayen.gif'
+      // },
+      // {
+      //   'name':'Swaziland',
+      //   'countryCode':'+268',
+      //   'flag':'../../assets/countryFlags/swaziland.gif'
+      // },
+      // {
+      //   'name':'Sweden',
+      //   'countryCode':'+46',
+      //   'flag':'../../assets/countryFlags/sweden.gif'
+      // },
+      // {
+      //   'name':'Switzerland',
+      //   'countryCode':'+41',
+      //   'flag':'../../assets/countryFlags/switzerland.gif'
+      // },
+      // {
+      //   'name':'Syria',
+      //   'countryCode':'+963',
+      //   'flag':'../../assets/countryFlags/syria.gif'
+      // },
+      // {
+      //   'name':'Tajikistan',
+      //   'countryCode':'+992',
+      //   'flag':'../../assets/countryFlags/tajikistan.gif'
+      // },
+      // {
+      //   'name':'Tanzania',
+      //   'countryCode':'+255',
+      //   'flag':'../../assets/countryFlags/tanzania.gif'
+      // },
+      // {
+      //   'name':'Thailand',
+      //   'countryCode':'+66',
+      //   'flag':'../../assets/countryFlags/thailand.gif'
+      // },
+      // {
+      //   'name':'Togo',
+      //   'countryCode':'+228',
+      //   'flag':'../../assets/countryFlags/togo.gif'
+      // },
+      // {
+      //   'name':'Tokelau',
+      //   'countryCode':'+690',
+      //   'flag':'../../assets/countryFlags/tokelau.gif'
+      // },
+      // {
+      //   'name':'Tonga',
+      //   'countryCode':'+676',
+      //   'flag':'../../assets/countryFlags/tonga.gif'
+      // },
+      // {
+      //   'name':'Trinidad & Tobago',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/trinidad_and_tobago.gif'
+      // },
+      // {
+      //   'name':'Tunisia',
+      //   'countryCode':'+216',
+      //   'flag':'../../assets/countryFlags/tunisia.gif'
+      // },
+      // {
+      //   'name':'Turkey',
+      //   'countryCode':'+90',
+      //   'flag':'../../assets/countryFlags/turkey.gif'
+      // },
+      // {
+      //   'name':'Turkmenistan',
+      //   'countryCode':'+993',
+      //   'flag':'../../assets/countryFlags/turkmenistan.gif'
+      // },
+      // {
+      //   'name':'Turks & Caico Islands',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/turks_and_caico_islands.gif'
+      // },
+      // {
+      //   'name':'Tuvalu',
+      //   'countryCode':'+688',
+      //   'flag':'../../assets/countryFlags/tuvalu.gif'
+      // },
+      // {
+      //   'name':'Uganda',
+      //   'countryCode':'+256',
+      //   'flag':'../../assets/countryFlags/uganda.gif'
+      // },
+      // {
+      //   'name':'Ukraine',
+      //   'countryCode':'+380',
+      //   'flag':'../../assets/countryFlags/ukraine.gif'
+      // },
+      // {
+      //   'name':'United Arab Emirates',
+      //   'countryCode':'+971',
+      //   'flag':'../../assets/countryFlags/united_arab_emirates.gif'
+      // },
+      // {
+      //   'name':'United Kingdom',
+      //   'countryCode':'+44',
+      //   'flag':'../../assets/countryFlags/united_kingdom.gif'
+      // },
+      // {
+      //   'name':'United States of America',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/united_states_of_america.gif'
+      // },
+      // {
+      //   'name':'Uruguay',
+      //   'countryCode':'+598',
+      //   'flag':'../../assets/countryFlags/uruguay.gif'
+      // },
+      // {
+      //   'name':'Uzbekistan',
+      //   'countryCode':'+998',
+      //   'flag':'../../assets/countryFlags/uzbekistan.gif'
+      // },
+      // {
+      //   'name':'Vanuatu',
+      //   'countryCode':'+678',
+      //   'flag':'../../assets/countryFlags/vanuatu.gif'
+      // },
+      // {
+      //   'name':'Vatican City',
+      //   'countryCode':'+379',
+      //   'flag':'../../assets/countryFlags/vatican_city.gif'
+      // },
+      // {
+      //   'name':'Venezuela',
+      //   'countryCode':'+58',
+      //   'flag':'../../assets/countryFlags/venezuela.gif'
+      // },
+      // {
+      //   'name':'Vietnam',
+      //   'countryCode':'+84',
+      //   'flag':'../../assets/countryFlags/vietnam.gif'
+      // },
+      // {
+      //   'name':'Virgin Islands British',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/virgin_islands_british.gif'
+      // },
+      // {
+      //   'name':'Virgin Islands US',
+      //   'countryCode':'+1',
+      //   'flag':'../../assets/countryFlags/virgin_islands_us.gif'
+      // },
+      // {
+      //   'name':'Wales',
+      //   'countryCode':'+44',
+      //   'flag':'../../assets/countryFlags/wales.gif'
+      // },
+      // {
+      //   'name':'Wallis & Futuna',
+      //   'countryCode':'+681',
+      //   'flag':'../../assets/countryFlags/wallis_and_futuna.gif'
+      // },
+      // {
+      //   'name':'Western Sahara',
+      //   'countryCode':'+212',
+      //   'flag':'../../assets/countryFlags/western_sahara.gif'
+      // },
+      // {
+      //   'name':'Yemen',
+      //   'countryCode':'+967',
+      //   'flag':'../../assets/countryFlags/yemen.gif'
+      // },
+      // {
+      //   'name':'Zambia',
+      //   'countryCode':'+260',
+      //   'flag':'../../assets/countryFlags/zambia.gif'
+      // },
+      // {
+      //   'name':'Zimbabwe',
+      //   'countryCode':'+263',
+      //   'flag':'../../assets/countryFlags/zimbabwe.gif'
+      // }
    ];
   }
 
