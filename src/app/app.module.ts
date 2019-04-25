@@ -34,6 +34,7 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+      // apiKey: 'AIzaSyDCvVuTiokiDQdh0RXYCoj0N2n3rlqEBL8'
     }),
     MaterialModule,
     ReactiveFormsModule,

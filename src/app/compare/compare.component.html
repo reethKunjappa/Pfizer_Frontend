@@ -10,7 +10,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header card-header-primary row">
-          <div *ngIf="projectDetails.project.projectName" class="col-11">
+          <div *ngIf="projectDetails.project.projectName" class="col-10">
             <h4 class="card-title">{{projectDetails.project.projectName}}</h4>
             <div class="card-category">
               <span>Country : {{ projectDetails.project.country.name }} | Created By :
@@ -18,34 +18,39 @@
                 Created On : {{ projectDetails.project.createdOn | date : 'dd-MMM-yyyy' }}</span>
             </div>
           </div>
-          <div class="col-1">
+          <div class="col-2 text-right">
             <button (click)="downloadCommentedLabelDoc();" mat-raised-button type="button" matTooltip="Commented Label" [matTooltipPosition]="'above'"
-              class="btn btn-link btn-just-icon">
+              class="btn btn-link btn-lg btn-just-icon">
               <i class="material-icons" style="color:black;">cloud_download</i>
             </button>
             <button mat-mini-fab color="warn" [disabled]="projectDetails.project.conflicts.total < 1"
               [mdePopoverTriggerFor]="appPopover"
-              mdePopoverTriggerOn="hover">{{ projectDetails.project.conflicts.total }}</button>
-            <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+              mdePopoverTriggerOn="hover">{{ totalCount }}</button>
+              <!-- {{ projectDetails.project.conflicts.total }} -->
+              <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
               <mat-card style="max-width: 300px;padding: 5px;">
                 <mat-card-content>
                   <table class="table table-borderless table-sm table-light">
                     <tbody>
-                      <tr *ngIf="projectDetails.project.conflicts.types.font">
+                      <tr *ngIf="fontCount">
                         <td style="padding:5px;">Font Conflicts</td>
-                        <td style="padding:5px;">{{ projectDetails.project.conflicts.types.font }}</td>
+                        <!-- <td style="padding:5px;">{{ projectDetails.project.conflicts.types.font }}</td> -->
+                        <td style="padding:5px;">{{ fontCount }}</td>
                       </tr>
                       <tr *ngIf="projectDetails.project.conflicts.types.content">
                         <td style="padding:5px;">Content Conflicts</td>
                         <td style="padding:5px;">{{ projectDetails.project.conflicts.types.content }}</td>
+                        <!-- <td style="padding:5px;">{{ projectDetails.project.conflicts.types.content }}</td> -->
                       </tr>
-                      <tr *ngIf="projectDetails.project.conflicts.types.order">
+                      <tr *ngIf="orderCount">
                         <td style="padding:5px;">Order Conflicts</td>
-                        <td style="padding:5px;">{{ projectDetails.project.conflicts.types.order }}</td>
+                        <!-- <td style="padding:5px;">{{ projectDetails.project.conflicts.types.order }}</td> -->
+                        <td style="padding:5px;">{{ orderCount }}</td>
                       </tr>
-                      <tr *ngIf="projectDetails.project.conflicts.types.spell_grammar">
+                      <tr *ngIf="spellCheckCount">
                           <td style="padding:5px;">Spell Check Conflicts</td>
-                          <td style="padding:5px;">{{ projectDetails.project.conflicts.types.spell_grammar }}</td>
+                          <!-- <td style="padding:5px;">{{ projectDetails.project.conflicts.types.spell_grammar }}</td> -->
+                          <td style="padding:5px;">{{ spellCheckCount }}</td>
                       </tr>
                     </tbody>
                   </table>

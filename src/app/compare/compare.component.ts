@@ -27,6 +27,12 @@ export class CompareComponent implements OnInit {
   public selectedIndex: number = -1;
   public labelCopy : string;
 
+  public totalCount : any;
+  public fontCount : any;
+  public orderCount : any;
+  public contentCount : any;
+  public spellCheckCount : any; 
+
   constructor(public location: Location, private router: Router, private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
     this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
@@ -41,13 +47,21 @@ export class CompareComponent implements OnInit {
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   // Get Updated Document
   getDocument() {
     this.projectViewService.getDocument(this.projectId).subscribe((res: any) => {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
+
+        this.totalCount = this.projectDetails.comments.length;
+        this.fontCount = this.projectDetails.comments.filter((x) => {
+          return x.conflict_type == 'FONT_NAME' || x.conflict_type == 'FONT_SIZE'           
+        }).length;
+        this.orderCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'ORDER' }).length;
+        this.spellCheckCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'GRAMMAR_SPELLING' }).length;
+
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
             if (a.hasOwnProperty('pdfPath')) {
@@ -55,7 +69,7 @@ export class CompareComponent implements OnInit {
               setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
               }, 1000);
-              this.labelCopy = a.labelCopy;
+              this.labelCopy = this.projectViewService.endPointAddress + a.labelCopy.destination;
             }
           }
         });
@@ -75,6 +89,14 @@ export class CompareComponent implements OnInit {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
         this.comments = res.result.comments;
+
+        this.totalCount = this.projectDetails.comments.length;
+        this.fontCount = this.projectDetails.comments.filter((x) => {
+          return x.conflict_type == 'FONT_NAME' || x.conflict_type == 'FONT_SIZE'           
+        }).length;
+        this.orderCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'ORDER' }).length;
+        this.spellCheckCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'GRAMMAR_SPELLING' }).length;
+
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
             if (a.hasOwnProperty('pdfPath')) {
@@ -82,7 +104,7 @@ export class CompareComponent implements OnInit {
               setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
               }, 1000);
-              this.labelCopy = a.labelCopy;
+              this.labelCopy = this.projectViewService.endPointAddress + a.labelCopy.destination;
             }
           }
         });
@@ -137,6 +159,14 @@ export class CompareComponent implements OnInit {
       this.projectViewService.acceptRejectDocumentsComments(obj).subscribe((updateDocCommentsResp: any) => {
         if (updateDocCommentsResp != undefined && updateDocCommentsResp != "") {
           this.projectDetails = updateDocCommentsResp.result;
+
+          this.totalCount = this.projectDetails.comments.length;
+          this.fontCount = this.projectDetails.comments.filter((x) => {
+            return x.conflict_type == 'FONT_NAME' || x.conflict_type == 'FONT_SIZE'           
+          }).length;
+          this.orderCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'ORDER' }).length;
+          this.spellCheckCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'GRAMMAR_SPELLING' }).length;  
+
         }
       });
     }

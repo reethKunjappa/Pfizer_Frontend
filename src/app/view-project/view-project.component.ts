@@ -63,9 +63,10 @@ export class ViewProjectComponent implements OnInit {
     
     for(var i = 0 ; i < doc.length;i++){
       if(doc[i].fileType == 'Label'){
-        inputResponse.label_filepath = "C:\\Users\\Reeth\\projects\\Pfizer_Backend\\fs\\"+doc[i].documentid+"\\"+doc[i].documentName;        
+        // inputResponse.label_filepath = "C:\\Users\\Reeth\\projects\\Pfizer_Backend\\fs\\"+doc[i].documentid+"\\"+doc[i].documentName;        
+        inputResponse.label_filepath = doc[i].pdfPath.location.replace('pdf', 'docx');
       }else if(doc[i].fileType == 'Reference'){
-        inputResponse.reference_filepath.push(doc[i].pdfPath.location);
+        inputResponse.reference_filepath[0] = ("C:\\Users\\Reeth\\projects\\Pfizer_Backend\\fs\\"+doc[i].documentid+"\\"+doc[i].documentName);
       }
     }
     this.projectViewService._initializeMappingSpec$.next(inputResponse); 
@@ -98,8 +99,8 @@ export class ViewProjectComponent implements OnInit {
     window.open(this.projectViewService.endPointAddress + documentDetails.destination, '_blank');
   }
 
-  downloadCommentedLabelDoc(documentDetails: any) {
-    window.open(this.projectViewService.endPointAddress + documentDetails.localCopy, '_blank');
+  downloadCommentedLabelDoc(documentDetails: any) {    
+    window.open(this.projectViewService.endPointAddress + documentDetails.labelCopy.destination, '_blank');
   }
 
   deleteDocument(documentDetails: any) {
