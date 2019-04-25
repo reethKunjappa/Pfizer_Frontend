@@ -25,6 +25,7 @@ export class CompareComponent implements OnInit {
   public projectDetails: any;
   public updateCommentsArray: any[] = [];
   public selectedIndex: number = -1;
+  public labelCopy : string;
 
   constructor(public location: Location, private router: Router, private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
     this.activatedRoute.paramMap.subscribe((params: any) => {
@@ -54,6 +55,7 @@ export class CompareComponent implements OnInit {
               setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
               }, 1000);
+              this.labelCopy = a.labelCopy;
             }
           }
         });
@@ -80,6 +82,7 @@ export class CompareComponent implements OnInit {
               setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
               }, 1000);
+              this.labelCopy = a.labelCopy;
             }
           }
         });
@@ -137,6 +140,10 @@ export class CompareComponent implements OnInit {
         }
       });
     }
+  }
+
+  downloadCommentedLabelDoc() {
+    window.open( this.labelCopy, '_blank' );
   }
 
   setUrl(destination: any) {

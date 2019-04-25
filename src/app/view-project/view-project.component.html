@@ -41,12 +41,16 @@
                     <td class="mat-cell">
                     <button (click)="reUploadDocument(document)" mat-raised-button type="button" matTooltip="Re-upload" [matTooltipPosition]="'above'"
                       class="btn btn-link  btn-just-icon"> 
-                      <!-- btn-sm -->
-                      <i class="material-icons">cloud_upload</i>
+                      <i class="material-icons" style="color:black;">cloud_upload</i>
                     </button>
                     <button (click)="downloadDocument(document)" mat-raised-button type="button" matTooltip="Download" [matTooltipPosition]="'above'"
                       class="btn btn-link btn-just-icon" *ngIf="document.mimetype != 'application/pdf'">
-                      <i class="material-icons">cloud_download</i>
+                      <i class="material-icons" style="color:black;">cloud_download</i>
+                    </button>
+                    <button (click)="downloadCommentedLabelDoc(document)" mat-raised-button type="button" matTooltip="Commented Label" [matTooltipPosition]="'above'"
+                      class="btn btn-link btn-just-icon" *ngIf="document.labelCopy">
+                      <!-- *ngIf="document.labelCopy != '' || document.labelCopy != null || document.labelCopy != undefined" -->
+                      <i class="material-icons" style="color:black;">cloud_download</i>
                     </button>
                     <button (click)="viewDocument(document)" style="color:#0275d8 !important;" mat-raised-button type="button" matTooltip="View" [matTooltipPosition]="'above'"
                       class="btn btn-link btn-just-icon" *ngIf="document.mimetype == 'application/pdf'">

@@ -22,8 +22,8 @@ export class ViewProjectComponent implements OnInit {
     { 'headerName': 'Document Name', 'class': '', 'width': '35%' },
     { 'headerName': 'Document Type', 'class': '', 'width': '15%' },
     { 'headerName': 'Uploaded By', 'class': '', 'width': '20%' },
-    { 'headerName': 'Uploaded On', 'class': '', 'width': '15%' },
-    { 'headerName': 'Actions', 'class': '', 'width': '15%' }
+    { 'headerName': 'Uploaded On', 'class': '', 'width': '12%' },
+    { 'headerName': 'Actions', 'class': '', 'width': '18%' }
   ];
   public projectDetails: any = {};
   public uploadDocumentDialog: any;
@@ -96,6 +96,10 @@ export class ViewProjectComponent implements OnInit {
   // View a document
   viewDocument(documentDetails: any) {
     window.open(this.projectViewService.endPointAddress + documentDetails.destination, '_blank');
+  }
+
+  downloadCommentedLabelDoc(documentDetails: any) {
+    window.open(this.projectViewService.endPointAddress + documentDetails.localCopy, '_blank');
   }
 
   deleteDocument(documentDetails: any) {

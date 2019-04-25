@@ -19,6 +19,10 @@
             </div>
           </div>
           <div class="col-1">
+            <button (click)="downloadCommentedLabelDoc();" mat-raised-button type="button" matTooltip="Commented Label" [matTooltipPosition]="'above'"
+              class="btn btn-link btn-just-icon">
+              <i class="material-icons" style="color:black;">cloud_download</i>
+            </button>
             <button mat-mini-fab color="warn" [disabled]="projectDetails.project.conflicts.total < 1"
               [mdePopoverTriggerFor]="appPopover"
               mdePopoverTriggerOn="hover">{{ projectDetails.project.conflicts.total }}</button>
