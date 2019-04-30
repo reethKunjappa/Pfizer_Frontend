@@ -1,8 +1,14 @@
 // Dependency Imports
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+export interface DialogData {
+  commentsList: any;
+  projectDetails: any;
+  action: string;
+}
 // Service Imports
 import { ProjectViewService } from 'app/services/project-view.service';
 
@@ -21,19 +27,28 @@ export class CompareComponent implements OnInit {
   viewType: string = "";
   url = "";
 
+  coomentsCopy = [];
   public projectId: any;
   public projectDetails: any;
   public updateCommentsArray: any[] = [];
   public selectedIndex: number = -1;
-  public labelCopy : string;
+  public labelCopy: string;
 
-  public totalCount : any;
-  public fontCount : any;
-  public orderCount : any;
-  public contentCount : any;
-  public spellCheckCount : any; 
+  public totalCount: any;
+  public fontCount: any;
+  public orderCount: any;
+  public contentCount: any;
+  public spellCheckCount: any;
 
-  constructor(public location: Location, private router: Router, private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
+  public conflicts = {
+    'font': [],
+    'order': [],
+    'spell': [],
+    'content': []
+  }
+
+  constructor(public location: Location, private router: Router, public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
     this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
       this.viewType = params.get('view');
@@ -47,7 +62,7 @@ export class CompareComponent implements OnInit {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   // Get Updated Document
   getDocument() {
@@ -57,7 +72,7 @@ export class CompareComponent implements OnInit {
 
         this.totalCount = this.projectDetails.comments.length;
         this.fontCount = this.projectDetails.comments.filter((x) => {
-          return x.conflict_type == 'FONT_NAME' || x.conflict_type == 'FONT_SIZE'           
+          return x.conflict_type == 'FONT_NAME' || x.conflict_type == 'FONT_SIZE'
         }).length;
         this.orderCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'ORDER' }).length;
         this.spellCheckCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'GRAMMAR_SPELLING' }).length;
@@ -91,11 +106,12 @@ export class CompareComponent implements OnInit {
         this.comments = res.result.comments;
 
         this.totalCount = this.projectDetails.comments.length;
-        this.fontCount = this.projectDetails.comments.filter((x) => {
-          return x.conflict_type == 'FONT_NAME' || x.conflict_type == 'FONT_SIZE'           
-        }).length;
-        this.orderCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'ORDER' }).length;
-        this.spellCheckCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'GRAMMAR_SPELLING' }).length;
+        this.conflicts.font = this.comments.filter((x) => {
+          return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
+        })
+        this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
+        this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
+        this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
 
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
@@ -126,6 +142,28 @@ export class CompareComponent implements OnInit {
     });
   }
 
+  // Open Confirmation Modal
+  openConfirmationModal(action, comments) {
+    const dialogRef = this.dialog.open(CommentsConfirmationModal, {
+      width: '35vw',
+      data: { commentsList: comments, projectDetails: this.projectDetails, action: action }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.projectDetails = result.result.project;
+      this.comments = result.result.comments;
+      this.totalCount = this.projectDetails.comments.length;
+
+      this.conflicts.font = this.comments.filter((x) => {
+        return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
+      })
+      this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
+      this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
+      this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
+
+    });
+  }
+
   // Accept Comment
   acceptOrRejectComment(action, index) {
     if (action == 'Accept') {
@@ -150,7 +188,7 @@ export class CompareComponent implements OnInit {
 
 
   acceptRejectDocumentsComments() {
-    var obj = {
+    const obj = {
       'user': this.projectViewService.loggedInUser,
       'projectId': this.projectDetails.project._id,
       'comments': this.projectDetails.comments.filter(comment => (comment.action == 'ACCEPT' || comment.action == 'REJECT'))
@@ -159,13 +197,14 @@ export class CompareComponent implements OnInit {
       this.projectViewService.acceptRejectDocumentsComments(obj).subscribe((updateDocCommentsResp: any) => {
         if (updateDocCommentsResp != undefined && updateDocCommentsResp != "") {
           this.projectDetails = updateDocCommentsResp.result;
-
           this.totalCount = this.projectDetails.comments.length;
-          this.fontCount = this.projectDetails.comments.filter((x) => {
-            return x.conflict_type == 'FONT_NAME' || x.conflict_type == 'FONT_SIZE'           
-          }).length;
-          this.orderCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'ORDER' }).length;
-          this.spellCheckCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'GRAMMAR_SPELLING' }).length;  
+
+          this.conflicts.font = this.comments.filter((x) => {
+            return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
+          })
+          this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
+          this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
+          this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
 
         }
       });
@@ -173,11 +212,63 @@ export class CompareComponent implements OnInit {
   }
 
   downloadCommentedLabelDoc() {
-    window.open( this.labelCopy, '_blank' );
+    window.open(this.labelCopy, '_blank');
   }
 
   setUrl(destination: any) {
     return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
   }
 
+}
+
+
+
+/* ================================ Confirmation Modal ================================ */
+@Component({
+  selector: 'comments-confirmation-modal',
+  templateUrl: 'commentsConfirmationModal.html',
+})
+export class CommentsConfirmationModal {
+
+  public commentsList: any;
+  public projectDetails: any;
+  public action: string;
+
+  constructor(private projectViewService: ProjectViewService,
+    public dialogRef: MatDialogRef<CommentsConfirmationModal>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    this.commentsList = data.commentsList;
+    this.projectDetails = data.projectDetails;
+    this.action = data.action;
+  }
+
+  // Accept All
+  acceptRejectAll() {
+    const acceptedComments = Object.assign([], this.commentsList);
+    for (let i = 0; i < this.commentsList.length; i++) {
+      if (this.action === 'Accept') {
+        this.commentsList[i].action = 'ACCEPT';
+        this.commentsList[i]._deleted = true;
+      } else {
+        this.commentsList[i].action = 'REJECT';
+        this.commentsList[i]._deleted = true;
+      }
+    }
+
+    const object = {
+      'user': this.projectViewService.loggedInUser,
+      'projectId': this.projectDetails.project._id,
+      'comments': acceptedComments
+    };
+    if (object.comments.length) {
+      this.projectViewService.acceptRejectDocumentsComments(object).subscribe((res: any) => {
+        if (res.status.code === 0) {
+          this.dialogRef.close(res.result);
+        } else {
+          alert(res.status.message);
+          this.dialogRef.close();
+        }
+      });
+    }
+  }
 }

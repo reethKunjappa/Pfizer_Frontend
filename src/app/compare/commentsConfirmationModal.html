@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Conformation message</h1>
+<div mat-dialog-content>
+  <p>This action will {{action}} all the comments in the document</p>
+</div>
+<div mat-dialog-actions class="float-right">
+  <button mat-button (click)="acceptRejectAll()">Yes</button>
+  <button mat-button [mat-dialog-close] cdkFocusInitial>No</button>
+</div>

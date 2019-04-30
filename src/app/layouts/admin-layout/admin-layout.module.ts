@@ -21,7 +21,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MaterialModule } from 'app/material.module';
 
 import { ProjectComponent } from '../../project/project.component';
-import { CompareComponent } from '../../compare/compare.component';
+import { CompareComponent, CommentsConfirmationModal } from '../../compare/compare.component';
 import { ViewProjectComponent } from '../../view-project/view-project.component';
 import { FavoriteProjectComponent } from '../../favorite-project/favorite-project.component';
 import { CreateProjectModalComponent } from '../../create-project-modal/create-project-modal.component';
@@ -66,6 +66,7 @@ import { QualityChecklistComponent } from '../../quality-checklist/quality-check
     UpgradeComponent,
     ProjectComponent,
     CompareComponent,
+    CommentsConfirmationModal,
     ViewProjectComponent,
     FavoriteProjectComponent,
     CreateProjectModalComponent,
@@ -77,7 +78,7 @@ import { QualityChecklistComponent } from '../../quality-checklist/quality-check
     QualityChecklistComponent
   ],
   entryComponents: [
-    CreateProjectModalComponent,UploadDocumentsModalComponent,StatusComponent
+    CreateProjectModalComponent,UploadDocumentsModalComponent, StatusComponent, CommentsConfirmationModal
   ],
 })
 

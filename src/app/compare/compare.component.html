@@ -25,32 +25,68 @@
             </button>
             <button mat-mini-fab color="warn" [disabled]="projectDetails.project.conflicts.total < 1"
               [mdePopoverTriggerFor]="appPopover"
-              mdePopoverTriggerOn="hover">{{ totalCount }}</button>
+              mdePopoverTriggerOn="hover">{{ projectDetails.project.conflicts.total }}</button>
               <!-- {{ projectDetails.project.conflicts.total }} -->
               <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
               <mat-card style="max-width: 300px;padding: 5px;">
                 <mat-card-content>
                   <table class="table table-borderless table-sm table-light">
                     <tbody>
-                      <tr *ngIf="fontCount">
+                      <tr *ngIf="projectDetails.project.conflicts.types.font">
                         <td style="padding:5px;">Font Conflicts</td>
-                        <!-- <td style="padding:5px;">{{ projectDetails.project.conflicts.types.font }}</td> -->
-                        <td style="padding:5px;">{{ fontCount }}</td>
+                        <td style="padding:5px;">{{ projectDetails.project.conflicts.types.font }}</td>
+                        <td><button mat-raised-button type="button" matTooltip="Accept All"
+                          class="btn btn-success btn-link btn-sm py-0 px-1 m-0"
+                          (click)="openConfirmationModal('Accept', conflicts.font)">
+                          <i class="material-icons">done_all</i>
+                        </button>
+                        <button mat-raised-button type="button" matTooltip="Reject All"
+                          class="btn btn-danger btn-link btn-sm py-0 px-1 m-0"
+                          (click)="openConfirmationModal('Reject', conflicts.font)">
+                          <i class="material-icons">close</i>
+                        </button></td>
                       </tr>
                       <tr *ngIf="projectDetails.project.conflicts.types.content">
                         <td style="padding:5px;">Content Conflicts</td>
                         <td style="padding:5px;">{{ projectDetails.project.conflicts.types.content }}</td>
-                        <!-- <td style="padding:5px;">{{ projectDetails.project.conflicts.types.content }}</td> -->
+                        <td><button mat-raised-button type="button" matTooltip="Accept All"
+                          class="btn btn-success btn-link btn-sm py-0 px-1 m-0"
+                          (click)="openConfirmationModal('Accept', conflicts.content)">
+                          <i class="material-icons">done_all</i>
+                        </button>
+                        <button mat-raised-button type="button" matTooltip="Reject All"
+                          class="btn btn-danger btn-link btn-sm py-0 px-1 m-0"
+                          (click)="openConfirmationModal('Reject', conflicts.content)">
+                          <i class="material-icons">close</i>
+                        </button></td>
                       </tr>
-                      <tr *ngIf="orderCount">
+                      <tr *ngIf="projectDetails.project.conflicts.types.order">
                         <td style="padding:5px;">Order Conflicts</td>
-                        <!-- <td style="padding:5px;">{{ projectDetails.project.conflicts.types.order }}</td> -->
-                        <td style="padding:5px;">{{ orderCount }}</td>
+                        <td style="padding:5px;">{{ projectDetails.project.conflicts.types.order }}</td>
+                        <td><button mat-raised-button type="button" matTooltip="Accept All"
+                          class="btn btn-success btn-link btn-sm py-0 px-1 m-0"
+                          (click)="openConfirmationModal('Accept', conflicts.order)">
+                          <i class="material-icons">done_all</i>
+                        </button>
+                        <button mat-raised-button type="button" matTooltip="Reject All"
+                          class="btn btn-danger btn-link btn-sm py-0 px-1 m-0"
+                          (click)="openConfirmationModal('Reject', conflicts.order)">
+                          <i class="material-icons">close</i>
+                        </button></td>
                       </tr>
-                      <tr *ngIf="spellCheckCount">
+                      <tr *ngIf="projectDetails.project.conflicts.types.spell_grammar">
                           <td style="padding:5px;">Spell Check Conflicts</td>
-                          <!-- <td style="padding:5px;">{{ projectDetails.project.conflicts.types.spell_grammar }}</td> -->
-                          <td style="padding:5px;">{{ spellCheckCount }}</td>
+                          <td style="padding:5px;">{{ projectDetails.project.conflicts.types.spell_grammar }}</td>
+                          <td><button mat-raised-button type="button" matTooltip="Accept All"
+                            class="btn btn-success btn-link btn-sm py-0 px-1 m-0"
+                            (click)="openConfirmationModal('Accept', conflicts.spell)">
+                            <i class="material-icons">done_all</i>
+                          </button>
+                          <button mat-raised-button type="button" matTooltip="Reject All"
+                            class="btn btn-danger btn-link btn-sm py-0 px-1 m-0"
+                            (click)="openConfirmationModal('Reject', conflicts.spell)">
+                            <i class="material-icons">close</i>
+                          </button></td>
                       </tr>
                     </tbody>
                   </table>
@@ -59,6 +95,8 @@
             </mde-popover>
           </div>
         </div>
+
+        
 
         <mat-drawer-container class="example-container" style="width:100%;height:90vh;margin: 15px 0px 0px 0px;">
           <mat-drawer #drawer class="example-sidenav p-0" mode="side" position="end">

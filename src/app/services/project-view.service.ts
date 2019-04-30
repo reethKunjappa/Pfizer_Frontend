@@ -25,8 +25,12 @@ export class ProjectViewService {
   // public endPointAddress : string = 'http://192.168.0.19:3009';  // Ashish IP or port 3000
   // public endPointAddress : string = 'http://localhost:5555';
   // public endPointAddress : string = 'http://192.168.0.125:5555' //Sunil IP
-   public endPointAddress : string = 'http://54.164.151.252:3005';
-  
+
+   public endPointAddress : string = 'http://54.164.151.252:3005'; //Old Server URL
+
+   //public endPointAddress: string = 'http://3.90.245.202:3005'; //New server URL
+
+
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/json',
@@ -295,10 +299,11 @@ export class ProjectViewService {
     .pipe(
       map((response: any )=> {
         if ( response.status.code == '0' ) {
-          return response;              
+
         }else {
-          throw new Error('Value expected!');
+          //throw new Error(response.status.message);
         }
+        return response;
       }),
       // catchError(err => of([]))
     );
@@ -312,7 +317,7 @@ export class ProjectViewService {
     .pipe(
       map((response: any )=> {
         if ( response.status.code == '0' ) {
-          return response;              
+          return response;
         }else {
           throw new Error('Value expected!');
         }
