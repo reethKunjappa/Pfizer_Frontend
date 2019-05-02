@@ -1,0 +1,22 @@
+
+  
+  .example-sidenav {
+    padding: 20px;
+    width: 40%
+  }
+  
+  .font-2{
+    font-size: 0.7rem;
+  }
+
+  .mat-drawer-content {
+    position: relative;
+    z-index: 1;
+    display: block;
+    height: 100%;
+    overflow: hidden !important;
+  }
+
+  .mat-drawer-inner-container{
+    overflow: hidden !important;
+  }

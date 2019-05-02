@@ -66,7 +66,7 @@ export class ViewProjectComponent implements OnInit {
         // inputResponse.label_filepath = "C:\\Users\\Reeth\\projects\\Pfizer_Backend\\fs\\"+doc[i].documentid+"\\"+doc[i].documentName;        
         inputResponse.label_filepath = doc[i].pdfPath.location.replace('pdf', 'docx');
       }else if(doc[i].fileType == 'Reference'){
-        inputResponse.reference_filepath[0] = ("C:\\Users\\Reeth\\projects\\Pfizer_Backend\\fs\\"+doc[i].documentid+"\\"+doc[i].documentName);
+        inputResponse.reference_filepath[0] = doc[i].pdfPath.location;
       }
     }
     this.projectViewService._initializeMappingSpec$.next(inputResponse); 

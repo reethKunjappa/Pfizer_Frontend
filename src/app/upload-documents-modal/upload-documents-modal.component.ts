@@ -31,6 +31,8 @@ export class UploadDocumentsModalComponent implements OnInit {
   public disableDropDown: boolean = false;
   public reUploadFileType: string;
 
+  public disableLabelText: boolean = false;
+
   constructor(public dialogRef: MatDialogRef<UploadDocumentsModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private projectViewService: ProjectViewService) {
     this.createProjectData = data.projectDetails;
     this.allowMultiple = data.allowMultiple;
@@ -154,6 +156,7 @@ export class UploadDocumentsModalComponent implements OnInit {
             this.fileTypes.filter((value) => {
               if (value.value == "Label")
                 value.disable = true;
+                this.disableLabelText = true;
             });
           } else {
             this.fileTypes.filter((value) => {

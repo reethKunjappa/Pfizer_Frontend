@@ -15,7 +15,7 @@ import { ProjectViewService } from 'app/services/project-view.service';
 @Component({
   selector: 'app-compare',
   templateUrl: './compare.component.html',
-  styleUrls: ['./compare.component.scss']
+  styleUrls: ['./compare.component.css']
 })
 
 export class CompareComponent implements OnInit {
@@ -69,13 +69,14 @@ export class CompareComponent implements OnInit {
     this.projectViewService.getDocument(this.projectId).subscribe((res: any) => {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
-
+        this.comments = this.projectDetails.comments;
         this.totalCount = this.projectDetails.comments.length;
-        this.fontCount = this.projectDetails.comments.filter((x) => {
-          return x.conflict_type == 'FONT_NAME' || x.conflict_type == 'FONT_SIZE'
-        }).length;
-        this.orderCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'ORDER' }).length;
-        this.spellCheckCount = this.projectDetails.comments.filter((x) => { return x.conflict_type == 'GRAMMAR_SPELLING' }).length;
+        this.conflicts.font = this.comments.filter((x) => {
+          return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
+        })
+        this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
+        this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
+        this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
 
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
@@ -150,17 +151,20 @@ export class CompareComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.projectDetails = result.result.project;
-      this.comments = result.result.comments;
-      this.totalCount = this.projectDetails.comments.length;
-
-      this.conflicts.font = this.comments.filter((x) => {
-        return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
-      })
-      this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
-      this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
-      this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
-
+      console.log(result);
+      
+      if( result != undefined && result != '' ) {
+        this.projectDetails = result;
+        this.comments = result.comments;
+        this.totalCount = this.projectDetails.comments.length;
+  
+        this.conflicts.font = this.comments.filter((x) => {
+          return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
+        })
+        this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
+        this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
+        this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
+      }
     });
   }
 
