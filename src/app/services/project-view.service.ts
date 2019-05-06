@@ -26,9 +26,9 @@ export class ProjectViewService {
   // public endPointAddress : string = 'http://localhost:5555';
   // public endPointAddress : string = 'http://192.168.0.125:5555' //Sunil IP
 
-   //public endPointAddress : string = 'http://54.164.151.252:3005'; //Old Server URL
+   public endPointAddress : string = 'http://54.164.151.252:3005'; //Old Server URL
 
-   public endPointAddress: string = 'http://3.90.245.202:3005'; //Sand box server URL
+   //public endPointAddress: string = 'http://3.90.245.202:3005'; //Sand box server URL
 
 
   private httpOptions = {

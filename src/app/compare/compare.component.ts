@@ -39,6 +39,7 @@ export class CompareComponent implements OnInit {
   public orderCount: any;
   public contentCount: any;
   public spellCheckCount: any;
+  public commentsAcceptedRejected = [];
 
   public conflicts = {
     'font': [],
@@ -107,7 +108,7 @@ export class CompareComponent implements OnInit {
         this.comments = res.result.comments;
 
         this.totalCount = this.projectDetails.comments.length;
-        this.conflicts.font = this.comments.filter((x) => {
+        this.conflicts.font = this.projectDetails.comments.filter((x) => {
           return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
         })
         this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
@@ -158,7 +159,7 @@ export class CompareComponent implements OnInit {
         this.comments = result.comments;
         this.totalCount = this.projectDetails.comments.length;
   
-        this.conflicts.font = this.comments.filter((x) => {
+        this.conflicts.font = this.projectDetails.comments.filter((x) => {
           return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
         })
         this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
@@ -168,8 +169,7 @@ export class CompareComponent implements OnInit {
     });
   }
 
-  // Accept Comment
-  acceptOrRejectComment(action, index) {
+ acceptOrRejectComment(action, index) {
     if (action == 'Accept') {
       if (this.projectDetails.comments[index].action == '' || this.projectDetails.comments[index].action == null) {
         this.projectDetails.comments[index].action = 'ACCEPT';
@@ -203,7 +203,7 @@ export class CompareComponent implements OnInit {
           this.projectDetails = updateDocCommentsResp.result;
           this.totalCount = this.projectDetails.comments.length;
 
-          this.conflicts.font = this.comments.filter((x) => {
+          this.conflicts.font = this.projectDetails.comments.filter((x) => {
             return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
           })
           this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });

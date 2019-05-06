@@ -19,7 +19,7 @@ export class MappingSpecComponent implements OnInit {
     { 'headerName': 'Label', 'class': '', 'width': '40%' },
     { 'headerName': 'Predicted Section', 'class': '', 'width': '40%' },
     // { 'headerName': 'Actual Section', 'class': '', 'width' : '30%' },
-    { 'headerName': 'Confidence Score (%)', 'class': '', 'width': '20%' }
+    { 'headerName': 'Similarity Score (%)', 'class': '', 'width': '20%' }
   ];
   public fileData: any;
   public mappingSpec: any[] = [];
