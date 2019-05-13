@@ -139,7 +139,7 @@ export class UploadDocumentsModalComponent implements OnInit {
   checkUploadAllStatus() {
     let count = 0;
     this.uploader.queue.map((e) => {
-      if (this.checkEmptyNullUndefined(e.fileType)) {
+      if (this.checkEmptyNullUndefined(e['fileType'])) {
         count++;
       }
     });
@@ -156,8 +156,8 @@ export class UploadDocumentsModalComponent implements OnInit {
       this.selectedFileTypeList = [];
 
        this.uploader.queue.map((e) => {
-         if (this.checkEmptyNullUndefined(e.fileType) && !this.selectedFileTypeList.includes(e.fileType)) {
-           this.selectedFileTypeList.push(e.fileType)
+         if (this.checkEmptyNullUndefined(e['fileType']) && !this.selectedFileTypeList.includes(e['fileType'])) {
+           this.selectedFileTypeList.push(e['fileType'])
         }
       })
       if (this.selectedFileTypeList.includes('Label')) {

@@ -3,7 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { SimplePdfViewerModule } from 'simple-pdf-viewer';
+// import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 
 export interface DialogData {
   commentsList: any;
@@ -50,9 +50,9 @@ export class CompareComponent implements OnInit {
   }
 
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
-    private pdfViewer: SimplePdfViewerModule) {
-    this.activatedRoute.paramMap.subscribe((params: any) => {
+    private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
+      // private pdfViewer: SimplePdfViewerModule
+      this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
       this.viewType = params.get('view');
     });
