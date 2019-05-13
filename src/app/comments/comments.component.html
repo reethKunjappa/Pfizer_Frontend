@@ -31,7 +31,7 @@
                   </mat-form-field>
                   <div class="row">
                     <div class="col-12 pad-0 text-right">
-                      <button mat-raised-button type="submit" class="btn btn-primary btn-spec"
+                      <button type="submit" [disabled]="createProjectComment.commentedText==='' || createProjectComment.commentedText==null" class="btn btn-primary btn-spec"
                         (click)="addComment();">Add</button>
                       <button mat-raised-button type="submit" class="btn btn-danger btn-spec"
                         (click)="cancelComment()">Cancel</button>
@@ -64,7 +64,7 @@
                     </mat-form-field>
                     <div class="row">
                       <div class="col-12 pad-0 text-right">
-                        <button mat-raised-button type="submit" class="btn btn-primary btn-spec"
+                        <button type="submit" [disabled]="comment.commentedText=='' || comment.commentedText==undefined || comment.commentedText==null" class="btn btn-primary btn-spec"
                           (click)="saveComment(comment, i)">Save</button>
                         <button mat-raised-button type="submit" class="btn btn-danger btn-spec"
                           (click)="cancelUpdateComment(comment, i)">Cancel</button>

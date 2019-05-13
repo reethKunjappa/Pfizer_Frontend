@@ -64,7 +64,7 @@ export class ViewProjectComponent implements OnInit {
     for(var i = 0 ; i < doc.length;i++){
       if(doc[i].fileType == 'Label'){
         // inputResponse.label_filepath = "C:\\Users\\Reeth\\projects\\Pfizer_Backend\\fs\\"+doc[i].documentid+"\\"+doc[i].documentName;        
-        inputResponse.label_filepath = doc[i].pdfPath.location.replace('pdf', 'docx');
+        inputResponse.label_filepath = doc[i].originalPath.location.replace('pdf', 'docx');
       }else if(doc[i].fileType == 'Reference'){
         inputResponse.reference_filepath[0] = doc[i].pdfPath.location;
       }

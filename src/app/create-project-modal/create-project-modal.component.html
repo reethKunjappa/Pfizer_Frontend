@@ -1,5 +1,11 @@
-<div class="mat-dialog-title">
-  <div>Create Project</div>
+<div class="mat-dialog-title d-flex">
+  <div class="col-6 p-0 w-auto">Create Project</div>
+  <div class="col-6 w-auto p-0 text-right">
+    <button [mat-dialog-close]="true" mat-raised-button type="button" matTooltip="Close"
+      class="btn  btn-link btn-sm btn-just-icon">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
 </div>
 <div class="mat-dialog-content">
   <form [formGroup]="projectForm" class="mb-0">

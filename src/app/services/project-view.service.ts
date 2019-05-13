@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, retry, catchError } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +21,9 @@ export class ProjectViewService {
 
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
 
-  // public endPointAddress : string = 'http://192.168.0.18:5555'; // Nagesh IP
-  //public endPointAddress : string = 'http://192.168.1.102:5555';
-  // public endPointAddress : string = 'http://192.168.0.19:3009';  // Ashish IP or port 3000
-  // public endPointAddress : string = 'http://localhost:5555';
-  // public endPointAddress : string = 'http://192.168.0.125:5555' //Sunil IP
+  public endPointAddress : string = environment.serverUrl; //configuration based on environment
 
-   public endPointAddress : string = 'http://54.164.151.252:3005'; //Old Server URL
+   //public endPointAddress : string = 'http://54.164.151.252:3005'; //Dev Server URL
 
    //public endPointAddress: string = 'http://3.90.245.202:3005'; //Sand box server URL
 

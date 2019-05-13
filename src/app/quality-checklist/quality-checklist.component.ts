@@ -1,6 +1,7 @@
 // Dependency Imports
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DefaultCheckList } from './default-checklist';
 
 // Services Imports
 import { ProjectViewService } from '../services/project-view.service';
@@ -22,8 +23,10 @@ export class QualityChecklistComponent implements OnInit {
   ];
   public checkListData : any[] = [];
   public documentId : any;
+  public defaultCheckList: any[] =  [];
 
   constructor( private projectViewService : ProjectViewService, private activatedRoute : ActivatedRoute ) { 
+    this.defaultCheckList =  DefaultCheckList;
     this.activatedRoute.paramMap.subscribe(( params : any )=> {
       this.projectId = params.get('id');
       this.projectViewService.openProject(this.projectId).subscribe((projectDetails: any) => {
@@ -33,7 +36,8 @@ export class QualityChecklistComponent implements OnInit {
         });  
                 
         this.projectViewService.getCheckListData({ 'project_id' : this.projectId, 'file_id' : this.documentId }).subscribe(( getCheckListDataResp : any )=> {
-          this.checkListData = getCheckListDataResp.result[0].checks;
+          this.checkListDataCheck(getCheckListDataResp.result[0].checks);
+          //this.checkListData = getCheckListDataResp.result[0].checks;
         });
 
       });
@@ -43,5 +47,17 @@ export class QualityChecklistComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+
+  checkListDataCheck(response) {
+    this.defaultCheckList.map((e) => {
+      response.map((r) => {
+        if (r.quality_check === e.quality_check) {
+          e.status = r.status;
+        }
+      })
+    })
+    this.checkListData = this.defaultCheckList;
+  }
 
 }

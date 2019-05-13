@@ -24,7 +24,7 @@ export class UploadDocumentsModalComponent implements OnInit {
   public hasBaseDropZoneOver: boolean = true;
   // public hasAnotherDropZoneOver:boolean = false;
   public fileObject: any;
-  public fileSelectOptionDisable: boolean;
+  public fileSelectOptionDisable: boolean = false;
   public allowMultiple: boolean = true;
   // public multipleAllow : boolean = false;
   public re_upload_documentId: string;
@@ -32,6 +32,8 @@ export class UploadDocumentsModalComponent implements OnInit {
   public reUploadFileType: string;
 
   public disableLabelText: boolean = false;
+
+  public selectedFileTypeList = [];
 
   constructor(public dialogRef: MatDialogRef<UploadDocumentsModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private projectViewService: ProjectViewService) {
     this.createProjectData = data.projectDetails;
@@ -58,9 +60,9 @@ export class UploadDocumentsModalComponent implements OnInit {
     for (var i = 0; i < this.createProjectData.documents.length; i++) {
       if (this.createProjectData.documents[i].fileType == "Label") {
         this.fileTypes.filter((value) => {
-          if (value.value == "Label")
-            value.disable = true;
-          this.fileSelectOptionDisable = true;
+          if (value.value == "Label") {
+            this.fileSelectOptionDisable = true;
+          }
         })
       }
     }
@@ -72,7 +74,7 @@ export class UploadDocumentsModalComponent implements OnInit {
       disableMultipart: false,
       // autoUpload : false,
       // removeAfterUpload : true,
-      itemAlias: "files",
+      itemAlias: 'files',
       method: 'POST',
       queueLimit: this.allowMultiple ? 5 : 1,
     });
@@ -80,6 +82,7 @@ export class UploadDocumentsModalComponent implements OnInit {
     // this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; }
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
+      file['fileType'] = '';
       if (!this.allowMultiple) {
         file['fileType'] = this.reUploadFileType;
         file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
@@ -136,7 +139,7 @@ export class UploadDocumentsModalComponent implements OnInit {
   checkUploadAllStatus() {
     let count = 0;
     this.uploader.queue.map((e) => {
-      if (e.hasOwnProperty('fileType')) {
+      if (this.checkEmptyNullUndefined(e.fileType)) {
         count++;
       }
     });
@@ -150,23 +153,24 @@ export class UploadDocumentsModalComponent implements OnInit {
 
   disableFileType(event, file) {
     if (!this.fileSelectOptionDisable) {
-      this.uploader.queue.map((e) => {
-        if (e.hasOwnProperty('fileType')) {
-          if (e['fileType'] == "Label") {
-            this.fileTypes.filter((value) => {
-              if (value.value == "Label")
-                value.disable = true;
-                this.disableLabelText = true;
-            });
-          } else {
-            this.fileTypes.filter((value) => {
-              if (value.value == "Label")
-                value.disable = false;
-            });
-          }
+      this.selectedFileTypeList = [];
+
+       this.uploader.queue.map((e) => {
+         if (this.checkEmptyNullUndefined(e.fileType) && !this.selectedFileTypeList.includes(e.fileType)) {
+           this.selectedFileTypeList.push(e.fileType)
         }
       })
+      if (this.selectedFileTypeList.includes('Label')) {
+        this.disableLabelText = true;
+      } else {
+        this.disableLabelText = false;
+      }
     }
+  }
+
+  checkEmptyNullUndefined(data) {
+    if ( data != '' && data != null && data != undefined ) { return true; }
+    else { return false; }
   }
 
 }
