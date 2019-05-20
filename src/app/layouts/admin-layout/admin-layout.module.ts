@@ -17,7 +17,7 @@ import { MdePopoverModule } from '@material-extended/mde';
 import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTooltipModule,MatSelectModule,MatCardModule,MatSidenavModule,MatDialogModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 //import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 
 import { MaterialModule } from 'app/material.module';
@@ -30,10 +30,9 @@ import { CreateProjectModalComponent } from '../../create-project-modal/create-p
 import { UploadDocumentsModalComponent } from '../../upload-documents-modal/upload-documents-modal.component';
 import { HistoryComponent } from '../../history/history.component';
 import { CommentsComponent } from '../../comments/comments.component';
-import { StatusComponent } from '../../status/status.component';
 import { MappingSpecComponent } from '../../mapping-spec/mapping-spec.component';
 import { QualityChecklistComponent } from '../../quality-checklist/quality-checklist.component';
-
+import { AdminPreferencesComponent } from '../../admin-preferences/admin-preferences.component';
 
 @NgModule({
   imports: [
@@ -56,6 +55,7 @@ import { QualityChecklistComponent } from '../../quality-checklist/quality-check
     MatChipsModule,
     MaterialModule,
     MatBadgeModule,
+    NgSelectModule,
    // SimplePdfViewerModule
   ],
   declarations: [
@@ -76,12 +76,12 @@ import { QualityChecklistComponent } from '../../quality-checklist/quality-check
     UploadDocumentsModalComponent,
     HistoryComponent,
     CommentsComponent,
-    StatusComponent,
     MappingSpecComponent,
-    QualityChecklistComponent
+    QualityChecklistComponent,
+    AdminPreferencesComponent,
   ],
   entryComponents: [
-    CreateProjectModalComponent,UploadDocumentsModalComponent, StatusComponent, CommentsConfirmationModal
+    CreateProjectModalComponent,UploadDocumentsModalComponent, CommentsConfirmationModal,
   ],
 })
 

@@ -1,0 +1,108 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div>
+              <h4 class="card-title">Preferences</h4>
+              <div class="card-category"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-header">
+              <h6 class="card-title">Set Country Language</h6>
+            </div>
+            <hr style="margin:0.5rem;" />
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="panelOpenState" hideToggle disabled>
+                      <mat-expansion-panel-header collapsedHeight="80px" expandedHeight="80px"
+                        style="background-color: #F7F6F6;">
+                        <div class="row w-100">
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                              <mat-select [(ngModel)]="countryName" placeholder="Country">
+                                <mat-select-trigger>
+                                  <span><img src="{{countrySelected.id}}" width="20" height="20" />
+                                    {{ countrySelected.name }}</span>
+                                </mat-select-trigger>
+                                <mat-option *ngFor="let item of countryData" [value]="item.name"
+                                  (onSelectionChange)="setCountry($event, item)">
+                                  <img src="{{ item.flag }}" width="20" height="20" />&nbsp;&nbsp;{{item.name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4">
+                            <mat-form-field class="example-full-width">
+                              <mat-select [(ngModel)]="language" placeholder="Language">
+                                <mat-option *ngFor="let item of languages" [value]="item.name">
+                                  {{item.name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class="col-md-4 pull-right">
+                            <button (click)="setCountryLanguage()" [disabled]="!countryName || !language"
+                              mat-raised-button type="submit" class="btn btn-primary btn-spec">Set Language
+                              Preference</button>
+                            <button mat-raised-button class="btn btn-primary btn-spec my-0"
+                              (click)="togglePanel()">View</button>
+                          </div>
+                        </div>
+                      </mat-expansion-panel-header>
+                      <hr style="margin: 0rem -1.5rem;" />
+                      <table class="table">
+                        <thead>
+                          <th [ngStyle]="{width: header.width}" *ngFor="let header of countryLanguageTableHeaders"
+                            class="{{ header.class }}">{{ header.headerName }}</th>
+                        </thead>
+                        <tbody *ngIf="adminPrefData">
+                          <tr *ngIf="adminPrefData.countryPreferences.length < 1">
+                            <td colspan="2" class="mx-auto text-center">
+                              <div class="badge badge-pill badge-primary p-3">No preferences to show.</div>
+                            </td>
+                          </tr>
+                          <tr class="mat-row" style="height:30px !important;"
+                            *ngFor="let item of adminPrefData.countryPreferences; let i = index">
+                            <td class="mat-cell">{{ item.countryName }}</td>
+                            <td class="mat-cell">
+                              <span *ngIf="i != selectedIndex">{{ item.language }}</span>
+                              <span *ngIf="i == selectedIndex">
+                                <mat-form-field class="example-full-width">
+                                  <mat-select [(ngModel)]="item.language">
+                                    <mat-option *ngFor="let lang of languages" [value]="lang.name">
+                                      {{lang.name}}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                              </span>
+                            </td>
+                            <td class="mat-cell">
+                              <button (click)="editLanguage(i)" mat-raised-button type="button" matTooltip="Edit"
+                                [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon">
+                                <i class="material-icons">edit</i>
+                              </button>
+                              <button *ngIf="i == selectedIndex" (click)="saveLanguage(i)" mat-raised-button
+                                type="button" matTooltip="Save" [matTooltipPosition]="'above'"
+                                class="btn btn-link btn-sm btn-just-icon">
+                                <i class="material-icons">save</i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

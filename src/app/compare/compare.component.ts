@@ -3,6 +3,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { NgSelectModule, NgOption } from '@ng-select/ng-select';
+
 // import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 
 export interface DialogData {
@@ -41,18 +43,26 @@ export class CompareComponent implements OnInit {
   public contentCount: any;
   public spellCheckCount: any;
   public commentsAcceptedRejected = [];
-
+  public conflictCriterias: any[] = [
+    { 'value': 'ALL' },
+    { 'value': 'CONTENT' },
+    { 'value': 'FONT' },
+    { 'value': 'GRAMMAR_SPELLING' },
+    { 'value': 'ORDER' },
+  ];
+  public conflictType: string = "ALL";
   public conflicts = {
     'font': [],
     'order': [],
     'spell': [],
     'content': []
   }
+  public filteredItems: any = [];
 
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
-      // private pdfViewer: SimplePdfViewerModule
-      this.activatedRoute.paramMap.subscribe((params: any) => {
+    // private pdfViewer: SimplePdfViewerModule
+    this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
       this.viewType = params.get('view');
     });
@@ -73,6 +83,8 @@ export class CompareComponent implements OnInit {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
         this.comments = this.projectDetails.comments;
+        this.assignCopy();
+
         this.totalCount = this.projectDetails.comments.length;
         this.conflicts.font = this.comments.filter((x) => {
           return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
@@ -108,6 +120,7 @@ export class CompareComponent implements OnInit {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
         this.comments = res.result.comments;
+        this.assignCopy();
 
         this.totalCount = this.projectDetails.comments.length;
         this.conflicts.font = this.projectDetails.comments.filter((x) => {
@@ -121,6 +134,8 @@ export class CompareComponent implements OnInit {
           if (a.fileType == 'Label') {
             if (a.hasOwnProperty('pdfPath')) {
               let labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
+              // + '#page=3';
+              // console.log("labelDocUrl::",labelDocUrl);
               setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
               }, 1000);
@@ -154,13 +169,11 @@ export class CompareComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      
-      if( result != undefined && result != '' ) {
+      if (result != undefined && result != '') {
         this.projectDetails = result;
         this.comments = result.comments;
         this.totalCount = this.projectDetails.comments.length;
-  
+
         this.conflicts.font = this.projectDetails.comments.filter((x) => {
           return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
         })
@@ -171,7 +184,7 @@ export class CompareComponent implements OnInit {
     });
   }
 
- acceptOrRejectComment(action, index) {
+  acceptOrRejectComment(action, index) {
     if (action == 'Accept') {
       if (this.projectDetails.comments[index].action == '' || this.projectDetails.comments[index].action == null) {
         this.projectDetails.comments[index].action = 'ACCEPT';
@@ -211,7 +224,6 @@ export class CompareComponent implements OnInit {
           this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
           this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
           this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
-
         }
       });
     }
@@ -223,6 +235,29 @@ export class CompareComponent implements OnInit {
 
   setUrl(destination: any) {
     return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
+  }
+
+  filterItem(event) {
+    let value = event; //.target.value;
+    if ( value ) {
+      if ( value == 'ALL' ) {
+        this.assignCopy();        
+      }else if( value == 'FONT' ){
+        this.filteredItems = this.filterAssign( 'FONT_SIZE', 'FONT_NAME' );        
+      }else {
+        this.filteredItems = this.filterAssign(value, '');
+      }
+    }else {
+      this.assignCopy();      
+    }
+  }
+
+  filterAssign(value1, value2){
+    return this.projectDetails.comments.filter((x) => { return x.conflict_type === value1 || x.conflict_type === value2 });
+  }
+
+  assignCopy() {
+    this.filteredItems = Object.assign([], this.projectDetails.comments)
   }
 
 }

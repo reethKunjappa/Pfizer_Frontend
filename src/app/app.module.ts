@@ -12,14 +12,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-// import { MdePopoverModule } from '@material-extended/mde';
 
 // Services Imports
 import { ProjectViewService } from './services/project-view.service';
 import { I1 } from './interceptor';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { LoginComponent } from './login/login.component';
-
+import { StatusComponent } from './status/status.component';
 
 @NgModule({
   imports: [
@@ -38,19 +37,18 @@ import { LoginComponent } from './login/login.component';
     }),
     MaterialModule,
     ReactiveFormsModule,
-    // MdePopoverModule,
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    LoginComponent
+    LoginComponent,
+    StatusComponent,
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    // MdePopoverModule,
   ],
   providers: [
     ProjectViewService,
@@ -61,6 +59,7 @@ import { LoginComponent } from './login/login.component';
       multi: true
     },
   ],
+  entryComponents:[ StatusComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

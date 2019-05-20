@@ -1,4 +1,7 @@
+// Dependency Imports
 import { Routes } from '@angular/router';
+
+// Component Imports
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { ProjectComponent } from '../../project/project.component';
 import { CompareComponent } from '../../compare/compare.component';
@@ -9,6 +12,7 @@ import { HistoryComponent } from 'app/history/history.component';
 import { CommentsComponent } from 'app/comments/comments.component';
 import { MappingSpecComponent } from 'app/mapping-spec/mapping-spec.component';
 import { QualityChecklistComponent } from 'app/quality-checklist/quality-checklist.component';
+import { AdminPreferencesComponent } from 'app/admin-preferences/admin-preferences.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
@@ -28,4 +32,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'mappingSpec/:id', component: MappingSpecComponent },
     { path: 'checklist', component: QualityChecklistComponent },
     { path: 'checklist/:id', component: QualityChecklistComponent },
+    { path: 'adminPreferences', component : AdminPreferencesComponent },
 ];

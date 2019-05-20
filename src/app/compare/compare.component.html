@@ -108,7 +108,7 @@
 
           <div class="example-sidenav-content">
             <div id="main">
-              <div class="row mx-1">
+              <div class="row mx-1 w-100">
                 <div style="width:70%">
                   <div class="card m-0 mt-1" style="height: 99vh !important">
                     <iframe id="showLabelDoc" frameborder="1" frameborder="0" width="100%" height="800px"></iframe>
@@ -116,8 +116,14 @@
                 </div>
 
                 <!-- COMMENTS SECTION -->
-                <div style="width:30%;overflow-x: hidden; overflow-y: auto; height: 100vh;" >
-                  <div *ngFor="let item of projectDetails.comments;let i = index" class="card border-info m-1 mr-2">
+                <div style="width:30%;" >
+                  <div class="row mx-2">
+                    <ng-select class="w-100 my-1" autoCapitalize="ON" dropdownPosition="bottom" [items]="conflictCriterias" bindValue="value" bindLabel="value" placeholder="Select Conflict Criteria" (ngModelChange)="filterItem($event)" [(ngModel)]="conflictType"></ng-select>
+                    <!-- text-capitalize -->
+                  </div>
+                  <hr />
+                  <div class="row mx-0 pl-2" style="overflow-x: hidden; overflow-y: auto; height: 85vh;">
+                  <div *ngFor="let item of filteredItems;let i = index" class="card border-info m-1 mr-2">
                     <mat-card class="p-2" id="{{ i }}">
                       <mat-card-content class="mb-0">
                         <div class="small"
@@ -143,6 +149,7 @@
                         <!-- runOnRouteChange(); -->
                       </mat-card-actions>
                     </mat-card>
+                  </div>
                   </div>
                 </div>
               </div>
