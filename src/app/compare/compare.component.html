@@ -110,8 +110,14 @@
             <div id="main">
               <div class="row mx-1">
                 <div style="width:70%">
+                  <button (click)="pdfViewer.prevPage()">Previous Page</button>
+                  <button (click)="pdfViewer.nextPage()">Next Page</button>
                   <div class="card m-0 mt-1" style="height: 99vh !important">
-                    <iframe id="showLabelDoc" frameborder="1" frameborder="0" width="100%" height="800px"></iframe>
+<!--                     <iframe id="showLabelDoc" frameborder="1" frameborder="0" width="100%" height="800px"></iframe> -->
+                    <section id="viewer">
+                      <!-- Simple PDF Viewer: open the test.pdf at the second page -->
+                      <simple-pdf-viewer #pdfViewer [src]="labelDocUrl"></simple-pdf-viewer>
+                    </section>
                   </div>
                 </div>
 
@@ -124,7 +130,7 @@
                           [ngClass]="item.action == 'ACCEPT' ? 'btn-success pl-2 rounded' :  (item.action == 'REJECT' ? 'btn-danger pl-2 rounded' : '' )">
                           {{item.conflict_type}} CONFLICT</div>
                         <hr style="margin: 0.5rem 0" />
-                        <div class="small">{{item.comment_text}}</div>
+                        <div class="small" (click)="pdfViewer.search(item.comment_text)" style="cursor: pointer;">{{item.comment_text}}</div>
                       </mat-card-content>
                       <mat-card-actions class="text-right">
                         <button mat-raised-button type="button" matTooltip="Accept"

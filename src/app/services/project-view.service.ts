@@ -23,7 +23,7 @@ export class ProjectViewService {
 
   public endPointAddress : string = environment.serverUrl; //configuration based on environment
 
-   //public endPointAddress : string = 'http://54.164.151.252:3005'; //Dev Server URL
+  //public endPointAddress : string = 'http://54.164.151.252:3005'; //Dev Server URL
 
    //public endPointAddress: string = 'http://3.90.245.202:3005'; //Sand box server URL
 

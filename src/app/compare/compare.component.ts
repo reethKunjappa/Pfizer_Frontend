@@ -1,9 +1,9 @@
 // Dependency Imports
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-// import { SimplePdfViewerModule } from 'simple-pdf-viewer';
+import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 
 export interface DialogData {
   commentsList: any;
@@ -41,6 +41,7 @@ export class CompareComponent implements OnInit {
   public contentCount: any;
   public spellCheckCount: any;
   public commentsAcceptedRejected = [];
+  public labelDocUrl: any = '';
 
   public conflicts = {
     'font': [],
@@ -48,10 +49,11 @@ export class CompareComponent implements OnInit {
     'spell': [],
     'content': []
   }
-
+  
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
-      // private pdfViewer: SimplePdfViewerModule
+    private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
+    private pdfViewer: SimplePdfViewerModule) {
+
       this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
       this.viewType = params.get('view');
@@ -84,10 +86,10 @@ export class CompareComponent implements OnInit {
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
             if (a.hasOwnProperty('pdfPath')) {
-              let labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
-              setTimeout(() => {
+              this.labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
+              /* setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
-              }, 1000);
+              }, 1000); */
               this.labelCopy = this.projectViewService.endPointAddress + a.labelCopy.destination;
             }
           }
@@ -120,10 +122,10 @@ export class CompareComponent implements OnInit {
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
             if (a.hasOwnProperty('pdfPath')) {
-              let labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
-              setTimeout(() => {
+              this.labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
+              /* setTimeout(() => {
                 document.getElementById('showLabelDoc').setAttribute('src', labelDocUrl);
-              }, 1000);
+              }, 1000); */
               this.labelCopy = this.projectViewService.endPointAddress + a.labelCopy.destination;
             }
           }
@@ -144,6 +146,10 @@ export class CompareComponent implements OnInit {
         }, 1000);
       }
     });
+  }
+  
+  testFunc(dat) {
+    console.log(dat)
   }
 
   // Open Confirmation Modal
@@ -220,10 +226,10 @@ export class CompareComponent implements OnInit {
   downloadCommentedLabelDoc() {
     window.open(this.labelCopy, '_blank');
   }
-
+/* 
   setUrl(destination: any) {
     return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
-  }
+  } */
 
 }
 

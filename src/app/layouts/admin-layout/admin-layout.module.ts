@@ -18,7 +18,7 @@ import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTo
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 
-//import { SimplePdfViewerModule } from 'simple-pdf-viewer';
+import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 
 import { MaterialModule } from 'app/material.module';
 
@@ -56,7 +56,7 @@ import { QualityChecklistComponent } from '../../quality-checklist/quality-check
     MatChipsModule,
     MaterialModule,
     MatBadgeModule,
-   // SimplePdfViewerModule
+    SimplePdfViewerModule
   ],
   declarations: [
     DashboardComponent,

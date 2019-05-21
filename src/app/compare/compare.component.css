@@ -20,3 +20,11 @@
   .mat-drawer-inner-container{
     overflow: hidden !important;
   }
+
+  .page {
+    border: none !important;
+  }
+
+  .pdfViewerContainer {
+    height: 72% !important;
+  }
