@@ -44,11 +44,11 @@ export class CompareComponent implements OnInit {
   public spellCheckCount: any;
   public commentsAcceptedRejected = [];
   public conflictCriterias: any[] = [
-    { 'value': 'ALL' },
-    { 'value': 'CONTENT' },
-    { 'value': 'FONT' },
-    { 'value': 'GRAMMAR_SPELLING' },
-    { 'value': 'ORDER' },
+    { 'value': 'ALL', 'label' : 'All' },
+    { 'value': 'CONTENT', 'label' : 'Content' },
+    { 'value': 'FONT', 'label' : 'Font' },
+    { 'value': 'GRAMMAR_SPELLING', 'label' : 'Spell Check' },
+    { 'value': 'ORDER', 'label' : 'Order' },
   ];
   public conflictType: string = "ALL";
   public conflicts = {
@@ -130,6 +130,10 @@ export class CompareComponent implements OnInit {
         this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
         this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
 
+        // Below lines execution for finding unique from an array - Shashank - Implement after Reeth's approval
+        // let unique = new Set(this.projectDetails.comments.map(item => item.conflict_type ));
+        // console.log("unique::",unique);
+
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
             if (a.hasOwnProperty('pdfPath')) {
@@ -184,25 +188,29 @@ export class CompareComponent implements OnInit {
     });
   }
 
-  acceptOrRejectComment(action, index) {
-    if (action == 'Accept') {
-      if (this.projectDetails.comments[index].action == '' || this.projectDetails.comments[index].action == null) {
-        this.projectDetails.comments[index].action = 'ACCEPT';
-        this.projectDetails.comments[index]._deleted = true;
-      } else {
-        this.projectDetails.comments[index].action = '';
-        this.projectDetails.comments[index]._deleted = false;
+  acceptOrRejectComment(action, item) {
+    this.projectDetails.comments.find((x) => {
+      if(x.comment_id === item.comment_id) {
+        if (action == 'Accept') {
+          if (x.action == '' || x.action == null) {
+            x.action = 'ACCEPT';
+            x._deleted = true;
+          } else {
+            x.action = '';
+            x._deleted = false;
+          }
+        }
+        if (action == 'Reject') {
+          if (x.action == '' || x.action == null) {
+            x.action = 'REJECT';
+            x._deleted = true;
+          } else {
+            x.action = '';
+            x._deleted = false;
+          }
+        }
       }
-    }
-    if (action == 'Reject') {
-      if (this.projectDetails.comments[index].action == '' || this.projectDetails.comments[index].action == null) {
-        this.projectDetails.comments[index].action = 'REJECT';
-        this.projectDetails.comments[index]._deleted = true;
-      } else {
-        this.projectDetails.comments[index].action = '';
-        this.projectDetails.comments[index]._deleted = false;
-      }
-    }
+    })
   }
 
 
@@ -237,7 +245,7 @@ export class CompareComponent implements OnInit {
     return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
   }
 
-  filterItem(event) {
+  filterItem(event) {    
     let value = event; //.target.value;
     if ( value ) {
       if ( value == 'ALL' ) {
@@ -261,7 +269,6 @@ export class CompareComponent implements OnInit {
   }
 
 }
-
 
 
 /* ================================ Confirmation Modal ================================ */

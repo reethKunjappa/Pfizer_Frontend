@@ -118,8 +118,7 @@
                 <!-- COMMENTS SECTION -->
                 <div style="width:30%;" >
                   <div class="row mx-2">
-                    <ng-select class="w-100 my-1" autoCapitalize="ON" dropdownPosition="bottom" [items]="conflictCriterias" bindValue="value" bindLabel="value" placeholder="Select Conflict Criteria" (ngModelChange)="filterItem($event)" [(ngModel)]="conflictType"></ng-select>
-                    <!-- text-capitalize -->
+                    <ng-select class="w-100 my-1" autoCapitalize="on" dropdownPosition="bottom" [items]="conflictCriterias" bindValue="value" bindLabel="label" placeholder="Select Conflict Criteria" (ngModelChange)="filterItem($event)" [(ngModel)]="conflictType"></ng-select>
                   </div>
                   <hr />
                   <div class="row mx-0 pl-2" style="overflow-x: hidden; overflow-y: auto; height: 85vh;">
@@ -135,12 +134,12 @@
                       <mat-card-actions class="text-right">
                         <button mat-raised-button type="button" matTooltip="Accept"
                           class="btn btn-success btn-link btn-sm btn-just-icon"
-                          (click)="acceptOrRejectComment('Accept',i)">
+                          (click)="acceptOrRejectComment('Accept',item)">
                           <i class="material-icons">check</i>
                         </button>
                         <button mat-raised-button type="button" matTooltip="Reject"
                           class="btn btn-danger btn-link btn-sm btn-just-icon"
-                          (click)="acceptOrRejectComment('Reject',i)">
+                          (click)="acceptOrRejectComment('Reject',item)">
                           <i class="material-icons">close</i>
                         </button>
                         <button mat-raised-button *ngIf="(item.reference_doc!='' && item.reference_doc!=null && item.reference_doc!=undefined)" type="button" (click)="drawer.toggle();getReferenceDocument(item, i);"
