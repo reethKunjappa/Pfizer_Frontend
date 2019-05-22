@@ -4,6 +4,9 @@ import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular
 import { Location, PopStateEvent } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SimplePdfViewerModule } from 'simple-pdf-viewer';
+import { NgSelectModule, NgOption } from '@ng-select/ng-select';
+
+// import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 
 export interface DialogData {
   commentsList: any;
@@ -43,18 +46,27 @@ export class CompareComponent implements OnInit {
   public commentsAcceptedRejected = [];
   public labelDocUrl: any = '';
 
+  public conflictCriterias: any[] = [
+    { 'value': 'ALL' },
+    { 'value': 'CONTENT' },
+    { 'value': 'FONT' },
+    { 'value': 'GRAMMAR_SPELLING' },
+    { 'value': 'ORDER' },
+  ];
+  public conflictType: string = "ALL";
   public conflicts = {
     'font': [],
     'order': [],
     'spell': [],
     'content': []
   }
-  
+  filteredItems: any;
+
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
     private pdfViewer: SimplePdfViewerModule) {
 
-      this.activatedRoute.paramMap.subscribe((params: any) => {
+    this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
       this.viewType = params.get('view');
     });
@@ -75,6 +87,8 @@ export class CompareComponent implements OnInit {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
         this.comments = this.projectDetails.comments;
+        this.assignCopy();
+
         this.totalCount = this.projectDetails.comments.length;
         this.conflicts.font = this.comments.filter((x) => {
           return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
@@ -110,6 +124,7 @@ export class CompareComponent implements OnInit {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
         this.comments = res.result.comments;
+        this.assignCopy();
 
         this.totalCount = this.projectDetails.comments.length;
         this.conflicts.font = this.projectDetails.comments.filter((x) => {
@@ -147,7 +162,7 @@ export class CompareComponent implements OnInit {
       }
     });
   }
-  
+
   testFunc(dat) {
     console.log(dat)
   }
@@ -160,13 +175,11 @@ export class CompareComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      
-      if( result != undefined && result != '' ) {
+      if (result != undefined && result != '') {
         this.projectDetails = result;
         this.comments = result.comments;
         this.totalCount = this.projectDetails.comments.length;
-  
+
         this.conflicts.font = this.projectDetails.comments.filter((x) => {
           return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
         })
@@ -177,25 +190,29 @@ export class CompareComponent implements OnInit {
     });
   }
 
- acceptOrRejectComment(action, index) {
-    if (action == 'Accept') {
-      if (this.projectDetails.comments[index].action == '' || this.projectDetails.comments[index].action == null) {
-        this.projectDetails.comments[index].action = 'ACCEPT';
-        this.projectDetails.comments[index]._deleted = true;
-      } else {
-        this.projectDetails.comments[index].action = '';
-        this.projectDetails.comments[index]._deleted = false;
+  acceptOrRejectComment(action, item) {
+    this.projectDetails.comments.find((x) => {
+      if(x.comment_id === item.comment_id) {
+        if (action == 'Accept') {
+          if (x.action == '' || x.action == null) {
+            x.action = 'ACCEPT';
+            x._deleted = true;
+          } else {
+            x.action = '';
+            x._deleted = false;
+          }
+        }
+        if (action == 'Reject') {
+          if (x.action == '' || x.action == null) {
+            x.action = 'REJECT';
+            x._deleted = true;
+          } else {
+            x.action = '';
+            x._deleted = false;
+          }
+        }
       }
-    }
-    if (action == 'Reject') {
-      if (this.projectDetails.comments[index].action == '' || this.projectDetails.comments[index].action == null) {
-        this.projectDetails.comments[index].action = 'REJECT';
-        this.projectDetails.comments[index]._deleted = true;
-      } else {
-        this.projectDetails.comments[index].action = '';
-        this.projectDetails.comments[index]._deleted = false;
-      }
-    }
+    })
   }
 
 
@@ -217,7 +234,6 @@ export class CompareComponent implements OnInit {
           this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
           this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
           this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
-
         }
       });
     }
@@ -226,10 +242,33 @@ export class CompareComponent implements OnInit {
   downloadCommentedLabelDoc() {
     window.open(this.labelCopy, '_blank');
   }
-/* 
-  setUrl(destination: any) {
-    return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
-  } */
+  /* 
+    setUrl(destination: any) {
+      return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
+    } */
+
+  filterItem(event) {
+    let value = event; //.target.value;
+    if (value) {
+      if (value == 'ALL') {
+        this.assignCopy();
+      } else if (value == 'FONT') {
+        this.filteredItems = this.filterAssign('FONT_SIZE', 'FONT_NAME');
+      } else {
+        this.filteredItems = this.filterAssign(value, '');
+      }
+    } else {
+      this.assignCopy();
+    }
+  }
+
+  filterAssign(value1, value2) {
+    return this.projectDetails.comments.filter((x) => { return x.conflict_type === value1 || x.conflict_type === value2 });
+  }
+
+  assignCopy() {
+    this.filteredItems = Object.assign([], this.projectDetails.comments)
+  }
 
 }
 

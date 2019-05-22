@@ -108,10 +108,27 @@
 
           <div class="example-sidenav-content">
             <div id="main">
-              <div class="row mx-1">
+              <div class="row mx-1 w-100">
                 <div style="width:70%">
-                  <button (click)="pdfViewer.prevPage()">Previous Page</button>
-                  <button (click)="pdfViewer.nextPage()">Next Page</button>
+                  <div class="row">
+                    <div class="col-4">
+                     <!--  <button mat-raised-button type="button" matTooltip="Download"
+                      class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">save_alt</i></button>  -->
+                    </div>
+                    <div class="col-4 text-center">
+                      <button (click)="pdfViewer.zoomIn()" mat-raised-button type="button" matTooltip="Prev Page"
+                      class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">zoom_in</i></button>
+                      <button (click)="pdfViewer.zoomOut()" mat-raised-button type="button" matTooltip="Next Page"
+                      class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">zoom_out</i></button>
+                    </div>
+                    <div class="col-4 text-right">
+                      <button (click)="pdfViewer.prevPage()" mat-raised-button type="button" matTooltip="Prev Page"
+                      class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">navigate_before</i></button>
+                      <button (click)="pdfViewer.nextPage()" mat-raised-button type="button" matTooltip="Next Page"
+                      class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">navigate_next</i></button>
+                    </div>
+                  </div>
+                  
                   <div class="card m-0 mt-1" style="height: 99vh !important">
 <!--                     <iframe id="showLabelDoc" frameborder="1" frameborder="0" width="100%" height="800px"></iframe> -->
                     <section id="viewer">
@@ -122,8 +139,13 @@
                 </div>
 
                 <!-- COMMENTS SECTION -->
-                <div style="width:30%;overflow-x: hidden; overflow-y: auto; height: 100vh;" >
-                  <div *ngFor="let item of projectDetails.comments;let i = index" class="card border-info m-1 mr-2">
+                <div style="width:30%;" >
+                  <div class="row mx-2">
+                    <ng-select class="w-100 my-1" autoCapitalize="ON" dropdownPosition="bottom" [items]="conflictCriterias" bindValue="value" bindLabel="value" placeholder="Select Conflict Criteria" (ngModelChange)="filterItem($event)" [(ngModel)]="conflictType"></ng-select>
+                    <!-- text-capitalize -->
+                  </div>
+                  <div class="row mx-0 pl-2" style="overflow-x: hidden; overflow-y: auto; height: 93vh;">
+                  <div *ngFor="let item of filteredItems;let i = index" class="card border-info m-1 mr-2">
                     <mat-card class="p-2" id="{{ i }}">
                       <mat-card-content class="mb-0">
                         <div class="small"
@@ -135,12 +157,12 @@
                       <mat-card-actions class="text-right">
                         <button mat-raised-button type="button" matTooltip="Accept"
                           class="btn btn-success btn-link btn-sm btn-just-icon"
-                          (click)="acceptOrRejectComment('Accept',i)">
+                          (click)="acceptOrRejectComment('Accept',item)">
                           <i class="material-icons">check</i>
                         </button>
                         <button mat-raised-button type="button" matTooltip="Reject"
                           class="btn btn-danger btn-link btn-sm btn-just-icon"
-                          (click)="acceptOrRejectComment('Reject',i)">
+                          (click)="acceptOrRejectComment('Reject',item)">
                           <i class="material-icons">close</i>
                         </button>
                         <button mat-raised-button *ngIf="(item.reference_doc!='' && item.reference_doc!=null && item.reference_doc!=undefined)" type="button" (click)="drawer.toggle();getReferenceDocument(item, i);"
@@ -149,6 +171,7 @@
                         <!-- runOnRouteChange(); -->
                       </mat-card-actions>
                     </mat-card>
+                  </div>
                   </div>
                 </div>
               </div>

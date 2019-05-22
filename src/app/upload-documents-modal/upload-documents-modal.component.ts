@@ -83,11 +83,15 @@ export class UploadDocumentsModalComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
       file['fileType'] = '';
+      console.log('before' + this.uploader.queue);
+      
       if (!this.allowMultiple) {
+        console.log(`bet ${this.uploader.queue}`);
         file['fileType'] = this.reUploadFileType;
         file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
         this.disableDropDown = true;
       }
+      console.log('after' +this.uploader.queue);
     };
 
     // this.uploader.uploadItem = (value : FileItem) => { }
@@ -131,6 +135,10 @@ export class UploadDocumentsModalComponent implements OnInit {
       this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + item.fileType;
     }
     this.checkUploadAllStatus();
+    if (item.fileType === 'Label' && item.file.name.split('.').pop() != 'docx') {
+      this.uploader.queue = this.uploader.queue.splice(i, -1);
+      alert('File type is not docx, please select docx file');
+    }
   }
 
   disabledSelectOption(array) { }

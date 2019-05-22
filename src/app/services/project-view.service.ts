@@ -18,15 +18,11 @@ export class ProjectViewService {
   public _initializeMappingSpec = this._initializeMappingSpec$.asObservable();   // asObservable declarations for listening to the
 
   public mappingFileData : any = {};
-
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
-
   public endPointAddress : string = environment.serverUrl; //configuration based on environment
 
-  //public endPointAddress : string = 'http://54.164.151.252:3005'; //Dev Server URL
-
-   //public endPointAddress: string = 'http://3.90.245.202:3005'; //Sand box server URL
-
+  // public endPointAddress : string = 'http://54.164.151.252:3005'; //Dev Server URL
+  // public endPointAddress: string = 'http://3.90.245.202:3005'; //Sand box server URL
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -339,4 +335,52 @@ export class ProjectViewService {
     );
   }
 
+  // ADD ADMIN PREFERENCES DATA 
+  addAdminPreferences( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/preferencesCreate';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;              
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+  
+  // ADD ADMIN PREFERENCES DATA 
+  fetchAdminPreferences() : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/getAllPreferences';
+    return this.http.post<any>( url, null, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;              
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // UPDATE ADMIN PREFERENCE COUNTRY LANGUAGE 
+  updateCountryLanguage( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/updatePreference';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code == '0' ) {
+          return response;              
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+  
 }

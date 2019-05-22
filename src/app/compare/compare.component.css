@@ -28,3 +28,11 @@
   .pdfViewerContainer {
     height: 72% !important;
   }
+
+  .pdfViewer .page {
+    height: 125vh !important;
+  }
+
+  #criteria .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    padding-bottom: 0rem !important; 
+  }
