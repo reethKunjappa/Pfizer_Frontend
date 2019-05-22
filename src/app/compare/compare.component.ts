@@ -47,11 +47,11 @@ export class CompareComponent implements OnInit {
   public labelDocUrl: any = '';
 
   public conflictCriterias: any[] = [
-    { 'value': 'ALL' },
-    { 'value': 'CONTENT' },
-    { 'value': 'FONT' },
-    { 'value': 'GRAMMAR_SPELLING' },
-    { 'value': 'ORDER' },
+    { 'value': 'ALL', 'label' : 'All' },
+    { 'value': 'CONTENT', 'label' : 'Content' },
+    { 'value': 'FONT', 'label' : 'Font' },
+    { 'value': 'GRAMMAR_SPELLING', 'label' : 'Spell Check' },
+    { 'value': 'ORDER', 'label' : 'Order' },
   ];
   public conflictType: string = "ALL";
   public conflicts = {
@@ -134,6 +134,10 @@ export class CompareComponent implements OnInit {
         this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
         this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
 
+        // Below lines execution for finding unique from an array - Shashank - Implement after Reeth's approval
+        // let unique = new Set(this.projectDetails.comments.map(item => item.conflict_type ));
+        // console.log("unique::",unique);
+
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
             if (a.hasOwnProperty('pdfPath')) {
@@ -177,6 +181,8 @@ export class CompareComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result != '') {
         this.projectDetails = result;
+        this.filteredItems = result.comments;
+        this.filterItem(this.conflictType);
         this.comments = result.comments;
         this.totalCount = this.projectDetails.comments.length;
 
@@ -225,15 +231,21 @@ export class CompareComponent implements OnInit {
     if (obj.comments.length) {
       this.projectViewService.acceptRejectDocumentsComments(obj).subscribe((updateDocCommentsResp: any) => {
         if (updateDocCommentsResp != undefined && updateDocCommentsResp != "") {
-          this.projectDetails = updateDocCommentsResp.result;
-          this.totalCount = this.projectDetails.comments.length;
-
-          this.conflicts.font = this.projectDetails.comments.filter((x) => {
-            return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
-          })
-          this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
-          this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
-          this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
+          if ( updateDocCommentsResp.status.code == 0 ) {
+            this.projectDetails = updateDocCommentsResp.result;
+            this.filteredItems = this.projectDetails.comments;
+            this.filterItem(this.conflictType);
+            this.totalCount = this.projectDetails.comments.length;
+  
+            this.conflicts.font = this.projectDetails.comments.filter((x) => {
+              return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
+            })
+            this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
+            this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
+            this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });              
+          }else {
+            alert(updateDocCommentsResp.status.message);
+          }
         }
       });
     }
@@ -247,7 +259,7 @@ export class CompareComponent implements OnInit {
       return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
     } */
 
-  filterItem(event) {
+  filterItem(event) {    
     let value = event; //.target.value;
     if (value) {
       if (value == 'ALL') {
@@ -271,7 +283,6 @@ export class CompareComponent implements OnInit {
   }
 
 }
-
 
 
 /* ================================ Confirmation Modal ================================ */

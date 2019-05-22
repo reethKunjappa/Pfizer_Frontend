@@ -141,8 +141,7 @@
                 <!-- COMMENTS SECTION -->
                 <div style="width:30%;" >
                   <div class="row mx-2">
-                    <ng-select class="w-100 my-1" autoCapitalize="ON" dropdownPosition="bottom" [items]="conflictCriterias" bindValue="value" bindLabel="value" placeholder="Select Conflict Criteria" (ngModelChange)="filterItem($event)" [(ngModel)]="conflictType"></ng-select>
-                    <!-- text-capitalize -->
+                    <ng-select class="w-100 my-1" autoCapitalize="on" dropdownPosition="bottom" [items]="conflictCriterias" bindValue="value" bindLabel="label" placeholder="Select Conflict Criteria" (ngModelChange)="filterItem($event)" [(ngModel)]="conflictType"></ng-select>
                   </div>
                   <div class="row mx-0 pl-2" style="overflow-x: hidden; overflow-y: auto; height: 93vh;">
                   <div *ngFor="let item of filteredItems;let i = index" class="card border-info m-1 mr-2">
