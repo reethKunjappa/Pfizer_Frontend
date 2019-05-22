@@ -70,7 +70,8 @@ export class ViewProjectComponent implements OnInit {
       }
     }
     this.projectViewService._initializeMappingSpec$.next(inputResponse); 
-    this.projectViewService.mappingFileData = inputResponse;   
+    this.projectViewService.mappingFileData = inputResponse;
+    // localStorage.setItem('mappingData', JSON.stringify(inputResponse));
     this.router.navigate(['/mappingSpec', this.projectDetails._id]);
   }
 

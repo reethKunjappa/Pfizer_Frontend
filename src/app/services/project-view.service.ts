@@ -17,7 +17,7 @@ export class ProjectViewService {
   public _initializeMappingSpec$: BehaviorSubject<any> = new BehaviorSubject<any>('');
   public _initializeMappingSpec = this._initializeMappingSpec$.asObservable();   // asObservable declarations for listening to the
 
-  public mappingFileData : any = {};
+  public mappingFileData : any;
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
   public endPointAddress : string = environment.serverUrl; //configuration based on environment
 
@@ -39,6 +39,10 @@ export class ProjectViewService {
   // Setter Method for Maintaining Project Id 
   public projectID(v : any) {
     this.projectId = v._id;
+  }
+
+  fetchMappingFileData(){
+    return this.mappingFileData;
   }
 
   // Create Project API Call

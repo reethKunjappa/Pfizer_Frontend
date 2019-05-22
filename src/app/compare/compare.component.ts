@@ -175,6 +175,8 @@ export class CompareComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result != '') {
         this.projectDetails = result;
+        this.filteredItems = result.comments;
+        this.filterItem(this.conflictType);
         this.comments = result.comments;
         this.totalCount = this.projectDetails.comments.length;
 
@@ -223,15 +225,21 @@ export class CompareComponent implements OnInit {
     if (obj.comments.length) {
       this.projectViewService.acceptRejectDocumentsComments(obj).subscribe((updateDocCommentsResp: any) => {
         if (updateDocCommentsResp != undefined && updateDocCommentsResp != "") {
-          this.projectDetails = updateDocCommentsResp.result;
-          this.totalCount = this.projectDetails.comments.length;
-
-          this.conflicts.font = this.projectDetails.comments.filter((x) => {
-            return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
-          })
-          this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
-          this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
-          this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
+          if ( updateDocCommentsResp.status.code == 0 ) {
+            this.projectDetails = updateDocCommentsResp.result;
+            this.filteredItems = this.projectDetails.comments;
+            this.filterItem(this.conflictType);
+            this.totalCount = this.projectDetails.comments.length;
+  
+            this.conflicts.font = this.projectDetails.comments.filter((x) => {
+              return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
+            })
+            this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
+            this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
+            this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });              
+          }else {
+            alert(updateDocCommentsResp.status.message);
+          }
         }
       });
     }

@@ -29,15 +29,13 @@ export class MappingSpecComponent implements OnInit {
       this.projectId = params.get('id');
     });    
 
-    this.projectViewService._initializeMappingSpec.subscribe((mappingSpecData: any) => {
-      if (mappingSpecData != undefined && mappingSpecData != "") {
-        this.fileData = mappingSpecData;
-        this.projectViewService.getMappingSpec(this.fileData).subscribe((getMappingSpecResp: any) => {
-          this.mappingSpec = JSON.parse(getMappingSpecResp.result);
-        });
-      }
-    }); 
-
+    this.fileData = this.projectViewService.fetchMappingFileData();
+    // this.fileData = JSON.parse(localStorage.getItem('mappingData'));
+    if( this.fileData ) {
+      this.projectViewService.getMappingSpec(this.fileData).subscribe((getMappingSpecResp: any) => {
+        this.mappingSpec = JSON.parse(getMappingSpecResp.result);
+      });  
+    }
   }
 
   ngOnInit() { }
