@@ -50,10 +50,9 @@ export class AdminPreferencesComponent implements OnInit {
   constructor(private countryCodeService: CountryCodeService, private projectViewService : ProjectViewService, public dialog: MatDialog) {
     this.countryData = this.countryCodeService.getCountryCodeData();
     this.projectViewService.fetchAdminPreferences().subscribe(( fetchAdminPrefResp : any )=>{
-      if ( fetchAdminPrefResp != null && fetchAdminPrefResp != undefined ) {
+      if ( fetchAdminPrefResp != null && fetchAdminPrefResp != undefined && fetchAdminPrefResp.result != null ) {
         this.adminPrefDataStore = Object.assign({}, fetchAdminPrefResp.result);
         this.adminPrefData = Object.assign({}, this.adminPrefDataStore);
-        // console.log("fetchAdminPrefResp::",this.adminPrefData);          
       }
     });
   }
@@ -91,9 +90,10 @@ export class AdminPreferencesComponent implements OnInit {
       this.language = "";
       this.countrySelected = { id: "", name: "" };
       this.projectViewService.addAdminPreferences( this.adminPreferencesData ).subscribe((addAdminPrefResp : any)=>{
-        // console.log("addAdminPrefResp::",addAdminPrefResp);
-        this.adminPrefDataStore = Object.assign({}, addAdminPrefResp.result);
-        this.adminPrefData = Object.assign({}, this.adminPrefDataStore);
+        if ( addAdminPrefResp != undefined && addAdminPrefResp != null && addAdminPrefResp.result != null ) {
+          this.adminPrefDataStore = Object.assign({}, addAdminPrefResp.result);
+          this.adminPrefData = Object.assign({}, this.adminPrefDataStore);          
+        }
       });        
     }else {
       this.setLanguageDialog = this.dialog.open(StatusComponent, {
@@ -118,20 +118,16 @@ export class AdminPreferencesComponent implements OnInit {
   }
 
   editLanguage( index : number ) {
-    // console.log("Main:",this.adminPrefData);
-    // console.log("Store:",this.adminPrefDataStore);
     this.adminPrefData = Object.assign({}, this.adminPrefDataStore);
     this.selectedIndex = index;
   }
 
   saveLanguage(index : number){
-    // console.log("save::",this.adminPrefData.countryPreferences[index]);
     let obj = {
       'countryPreferences' : this.adminPrefData.countryPreferences[index]
     }; 
     this.projectViewService.updateCountryLanguage(obj).subscribe((updateCtryLangResp:any)=>{
-      if ( updateCtryLangResp != undefined && updateCtryLangResp != null ) {
-        // console.log("updateCtryLangResp::",updateCtryLangResp);
+      if ( updateCtryLangResp != undefined && updateCtryLangResp != null && updateCtryLangResp.result != null ) {
         this.adminPrefDataStore = Object.assign({}, updateCtryLangResp.result);
         this.adminPrefData = Object.assign({}, this.adminPrefDataStore);
       }

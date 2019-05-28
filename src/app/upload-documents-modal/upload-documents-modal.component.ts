@@ -76,40 +76,59 @@ export class UploadDocumentsModalComponent implements OnInit {
       // removeAfterUpload : true,
       itemAlias: 'files',
       method: 'POST',
-      queueLimit: this.allowMultiple ? 5 : 1,
+      // queueLimit: this.allowMultiple ? 50 : 1,
+      queueLimit: this.setQueueLimit(this.allowMultiple),
     });
+
     // Below line mandatory to show binary in header payloads
     // this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; }
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
       file['fileType'] = '';
-      console.log('before' + this.uploader.queue);
+      // console.log('before' + this.uploader.queue);
       
       if (!this.allowMultiple) {
-        console.log(`bet ${this.uploader.queue}`);
         file['fileType'] = this.reUploadFileType;
         file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
         this.disableDropDown = true;
       }
-      console.log('after' +this.uploader.queue);
+      // console.log('after' +this.uploader.queue);
     };
 
+    this.uploader.onErrorItem = (item: any, response: any, status: any, headers: any) => {
+      // console.log("onErrorItem item:", item);
+      // console.log("onErrorItem resp:", response);
+      // console.log("onErrorItem status:",status);
+      // console.log("onErrorItem headers:", headers);
+    }
+  
     // this.uploader.uploadItem = (value : FileItem) => { }
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      if (JSON.parse(response).status.code == 0) {
-        if (this.allowMultiple) {
-          this.createProjectData.documents.push(JSON.parse(response).result);
-        } else {
-          this.createProjectData.documents.map((e) => {
-            if (e._id == this.re_upload_documentId) {
-              let index = this.createProjectData.documents.indexOf(e);
-              this.createProjectData.documents.splice(index, 1, JSON.parse(response).result);
-            }
-          });
-        }
+      if ( response != "" && response != undefined && response != {} ) {
+        // console.log("onCompleteItem headers::", headers);
+        // console.log("Parsed res::", JSON.parse(response));
+        if (JSON.parse(response).status.code == 0) {
+          if (this.allowMultiple) {
+            this.createProjectData.documents.push(JSON.parse(response).result);
+          } else {
+            this.createProjectData.documents.map((e) => {
+              if (e._id == this.re_upload_documentId) {
+                let index = this.createProjectData.documents.indexOf(e);
+                this.createProjectData.documents.splice(index, 1, JSON.parse(response).result);
+              }
+            });
+          }
+        } 
       }
     };
+  }
+
+  // Function for setting file uploader queue size to 1 while re-upload and infinite while upload  
+  setQueueLimit( allowMultiple ) {
+    if ( !allowMultiple ) {
+      return 1;
+    }
   }
 
   // Ng2-File-Upload Methods
@@ -159,6 +178,7 @@ export class UploadDocumentsModalComponent implements OnInit {
     }
   }
 
+  // Function to disable "Label" fileType from dropdown if it is selected even once.
   disableFileType(event, file) {
     if (!this.fileSelectOptionDisable) {
       this.selectedFileTypeList = [];

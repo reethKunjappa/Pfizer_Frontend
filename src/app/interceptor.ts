@@ -25,29 +25,37 @@ export class I1 implements HttpInterceptor {
     return next.handle(req).do(
       (event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
+          if( event.body.status.code !== 0 ){
+            this.displayErrorMessage( event.body.status );
+          }
           this.spinnerService.hide();
         }
       },
       (err: any) => {
         if ( err ) {
           this.spinnerService.hide();
-          this.statusDialog = this.dialog.open(StatusComponent, {
-            disableClose: true,
-            width: '400px',
-            data: {
-              statusText: err.message,
-              statusTitle: 'Error',
-              showSubmit: false,
-              showCancel: true,
-              submitText: 'Ok',
-              cancelText: 'Close',
-            },
-          });
-          
-          this.statusDialog.afterClosed().subscribe(result => {});
+          this.displayErrorMessage(err);
         }
       }
     );
 
   }
+
+  displayErrorMessage( errMessage ){
+    this.statusDialog = this.dialog.open(StatusComponent, {
+      disableClose: true,
+      width: '400px',
+      data: {
+        statusText: errMessage.message,
+        statusTitle: 'Error',
+        showSubmit: false,
+        showCancel: true,
+        submitText: 'Ok',
+        cancelText: 'Close',
+      },
+    });
+    
+    this.statusDialog.afterClosed().subscribe(result => {});
+  }
+
 }

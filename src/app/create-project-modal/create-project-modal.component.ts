@@ -28,10 +28,10 @@ export class CreateProjectModalComponent implements OnInit {
   public createProjectData: CreateProjectData = new CreateProjectData();
   // public countryData: any[] = countries;
   public countryData: any[] = [];
-  public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
-  public statusDialog : any;
+  public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId': 'SHonrao' };
+  public statusDialog: any;
 
-  constructor(private projectViewService: ProjectViewService, public dialogRef: MatDialogRef<CreateProjectModalComponent>, public dialog: MatDialog, private countryCodeService : CountryCodeService) {
+  constructor(private projectViewService: ProjectViewService, public dialogRef: MatDialogRef<CreateProjectModalComponent>, public dialog: MatDialog, private countryCodeService: CountryCodeService) {
     this.countryData = this.countryCodeService.getCountryCodeData();
     // Form Validations Declarations
     this.projectForm = new FormGroup({
@@ -40,7 +40,7 @@ export class CreateProjectModalComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   setCountry(event, item) {
     if (event.isUserInput) {
@@ -56,25 +56,29 @@ export class CreateProjectModalComponent implements OnInit {
   createProject() {
     this.createProjectData.createdBy = this.projectViewService.loggedInUser; //this.loggedInUser;
     this.projectViewService.createProject(this.createProjectData).subscribe((createStatus: any) => {
-      if ( createStatus != "" && createStatus != undefined ) {
-        this.statusDialog = this.dialog.open(StatusComponent, {
-          disableClose: true,
-          width: '400px',
-          data: {
-            statusText: createStatus.status.message,
-            statusTitle: createStatus.status.code == '0' ? 'Success' : 'Error',
-            showSubmit: true,
-            showCancel: false,
-            submitText: 'Ok',
-            cancelText: 'Cancel',
-          },
-        });
+      if (createStatus != "" && createStatus != undefined) {
+        if (createStatus.status.code === 0) {
+          this.statusDialog = this.dialog.open(StatusComponent, {
+            disableClose: true,
+            width: '400px',
+            data: {
+              statusText: createStatus.status.message,
+              statusTitle: createStatus.status.code == '0' ? 'Success' : 'Error',
+              showSubmit: true,
+              showCancel: false,
+              submitText: 'Ok',
+              cancelText: 'Cancel',
+            },
+          });
 
-        this.statusDialog.afterClosed().subscribe(result => {
-          if ( result == 'Submit' ) {
-            this.dialogRef.close({'status' : 'Created' , 'data' : createStatus});                      
-          }
-        });
+          this.statusDialog.afterClosed().subscribe(result => {
+            if (result == 'Submit') {
+              this.dialogRef.close({ 'status': 'Created', 'data': createStatus });
+            }
+          });
+        }else {
+          this.dialogRef.close();
+        }
       }
     });
   }

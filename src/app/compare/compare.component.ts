@@ -155,7 +155,9 @@ export class CompareComponent implements OnInit {
 
   // Get Reference Document
   getReferenceDocument(docDetails: any) {
+    // console.log("Get Ref. Doc::",docDetails);
     this.referenceDocuments = [];
+    // console.log("#$#$::",this.projectDetails.project.documents);
     this.projectDetails.project.documents.map((element: any) => {
       if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) == element.documentName) {
         this.referenceDocuments.push(element);
@@ -165,10 +167,6 @@ export class CompareComponent implements OnInit {
         }, 1000);
       }
     });
-  }
-
-  testFunc(dat) {
-    console.log(dat)
   }
 
   // Open Confirmation Modal
@@ -244,7 +242,7 @@ export class CompareComponent implements OnInit {
             this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
             this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });              
           }else {
-            alert(updateDocCommentsResp.status.message);
+            // alert(updateDocCommentsResp.status.message);
           }
         }
       });
@@ -254,10 +252,11 @@ export class CompareComponent implements OnInit {
   downloadCommentedLabelDoc() {
     window.open(this.labelCopy, '_blank');
   }
+  
   /* 
     setUrl(destination: any) {
       return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
-    } */
+  } */
 
   filterItem(event) {    
     let value = event; //.target.value;
@@ -327,7 +326,7 @@ export class CommentsConfirmationModal {
         if (res.status.code === 0) {
           this.dialogRef.close(res.result);
         } else {
-          alert(res.status.message);
+          // alert(res.status.message);
           this.dialogRef.close();
         }
       });

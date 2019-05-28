@@ -63,7 +63,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, data, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response.result;                
         }else {
           throw new Error('Value expected!');
@@ -79,7 +79,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, { "_id" : id }, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response.result;                
         }else {
           throw new Error('Value expected!');
@@ -95,7 +95,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response.result;                
         }else {
           throw new Error('Value expected!');
@@ -111,7 +111,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;                
         }else {
           throw new Error('Value expected!');
@@ -127,7 +127,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;                
         }else {
           throw new Error('Value expected!');
@@ -146,7 +146,7 @@ export class ProjectViewService {
     }
     return this.http.post(url, reqInput, this.httpOptions).pipe(
       map((response: any) => {
-        if ( response.status.code === 1 ) {
+        if ( response.status.code === 0 ) {
           return response;
         }
       })
@@ -198,7 +198,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;                
         }else {
           throw new Error('Value expected!');
@@ -215,7 +215,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;                
         }else {
           throw new Error('Value expected!');
@@ -231,7 +231,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;                
         }else {
           throw new Error('Value expected!');
@@ -247,7 +247,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;                
         }else {
           throw new Error('Value expected!');
@@ -263,7 +263,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;              
         }else {
           throw new Error('Value expected!');
@@ -279,7 +279,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;              
         }else {
           throw new Error('Value expected!');
@@ -295,7 +295,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
 
         }else {
           //throw new Error(response.status.message);
@@ -313,7 +313,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;
         }else {
           throw new Error('Value expected!');
@@ -329,7 +329,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;              
         }else {
           throw new Error('Value expected!');
@@ -345,7 +345,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;              
         }else {
           throw new Error('Value expected!');
@@ -361,7 +361,7 @@ export class ProjectViewService {
     return this.http.post<any>( url, null, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;              
         }else {
           throw new Error('Value expected!');
@@ -377,10 +377,10 @@ export class ProjectViewService {
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
       map((response: any )=> {
-        if ( response.status.code == '0' ) {
+        if ( response.status.code === 0 ) {
           return response;              
         }else {
-          throw new Error('Value expected!');
+          throw new Error('Value expected!');  
         }
       }),
       // catchError(err => of([]))
