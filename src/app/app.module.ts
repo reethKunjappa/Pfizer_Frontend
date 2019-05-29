@@ -17,6 +17,9 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { ProjectViewService } from './services/project-view.service';
 import { I1 } from './interceptor';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { LoggedInUserService } from './services/logged-in-user.service';
+
+// Component Imports
 import { LoginComponent } from './login/login.component';
 import { StatusComponent } from './status/status.component';
 
@@ -58,6 +61,7 @@ import { StatusComponent } from './status/status.component';
       useClass: I1,
       multi: true
     },
+    LoggedInUserService,
   ],
   entryComponents:[ StatusComponent ],
   bootstrap: [AppComponent]

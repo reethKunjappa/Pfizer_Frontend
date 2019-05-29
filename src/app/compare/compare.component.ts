@@ -170,10 +170,10 @@ export class CompareComponent implements OnInit {
   }
 
   // Open Confirmation Modal
-  openConfirmationModal(action, comments) {
+  openConfirmationModal(action, comments, conflictTypeLabel) {
     const dialogRef = this.dialog.open(CommentsConfirmationModal, {
       width: '35vw',
-      data: { commentsList: comments, projectDetails: this.projectDetails, action: action }
+      data: { commentsList: comments, projectDetails: this.projectDetails, action: action, conflictTypeLabel : conflictTypeLabel }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -224,7 +224,11 @@ export class CompareComponent implements OnInit {
     const obj = {
       'user': this.projectViewService.loggedInUser,
       'projectId': this.projectDetails.project._id,
-      'comments': this.projectDetails.comments.filter(comment => (comment.action == 'ACCEPT' || comment.action == 'REJECT'))
+      'comments': this.projectDetails.comments.filter(comment => (comment.action == 'ACCEPT' || comment.action == 'REJECT')),
+      'commentAction' : {
+        'action' : 'accept/reject',
+        'type' : ''
+      }
     };
     if (obj.comments.length) {
       this.projectViewService.acceptRejectDocumentsComments(obj).subscribe((updateDocCommentsResp: any) => {
@@ -294,6 +298,7 @@ export class CommentsConfirmationModal {
   public commentsList: any;
   public projectDetails: any;
   public action: string;
+  public conflictTypeLabel : string;
 
   constructor(private projectViewService: ProjectViewService,
     public dialogRef: MatDialogRef<CommentsConfirmationModal>,
@@ -301,6 +306,7 @@ export class CommentsConfirmationModal {
     this.commentsList = data.commentsList;
     this.projectDetails = data.projectDetails;
     this.action = data.action;
+    this.conflictTypeLabel = data['conflictTypeLabel'] 
   }
 
   // Accept All
@@ -319,7 +325,11 @@ export class CommentsConfirmationModal {
     const object = {
       'user': this.projectViewService.loggedInUser,
       'projectId': this.projectDetails.project._id,
-      'comments': acceptedComments
+      'comments': acceptedComments,
+      'commentAction' : {
+        'action' : this.action === 'Accept' ? 'acceptAll' : 'rejectAll',
+        'type' : this.conflictTypeLabel
+      }
     };
     if (object.comments.length) {
       this.projectViewService.acceptRejectDocumentsComments(object).subscribe((res: any) => {

@@ -58,7 +58,9 @@ export class ViewProjectComponent implements OnInit {
   showMappingSpec(doc) {
     var inputResponse = {
       "label_filepath" : "",
-      "reference_filepath": []
+      "reference_filepath" : [],
+      "_id": this.projectDetails._id,
+      "user" : this.projectViewService.loggedInUser  
     }
     
     for(var i = 0 ; i < doc.length;i++){
@@ -69,6 +71,7 @@ export class ViewProjectComponent implements OnInit {
         inputResponse.reference_filepath[0] = doc[i].pdfPath.location;
       }
     }
+
     this.projectViewService._initializeMappingSpec$.next(inputResponse); 
     this.projectViewService.mappingFileData = inputResponse;
     // localStorage.setItem('mappingData', JSON.stringify(inputResponse));
@@ -105,7 +108,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   deleteDocument(documentDetails: any) {
-    this.projectViewService.deleteDocument({ 'projectId': documentDetails.projectId, 'documentId': documentDetails._id }).subscribe((deleteDocumentResponse: any) => {
+    this.projectViewService.deleteDocument({ 'projectId': documentDetails.projectId, 'documentId': documentDetails._id, 'deletedBy' : this.projectViewService.loggedInUser }).subscribe((deleteDocumentResponse: any) => {
       if (deleteDocumentResponse.status.code === 0) {
         this.projectDetails.documents.map((e) => {
           if (e._id == deleteDocumentResponse.result.documentId) {

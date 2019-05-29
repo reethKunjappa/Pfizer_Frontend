@@ -35,7 +35,7 @@ export class QualityChecklistComponent implements OnInit {
           if ( e.fileType == 'Label' ) { this.documentId = e._id; }
         });  
                 
-        this.projectViewService.getCheckListData({ 'project_id' : this.projectId, 'file_id' : this.documentId }).subscribe(( getCheckListDataResp : any )=> {
+        this.projectViewService.getCheckListData({ 'project_id' : this.projectId, 'file_id' : this.documentId, 'user' : this.projectViewService.loggedInUser }).subscribe(( getCheckListDataResp : any )=> {
           this.checkListDataCheck(getCheckListDataResp.result[0].checks);
           //this.checkListData = getCheckListDataResp.result[0].checks;
         });
@@ -47,7 +47,6 @@ export class QualityChecklistComponent implements OnInit {
   }
 
   ngOnInit() {}
-
 
   checkListDataCheck(response) {
     this.defaultCheckList.map((e) => {

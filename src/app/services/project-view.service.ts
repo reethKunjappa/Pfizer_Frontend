@@ -1,9 +1,13 @@
+// Dependency Imports
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, retry, catchError } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
+
+// Service Imports
+import { LoggedInUserService } from '../services/logged-in-user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +22,8 @@ export class ProjectViewService {
   public _initializeMappingSpec = this._initializeMappingSpec$.asObservable();   // asObservable declarations for listening to the
 
   public mappingFileData : any;
-  public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
+  // public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
+  public loggedInUser : any = this.loggedInUserService.getNativeWindowRef();
   public endPointAddress : string = environment.serverUrl; //configuration based on environment
 
   // public endPointAddress : string = 'http://54.164.151.252:3005'; //Dev Server URL
@@ -34,7 +39,7 @@ export class ProjectViewService {
 
   public projectId : string = "";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private loggedInUserService : LoggedInUserService) {}
 
   // Setter Method for Maintaining Project Id 
   public projectID(v : any) {

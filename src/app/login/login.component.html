@@ -1,15 +1,39 @@
-<div class="wrapper login-background fadeInDown">
+<div class="login-wrapper login-background fadeInDown">
   <div id="formContent">
     <div class="fadeIn first">
       <img src="../../assets/img/gears.gif"  class="mt-1"/>
       <h3> Automated Label Review</h3>
     </div>
-    <form>
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="User Name">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="Password">
+    <form class="login p-4 mb-0" [formGroup]="authForm">
+      <mat-form-field appearance="outline" class="login fadeIn second" name="login">
+        <mat-label>User Name</mat-label>
+        <input id="login" formControlName="userId" [(ngModel)]="loginData.userId" matInput placeholder="User Name">
+        <mat-icon matSuffix>account_circle</mat-icon>
+      </mat-form-field>
+      <!-- <input type="text" id="login" formControlName="userId" [(ngModel)]="loginData.userId" class="fadeIn second" name="login" placeholder="User Name"> -->
+      <div class="p-2 alert alert-danger" *ngIf="!authForm.controls['userId'].valid && (authForm.controls['userId'].touched)">
+        <div *ngIf="authForm.controls['userId'].errors.required && authForm.controls['userId'].touched">
+          User Name is required.
+        </div>
+      </div>
+      <br>
+      <mat-form-field appearance="outline" class="fadeIn second" name="login">
+        <mat-label>Password</mat-label>
+        <input type="password" id="password" formControlName="password" [(ngModel)]="loginData.password" matInput placeholder="Password">
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+      <!-- <input type="text" id="password" formControlName="password" [(ngModel)]="loginData.password" class="fadeIn third" name="login" placeholder="Password"> -->
+      <div class="p-2 alert alert-danger" *ngIf="!authForm.controls['password'].valid && (authForm.controls['password'].touched)">
+        <div *ngIf="authForm.controls['password'].errors.required && authForm.controls['password'].touched">
+          Password is required.
+        </div>
+      </div>
+      <div *ngIf="loginMessage" class="mt-2 p-1 alert alert-danger">{{ loginMessage }}</div>
     </form>
     <div id="formFooter">
-      <a class="underlineHover" routerLink="/dashboard">Login</a>
+      <button [disabled]="!authForm.valid" (click)="login()" mat-raised-button type="submit" class="w-100 btn btn-primary btn-spec">Login</button>
+      <!-- <button type="button" class="underlineHover" [disabled]="!authForm.valid" (click)="login()">Login</button> -->
+      <!-- routerLink="/dashboard" -->
     </div>
   </div>
 </div>

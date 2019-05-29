@@ -37,12 +37,12 @@
                         <td style="padding:5px;">{{ projectDetails.project.conflicts.types.font }}</td>
                         <td><button mat-raised-button type="button" matTooltip="Accept All"
                           class="btn btn-success btn-link btn-sm py-0 px-1 m-0" [disabled]="projectDetails.project.conflicts.types.font.length < 1"
-                          (click)="openConfirmationModal('Accept', conflicts.font)">
+                          (click)="openConfirmationModal('Accept', conflicts.font, 'FONT CONFLICTS')">
                           <i class="material-icons">done_all</i>
                         </button>
                         <button mat-raised-button type="button" matTooltip="Reject All"
                           class="btn btn-danger btn-link btn-sm py-0 px-1 m-0" [disabled]="projectDetails.project.conflicts.types.font.length < 1"
-                          (click)="openConfirmationModal('Reject', conflicts.font)">
+                          (click)="openConfirmationModal('Reject', conflicts.font, 'FONT CONFLICTS')">
                           <i class="material-icons">close</i>
                         </button></td>
                       </tr>
@@ -51,12 +51,12 @@
                         <td style="padding:5px;">{{ projectDetails.project.conflicts.types.content }}</td>
                         <td><button mat-raised-button type="button" matTooltip="Accept All"
                           class="btn btn-success btn-link btn-sm py-0 px-1 m-0" [disabled]="projectDetails.project.conflicts.types.content.length < 1"
-                          (click)="openConfirmationModal('Accept', conflicts.content)">
+                          (click)="openConfirmationModal('Accept', conflicts.content, 'CONTENT CONFLICTS')">
                           <i class="material-icons">done_all</i>
                         </button>
                         <button mat-raised-button type="button" matTooltip="Reject All"
                           class="btn btn-danger btn-link btn-sm py-0 px-1 m-0" [disabled]="projectDetails.project.conflicts.types.content.length < 1"
-                          (click)="openConfirmationModal('Reject', conflicts.content)">
+                          (click)="openConfirmationModal('Reject', conflicts.content, 'CONTENT CONFLICTS')">
                           <i class="material-icons">close</i>
                         </button></td>
                       </tr>
@@ -65,12 +65,12 @@
                         <td style="padding:5px;">{{ projectDetails.project.conflicts.types.order }}</td>
                         <td><button mat-raised-button type="button" matTooltip="Accept All"
                           class="btn btn-success btn-link btn-sm py-0 px-1 m-0" [disabled]="projectDetails.project.conflicts.types.order.length < 1"
-                          (click)="openConfirmationModal('Accept', conflicts.order)">
+                          (click)="openConfirmationModal('Accept', conflicts.order, 'ORDER CONFLICTS')">
                           <i class="material-icons">done_all</i>
                         </button>
                         <button mat-raised-button type="button" matTooltip="Reject All"
                           class="btn btn-danger btn-link btn-sm py-0 px-1 m-0" [disabled]="projectDetails.project.conflicts.types.order.length < 1"
-                          (click)="openConfirmationModal('Reject', conflicts.order)">
+                          (click)="openConfirmationModal('Reject', conflicts.order, 'ORDER CONFLICTS')">
                           <i class="material-icons">close</i>
                         </button></td>
                       </tr>
@@ -79,12 +79,12 @@
                           <td style="padding:5px;">{{ projectDetails.project.conflicts.types.spell_grammar }}</td>
                           <td><button mat-raised-button type="button" matTooltip="Accept All"
                             class="btn btn-success btn-link btn-sm py-0 px-1 m-0" [disabled]="projectDetails.project.conflicts.types.spell_grammar.length < 1"
-                            (click)="openConfirmationModal('Accept', conflicts.spell)">
+                            (click)="openConfirmationModal('Accept', conflicts.spell, 'SPELL CHECK CONFLICTS')">
                             <i class="material-icons">done_all</i>
                           </button>
                           <button mat-raised-button type="button" matTooltip="Reject All"
                             class="btn btn-danger btn-link btn-sm py-0 px-1 m-0" [disabled]="projectDetails.project.conflicts.types.spell_grammar.length < 1"
-                            (click)="openConfirmationModal('Reject', conflicts.spell)">
+                            (click)="openConfirmationModal('Reject', conflicts.spell, 'SPELL CHECK CONFLICTS')">
                             <i class="material-icons">close</i>
                           </button></td>
                       </tr>

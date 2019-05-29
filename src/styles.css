@@ -2,6 +2,7 @@
 /* @import "./app/compare/compare.component.scss"; */
 
 @import "./app/compare/compare.component.css";
+@import "./app/login/login.component.css";
 
 .ng-sidebar {
   background: rgb(255, 255, 255);

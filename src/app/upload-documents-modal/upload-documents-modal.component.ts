@@ -85,14 +85,13 @@ export class UploadDocumentsModalComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
       file['fileType'] = '';
-      // console.log('before' + this.uploader.queue);
       
       if (!this.allowMultiple) {
         file['fileType'] = this.reUploadFileType;
         file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
         this.disableDropDown = true;
       }
-      // console.log('after' +this.uploader.queue);
+
     };
 
     this.uploader.onErrorItem = (item: any, response: any, status: any, headers: any) => {
@@ -106,8 +105,6 @@ export class UploadDocumentsModalComponent implements OnInit {
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       if ( response != "" && response != undefined && response != {} ) {
-        // console.log("onCompleteItem headers::", headers);
-        // console.log("Parsed res::", JSON.parse(response));
         if (JSON.parse(response).status.code == 0) {
           if (this.allowMultiple) {
             this.createProjectData.documents.push(JSON.parse(response).result);
