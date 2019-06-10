@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 // Service Imports
 import { ProjectViewService } from '../services/project-view.service';
+import { LoggedInUserService } from '../services/logged-in-user.service';
 
 // Model Imports
 import { ProjectCommentsData } from '../models/project-comments.model';
@@ -29,7 +30,7 @@ export class CommentsComponent implements OnInit {
   public allExpandState : boolean = false;
   // public panelOpenState : boolean = false;
 
-  constructor( private activatedRoute : ActivatedRoute, private projectViewService : ProjectViewService ) { 
+  constructor( private activatedRoute : ActivatedRoute, private projectViewService : ProjectViewService, private loggedInUserService : LoggedInUserService ) { 
     this.activatedRoute.paramMap.subscribe(( params : any )=>{
       this.projectId = params.get('id');
       this.getAllComments();
@@ -56,7 +57,7 @@ export class CommentsComponent implements OnInit {
 
   // Create a Comment API Call
   addComment() {
-    this.createProjectComment.commentedBy = this.projectViewService.loggedInUser;
+    this.createProjectComment.commentedBy = this.loggedInUserService.getNativeWindowRef();
     this.createProjectComment.projectId = this.projectId;
     this.projectViewService.createComments(this.createProjectComment).subscribe(( addCommentResponse : any )=>{
       if ( addCommentResponse != undefined && addCommentResponse != "" ) {
@@ -80,7 +81,7 @@ export class CommentsComponent implements OnInit {
 
   // Update a comment API call
   saveComment( comment, index ) {
-    comment.commentedBy = this.projectViewService.loggedInUser;
+    comment.commentedBy = this.loggedInUserService.getNativeWindowRef();
     this.projectViewService.updateComment(comment).subscribe(( updateCommentResponse : any ) => {
       if ( updateCommentResponse.status.code === 0 ) {
         this.commentsList[index] = updateCommentResponse.result;

@@ -24,15 +24,15 @@ export class NavbarComponent implements OnInit {
     constructor(location: Location, private element: ElementRef, private router: Router, private loggedInUserService : LoggedInUserService) {
         this.location = location;
         this.sidebarVisible = false;
+        this.loggedInUserData = this.loggedInUserService.getNativeWindowRef();
+    }
+
+    logout() {
+        localStorage.clear();
+        this.router.navigate(['/login',{}]);
     }
 
     ngOnInit() {
-        this.loggedInUserService._loggedInUser.subscribe((loggedUser : any)=>{
-            if ( loggedUser != undefined && loggedUser != null && loggedUser != "" ) {
-                this.loggedInUserData = loggedUser;
-                console.log("Navbar Comp:", this.loggedInUserData);
-            }
-        });        
         this.listTitles = ROUTES.filter(listTitle => listTitle);
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];

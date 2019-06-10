@@ -15,6 +15,7 @@ export interface DialogData {
 }
 // Service Imports
 import { ProjectViewService } from 'app/services/project-view.service';
+import { LoggedInUserService } from 'app/services/logged-in-user.service';
 
 @Component({
   selector: 'app-compare',
@@ -64,7 +65,7 @@ export class CompareComponent implements OnInit {
 
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
-    private pdfViewer: SimplePdfViewerModule) {
+    private pdfViewer: SimplePdfViewerModule, private loggedInUserService : LoggedInUserService) {
 
     this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
@@ -136,7 +137,6 @@ export class CompareComponent implements OnInit {
 
         // Below lines execution for finding unique from an array - Shashank - Implement after Reeth's approval
         // let unique = new Set(this.projectDetails.comments.map(item => item.conflict_type ));
-        // console.log("unique::",unique);
 
         this.projectDetails.project.documents.map(a => {
           if (a.fileType == 'Label') {
@@ -155,9 +155,7 @@ export class CompareComponent implements OnInit {
 
   // Get Reference Document
   getReferenceDocument(docDetails: any) {
-    // console.log("Get Ref. Doc::",docDetails);
     this.referenceDocuments = [];
-    // console.log("#$#$::",this.projectDetails.project.documents);
     this.projectDetails.project.documents.map((element: any) => {
       if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) == element.documentName) {
         this.referenceDocuments.push(element);
@@ -222,7 +220,7 @@ export class CompareComponent implements OnInit {
 
   acceptRejectDocumentsComments() {
     const obj = {
-      'user': this.projectViewService.loggedInUser,
+      'user': this.loggedInUserService.getNativeWindowRef(),
       'projectId': this.projectDetails.project._id,
       'comments': this.projectDetails.comments.filter(comment => (comment.action == 'ACCEPT' || comment.action == 'REJECT')),
       'commentAction' : {
@@ -302,7 +300,7 @@ export class CommentsConfirmationModal {
 
   constructor(private projectViewService: ProjectViewService,
     public dialogRef: MatDialogRef<CommentsConfirmationModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private loggedInUserService : LoggedInUserService) {
     this.commentsList = data.commentsList;
     this.projectDetails = data.projectDetails;
     this.action = data.action;
@@ -323,7 +321,7 @@ export class CommentsConfirmationModal {
     }
 
     const object = {
-      'user': this.projectViewService.loggedInUser,
+      'user': this.loggedInUserService.getNativeWindowRef(),
       'projectId': this.projectDetails.project._id,
       'comments': acceptedComments,
       'commentAction' : {

@@ -10,6 +10,7 @@ import { CreateProjectData } from '../models/create-project.model';
 // Services Imports
 import { ProjectViewService } from '../services/project-view.service';
 import { CountryCodeService } from '../services/country-code.service';
+import { LoggedInUserService } from '../services/logged-in-user.service';
 
 // Component Imports
 import { StatusComponent } from '../status/status.component';
@@ -31,7 +32,7 @@ export class CreateProjectModalComponent implements OnInit {
   public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId': 'SHonrao' };
   public statusDialog: any;
 
-  constructor(private projectViewService: ProjectViewService, public dialogRef: MatDialogRef<CreateProjectModalComponent>, public dialog: MatDialog, private countryCodeService: CountryCodeService) {
+  constructor(private projectViewService: ProjectViewService, public dialogRef: MatDialogRef<CreateProjectModalComponent>, public dialog: MatDialog, private countryCodeService: CountryCodeService, private loggedInUserService : LoggedInUserService) {
     this.countryData = this.countryCodeService.getCountryCodeData();
     // Form Validations Declarations
     this.projectForm = new FormGroup({
@@ -54,7 +55,7 @@ export class CreateProjectModalComponent implements OnInit {
   }
 
   createProject() {
-    this.createProjectData.createdBy = this.projectViewService.loggedInUser; //this.loggedInUser;
+    this.createProjectData.createdBy = this.loggedInUserService.getNativeWindowRef(); //this.loggedInUser;
     this.projectViewService.createProject(this.createProjectData).subscribe((createStatus: any) => {
       if (createStatus != "" && createStatus != undefined) {
         if (createStatus.status.code === 0) {

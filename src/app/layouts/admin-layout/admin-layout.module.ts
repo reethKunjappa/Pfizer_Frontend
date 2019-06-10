@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
+import { ChartJsComponent } from '../../chart-js/chart-js.component';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { TableListComponent } from '../../table-list/table-list.component';
@@ -20,6 +21,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 
 import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ChartsModule } from 'ng2-charts-x';
 
 import { MaterialModule } from 'app/material.module';
 
@@ -57,9 +59,11 @@ import { AdminPreferencesComponent } from '../../admin-preferences/admin-prefere
     MaterialModule,
     MatBadgeModule,
     SimplePdfViewerModule,
-    NgSelectModule
+    NgSelectModule,
+    ChartsModule,
   ],
   declarations: [
+    ChartJsComponent,
     DashboardComponent,
     UserProfileComponent,
     TableListComponent,

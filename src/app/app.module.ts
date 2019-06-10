@@ -12,6 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { ChartsModule } from 'ng2-charts-x';
 
 // Services Imports
 import { ProjectViewService } from './services/project-view.service';
@@ -22,6 +23,7 @@ import { LoggedInUserService } from './services/logged-in-user.service';
 // Component Imports
 import { LoginComponent } from './login/login.component';
 import { StatusComponent } from './status/status.component';
+// import { ChartJsComponent } from './chart-js/chart-js.component';
 
 @NgModule({
   imports: [
@@ -40,18 +42,21 @@ import { StatusComponent } from './status/status.component';
     }),
     MaterialModule,
     ReactiveFormsModule,
+    ChartsModule,
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
     StatusComponent,
+    // ChartJsComponent,
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ChartsModule,
   ],
   providers: [
     ProjectViewService,

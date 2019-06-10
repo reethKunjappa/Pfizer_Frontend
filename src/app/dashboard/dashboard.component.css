@@ -1,0 +1,29 @@
+.card-header-1 {
+    /* background: linear-gradient(60deg, #3fc3ca, #119DA4) !important; */
+    background: linear-gradient(60deg, #3fc3ca, #17d9e2) !important;
+}
+
+.card-header-2 {
+    /* background: linear-gradient(60deg, #b26cff, #9e1eff) !important; */
+    background: linear-gradient(60deg, #bc7eff, #b14aff) !important;
+}
+
+.card-header-3 {
+    background: linear-gradient(60deg, #7effb8, #6e4aff) !important;
+}
+
+.card-header-4 {
+    background: linear-gradient(60deg, #7ed5ff, #78ffd3) !important;
+}
+
+.card-header-5 {
+    background: linear-gradient(60deg, #7ed5ff, #ff78e2) !important;
+}
+
+.card-header-6 {
+    background: linear-gradient(60deg, #ffc57e, #fdff78) !important;
+}
+
+.card-header-7 {
+    background: linear-gradient(60deg, #7eedff, #d8ff78) !important;
+}

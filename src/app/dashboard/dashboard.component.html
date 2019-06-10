@@ -4,13 +4,9 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-header card-header-warning card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">content_copy</i>
-                        </div>
-                        <p class="card-category">Projects Created</p>
-                        <h3 class="card-title">50
-
-                        </h3>
+                        <div class="card-icon"><i class="material-icons">content_copy</i></div>
+                        <p class="card-category">Project(s) Created</p>
+                        <h3 class="card-title">50</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats" style="margin-left: 60%;">
@@ -22,10 +18,8 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-header card-header-success card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">store</i>
-                        </div>
-                        <p class="card-category">Documents Uploaded</p>
+                        <div class="card-icon"><i class="material-icons">store</i></div>
+                        <p class="card-category">Document(s) Uploaded</p>
                         <h3 class="card-title">34,245</h3>
                     </div>
                     <div class="card-footer">
@@ -38,11 +32,9 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-header card-header-danger card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">info_outline</i>
-                        </div>
+                        <div class="card-icon"><i class="material-icons">grade</i></div>
                         <p class="card-category">My Favorite Project(s)</p>
-                        <h3 class="card-title">1175</h3>
+                        <h3 class="card-title">22</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats" style="margin-left: 60%;">
@@ -54,11 +46,9 @@
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
                     <div class="card-header card-header-info card-header-icon">
-                        <div class="card-icon">
-                            <i class="fa fa-twitter"></i>
-                        </div>
-                        <p class="card-category">Latest Project Update</p>
-                        <h3 class="card-title">245</h3>
+                        <div class="card-icon"><i class="fa fa-twitter"></i></div>
+                        <p class="card-category">Total Conflict(s)</p>
+                        <h3 class="card-title">24,578</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats" style="margin-left: 55%;">
@@ -69,16 +59,78 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card card-chart">
-                    <div class="card-header card-header-success">
-                        <div class="ct-chart" id="dailySalesChart"></div>
+                    <div class="card-header card-header-warning card-header-1">
+                        <!-- <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                            [legend]="barChartLegend" [chartType]="barChartType">
+                        </canvas> -->
+                        <app-chart-js [chartTypes]="chart1" [scaleShowVerticalLines]=false [responsive]=true
+                            [maintainAspectRatio]=true [legendDisplay]=true [legendLabelColor]="'white'"
+                            [xAxisGridLinesDisplay]=false [yAxisGridLinesDisplay]=false [xAxisLabelShow]=true
+                            [yAxisLabelShow]=true [xAxisLabelString]="'Types of Documents'"
+                            [yAxisLabelString]="'Number of Uploads'" [xAxisLabelColor]="'white'"
+                            [yAxisLabelColor]="'white'" [xAxisDataLabelColor]="'white'" [yAxisDataLabelColor]="'white'"
+                            [offsetGridLines]=false [headerLabelArray]="documentsHeaderArray"
+                            [chartData]="documentsChartData">
+                        </app-chart-js>
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title">Daily Sales</h4>
+                        <div class="row">
+                            <h4 class="card-title col-6 p-3">Documents Uploaded</h4>
+                            <span class="col-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select Chart Type</mat-label>
+                                    <mat-select class="text-capitalize" [(ngModel)]="chart1">
+                                        <mat-option class="text-capitalize" *ngFor="let type of typeOfCharts"
+                                            [value]="type">
+                                            {{type}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </span>
+                        </div>
+                        <p class="card-category">Last Campaign Performance</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">access_time</i> campaign sent 2 days ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header card-header-success card-header-2">
+                        <app-chart-js [chartTypes]="chart2" [scaleShowVerticalLines]=false [responsive]=true
+                            [maintainAspectRatio]=true [legendDisplay]=true [legendLabelColor]="'white'"
+                            [xAxisGridLinesDisplay]=false [yAxisGridLinesDisplay]=false [xAxisLabelShow]=true
+                            [yAxisLabelShow]=true [xAxisLabelString]="'Types of Conflicts'"
+                            [yAxisLabelString]="'Conflict Range'" [xAxisLabelColor]="'white'"
+                            [yAxisLabelColor]="'white'" [xAxisDataLabelColor]="'white'" [yAxisDataLabelColor]="'white'"
+                            [offsetGridLines]=false [headerLabelArray]="conflictHeaderArray"
+                            [chartData]="conflictChartData">
+                        </app-chart-js>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <h4 class="card-title col-6 p-3">Conflicts Data</h4>
+                            <span class="col-6">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select Chart Type</mat-label>
+                                    <mat-select class="text-capitalize" [(ngModel)]="chart2">
+                                        <mat-option class="text-capitalize" *ngFor="let type of typeOfCharts"
+                                            [value]="type">
+                                            {{type}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </span>
+                        </div>
                         <p class="card-category">
-                            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today
-                            sales.</p>
+                            <span class="text-success"><i class="fa fa-long-arrow-up"></i>
+                                55%</span> increase in today sales.
+                        </p>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -87,39 +139,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card card-chart">
-                    <div class="card-header card-header-warning">
-                        <div class="ct-chart" id="websiteViewsChart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Email Subscriptions</h4>
-                        <p class="card-category">Last Campaign Performance</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">access_time</i> campaign sent 2 days ago
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-chart">
-                    <div class="card-header card-header-danger">
-                        <div class="ct-chart" id="completedTasksChart"></div>
-                    </div>
-                    <div class="card-body">
-                        <h4 class="card-title">Completed Tasks</h4>
-                        <p class="card-category">Last Campaign Performance</p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">access_time</i> campaign sent 2 days ago
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+
+        <!-- Below Charts are not necessary -->
         <div class="row" style="display:none;">
             <div class="col-lg-6 col-md-12">
                 <div class="card">

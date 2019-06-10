@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 // Service Imports
-import { LoggedInUserService } from '../services/logged-in-user.service';
+import { LoggedInUserService } from './logged-in-user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,8 @@ export class ProjectViewService {
 
   public projectId : string = "";
 
-  constructor(private http: HttpClient, private loggedInUserService : LoggedInUserService) {}
+  constructor(private http: HttpClient, private loggedInUserService : LoggedInUserService) {
+  }
 
   // Setter Method for Maintaining Project Id 
   public projectID(v : any) {

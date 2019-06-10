@@ -5,6 +5,7 @@ import { FileUploader, FileLikeObject, FileItem, ParsedResponseHeaders } from 'n
 
 // Service Imports
 import { ProjectViewService } from '../services/project-view.service';
+import { LoggedInUserService } from '../services/logged-in-user.service';
 
 @Component({
   selector: 'app-upload-documents-modal',
@@ -32,10 +33,10 @@ export class UploadDocumentsModalComponent implements OnInit {
   public reUploadFileType: string;
 
   public disableLabelText: boolean = false;
-
   public selectedFileTypeList = [];
+  public uploadingComplete : boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<UploadDocumentsModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private projectViewService: ProjectViewService) {
+  constructor(public dialogRef: MatDialogRef<UploadDocumentsModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private projectViewService: ProjectViewService, private loggedInUserService : LoggedInUserService) {
     this.createProjectData = data.projectDetails;
     this.allowMultiple = data.allowMultiple;
     this.re_upload_documentId = data.documentId ? data.documentId : '';
@@ -88,19 +89,13 @@ export class UploadDocumentsModalComponent implements OnInit {
       
       if (!this.allowMultiple) {
         file['fileType'] = this.reUploadFileType;
-        file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
+        file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
         this.disableDropDown = true;
       }
 
     };
 
-    this.uploader.onErrorItem = (item: any, response: any, status: any, headers: any) => {
-      // console.log("onErrorItem item:", item);
-      // console.log("onErrorItem resp:", response);
-      // console.log("onErrorItem status:",status);
-      // console.log("onErrorItem headers:", headers);
-    }
-  
+    this.uploader.onErrorItem = (item: any, response: any, status: any, headers: any) => {}  
     // this.uploader.uploadItem = (value : FileItem) => { }
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
@@ -119,6 +114,9 @@ export class UploadDocumentsModalComponent implements OnInit {
         } 
       }
     };
+
+    // Function triggered when all files in queue gets uploaded successfully.
+    this.uploader.onCompleteAll = () => { this.uploadingComplete = true; };
   }
 
   // Function for setting file uploader queue size to 1 while re-upload and infinite while upload  
@@ -146,9 +144,9 @@ export class UploadDocumentsModalComponent implements OnInit {
     let count = 0;
     this.uploader.queue[i].formData = this.uploader.queue[i]['some'];
     if (!this.allowMultiple) {
-      this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + item.fileType + '&documentId=' + this.re_upload_documentId;
+      this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + item.fileType + '&documentId=' + this.re_upload_documentId;
     } else {
-      this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.projectViewService.loggedInUser) + '&fileType=' + item.fileType;
+      this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + item.fileType;
     }
     this.checkUploadAllStatus();
     if (item.fileType === 'Label' && item.file.name.split('.').pop() != 'docx') {
@@ -196,6 +194,10 @@ export class UploadDocumentsModalComponent implements OnInit {
   checkEmptyNullUndefined(data) {
     if ( data != '' && data != null && data != undefined ) { return true; }
     else { return false; }
+  }
+
+  closeUploadModal(){
+    this.dialogRef.close({ 'action': 'Cancel', 'uploadComplete' : this.uploadingComplete });
   }
 
 }

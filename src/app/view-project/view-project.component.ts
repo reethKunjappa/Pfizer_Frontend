@@ -1,10 +1,11 @@
 // Dependency Imports
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 
 // Service Imports
 import { ProjectViewService } from '../services/project-view.service';
+import { LoggedInUserService } from '../services/logged-in-user.service';
 
 // Component Imports
 import { UploadDocumentsModalComponent } from 'app/upload-documents-modal/upload-documents-modal.component';
@@ -29,7 +30,11 @@ export class ViewProjectComponent implements OnInit {
   public uploadDocumentDialog: any;
   public reUploadDocumentDialog: any;
 
-  constructor(private projectViewService: ProjectViewService, private router: Router, private activatedRoute: ActivatedRoute, public dialog: MatDialog) {
+  constructor(private projectViewService: ProjectViewService, private router: Router, private activatedRoute: ActivatedRoute, public dialog: MatDialog, private loggedInUserService : LoggedInUserService) {
+    this.viewProject();
+  }
+
+  viewProject() {
     this.activatedRoute.paramMap.subscribe((params: any) => {
       if (params.get('id') != "" && params.get('id') != undefined && params.get('id') != null) {
         this.projectViewService.openProject(params.get('id')).subscribe((projectDetails: any) => {
@@ -47,12 +52,16 @@ export class ViewProjectComponent implements OnInit {
 
   uploadMoreDocuments() {
     this.uploadDocumentDialog = this.dialog.open(UploadDocumentsModalComponent, {
-      disableClose: false,//true,
+      disableClose: true,//true,
       width: '1000px',
       data: { projectDetails: this.projectDetails, allowMultiple: true } //, allowMultiple : true
     });
 
-    this.uploadDocumentDialog.afterClosed().subscribe(result => { });
+    this.uploadDocumentDialog.afterClosed().subscribe((result) => { 
+      if ( result.uploadComplete === true ) {
+        this.viewProject();
+      }
+    });
   }
 
   showMappingSpec(doc) {
@@ -60,7 +69,7 @@ export class ViewProjectComponent implements OnInit {
       "label_filepath" : "",
       "reference_filepath" : [],
       "_id": this.projectDetails._id,
-      "user" : this.projectViewService.loggedInUser  
+      "user" : this.loggedInUserService.getNativeWindowRef()  
     }
     
     for(var i = 0 ; i < doc.length;i++){
@@ -85,12 +94,16 @@ export class ViewProjectComponent implements OnInit {
   // Re-upload document
   reUploadDocument(document: any) {
     this.reUploadDocumentDialog = this.dialog.open(UploadDocumentsModalComponent, {
-      disableClose: false,//true,
+      disableClose: true,//true,
       width: '1000px',
       data: { projectDetails: this.projectDetails, allowMultiple: false, documentId: document._id, fileType: document.fileType } //, allowMultiple : false
     });
 
-    this.reUploadDocumentDialog.afterClosed().subscribe(result => { });
+    this.reUploadDocumentDialog.afterClosed().subscribe((result) => { 
+      if ( result.uploadComplete === true ) {
+        this.viewProject();
+      }     
+    });
   }
 
   // Download a document
@@ -108,7 +121,7 @@ export class ViewProjectComponent implements OnInit {
   }
 
   deleteDocument(documentDetails: any) {
-    this.projectViewService.deleteDocument({ 'projectId': documentDetails.projectId, 'documentId': documentDetails._id, 'deletedBy' : this.projectViewService.loggedInUser }).subscribe((deleteDocumentResponse: any) => {
+    this.projectViewService.deleteDocument({ 'projectId': documentDetails.projectId, 'documentId': documentDetails._id, 'deletedBy' : this.loggedInUserService.getNativeWindowRef() }).subscribe((deleteDocumentResponse: any) => {
       if (deleteDocumentResponse.status.code === 0) {
         this.projectDetails.documents.map((e) => {
           if (e._id == deleteDocumentResponse.result.documentId) {

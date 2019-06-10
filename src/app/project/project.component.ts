@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 
 // Service Imports
 import { ProjectViewService } from '../services/project-view.service';
+import { LoggedInUserService } from '../services/logged-in-user.service';
 
 // Component Imports
 import { CreateProjectModalComponent } from 'app/create-project-modal/create-project-modal.component';
@@ -30,8 +31,8 @@ export class ProjectComponent implements OnInit {
   public allProjectList: any[] = [];
   public createProjectDialog: any;
 
-  constructor(private projectViewService: ProjectViewService, private router: Router, public dialog: MatDialog) {
-    this.projectViewService.fetchAllProjects({ user: this.projectViewService.loggedInUser }).subscribe((allProjects: any) => {
+  constructor(private projectViewService: ProjectViewService, private router: Router, public dialog: MatDialog, private loggedInUserService : LoggedInUserService) {
+    this.projectViewService.fetchAllProjects({ user: this.loggedInUserService.getNativeWindowRef() }).subscribe((allProjects: any) => {
       this.allProjectList = allProjects;
     });
   }
@@ -68,7 +69,7 @@ export class ProjectComponent implements OnInit {
 
   markFavorite(projectDetails: any) {
     this.projectViewService.markFavorite({
-      user: this.projectViewService.loggedInUser,
+      user: this.loggedInUserService.getNativeWindowRef(),
       project: projectDetails._id
     }).subscribe((markFavoriteResponse: any) => {
       if (markFavoriteResponse.status.code == 0) {
@@ -83,7 +84,7 @@ export class ProjectComponent implements OnInit {
 
   unMarkFavorite(projectDetails: any) {
     this.projectViewService.unMarkFavorite({
-      user: this.projectViewService.loggedInUser,
+      user: this.loggedInUserService.getNativeWindowRef(),
       project: projectDetails._id
     }).subscribe((unMarkFavoriteResponse: any) => {
       if (unMarkFavoriteResponse.status.code == 0) {

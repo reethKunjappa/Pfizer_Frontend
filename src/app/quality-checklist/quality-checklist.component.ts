@@ -5,6 +5,7 @@ import { DefaultCheckList } from './default-checklist';
 
 // Services Imports
 import { ProjectViewService } from '../services/project-view.service';
+import { LoggedInUserService } from '../services/logged-in-user.service';
 
 @Component({
   selector: 'app-quality-checklist',
@@ -25,7 +26,7 @@ export class QualityChecklistComponent implements OnInit {
   public documentId : any;
   public defaultCheckList: any[] =  [];
 
-  constructor( private projectViewService : ProjectViewService, private activatedRoute : ActivatedRoute ) { 
+  constructor( private projectViewService : ProjectViewService, private activatedRoute : ActivatedRoute, private loggedInUserService : LoggedInUserService ) { 
     this.defaultCheckList =  DefaultCheckList;
     this.activatedRoute.paramMap.subscribe(( params : any )=> {
       this.projectId = params.get('id');
@@ -35,7 +36,7 @@ export class QualityChecklistComponent implements OnInit {
           if ( e.fileType == 'Label' ) { this.documentId = e._id; }
         });  
                 
-        this.projectViewService.getCheckListData({ 'project_id' : this.projectId, 'file_id' : this.documentId, 'user' : this.projectViewService.loggedInUser }).subscribe(( getCheckListDataResp : any )=> {
+        this.projectViewService.getCheckListData({ 'project_id' : this.projectId, 'file_id' : this.documentId, 'user' : this.loggedInUserService.getNativeWindowRef() }).subscribe(( getCheckListDataResp : any )=> {
           this.checkListDataCheck(getCheckListDataResp.result[0].checks);
           //this.checkListData = getCheckListDataResp.result[0].checks;
         });

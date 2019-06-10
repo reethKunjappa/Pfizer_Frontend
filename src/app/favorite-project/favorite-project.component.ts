@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 // Service Imports
 import { ProjectViewService } from 'app/services/project-view.service';
+import { LoggedInUserService } from '../services/logged-in-user.service';
 
 @Component({
   selector: 'app-favorite-project',
@@ -25,9 +26,9 @@ export class FavoriteProjectComponent implements OnInit {
 
   public allFavoriteList: any[] = [];
 
-  constructor(private projectViewService: ProjectViewService, private router: Router) {
+  constructor(private projectViewService: ProjectViewService, private router: Router, private loggedInUserService : LoggedInUserService) {
     // Favorite API needs to be INtegrated. This is a dummy API  
-    this.projectViewService.fetchFavoriteProjects({ user: this.projectViewService.loggedInUser }).subscribe((allFavProjects: any) => {
+    this.projectViewService.fetchFavoriteProjects({ user: this.loggedInUserService.getNativeWindowRef() }).subscribe((allFavProjects: any) => {
       // allFavProjects.forEach(element => {element.favorite = true;});
       this.allFavoriteList = allFavProjects;
     });
@@ -37,7 +38,7 @@ export class FavoriteProjectComponent implements OnInit {
 
   unMarkFavorite(projectDetails: any) {
     this.projectViewService.unMarkFavorite({
-      user: this.projectViewService.loggedInUser,
+      user: this.loggedInUserService.getNativeWindowRef(),
       project: projectDetails._id
     }).subscribe((unMarkFavoriteResponse: any) => {
       if (unMarkFavoriteResponse.status.code == 0) {
