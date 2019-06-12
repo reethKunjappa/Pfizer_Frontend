@@ -9,7 +9,7 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ChartsModule } from 'ng2-charts-x';
@@ -59,6 +59,7 @@ import { StatusComponent } from './status/status.component';
     ChartsModule,
   ],
   providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
     ProjectViewService,
     HttpInterceptorService,
     {

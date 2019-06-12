@@ -1,8 +1,8 @@
 // Dependency Imports
 import { NgModule } from '@angular/core';
-import { CommonModule, } from '@angular/common';
+import { CommonModule, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Router, NavigationEnd } from '@angular/router';
 
 // Component Imports
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
@@ -19,8 +19,8 @@ const routes: Routes = [
         path: '',
         loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
       }
-    ]
-  }
+    ],
+  }  
   // { path: 'dashboard',      component: DashboardComponent },
   // { path: 'user-profile',   component: UserProfileComponent },
   // { path: 'table-list',     component: TableListComponent },
@@ -29,16 +29,16 @@ const routes: Routes = [
   // { path: 'maps',           component: MapsComponent },
   // { path: 'notifications',  component: NotificationsComponent },
   // { path: 'upgrade',        component: UpgradeComponent },
-  // { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }
+  // { path: '',               redirectTo: 'dashboard', pathMatch: 'full' } 
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
-  exports: [
-  ],
+  providers: [{ provide: LocationStrategy, useClass : HashLocationStrategy }],
+  exports: [],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
