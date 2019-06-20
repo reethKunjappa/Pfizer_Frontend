@@ -3,16 +3,15 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { SimplePdfViewerModule } from 'simple-pdf-viewer';
+import { SimplePdfViewerModule, SimplePdfViewerComponent } from 'simple-pdf-viewer';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
-
-// import { SimplePdfViewerModule } from 'simple-pdf-viewer';
 
 export interface DialogData {
   commentsList: any;
   projectDetails: any;
   action: string;
 }
+
 // Service Imports
 import { ProjectViewService } from 'app/services/project-view.service';
 import { LoggedInUserService } from 'app/services/logged-in-user.service';
@@ -24,6 +23,8 @@ import { LoggedInUserService } from 'app/services/logged-in-user.service';
 })
 
 export class CompareComponent implements OnInit {
+
+  @ViewChild(SimplePdfViewerComponent) private pdfViewers: SimplePdfViewerComponent;
 
   sampleImages: any[] = [];
   sampleRevImages: any[] = [];
@@ -45,14 +46,14 @@ export class CompareComponent implements OnInit {
   public contentCount: any;
   public spellCheckCount: any;
   public commentsAcceptedRejected = [];
-  public labelDocUrl: any = '';
+  public labelDocUrl: any;
 
   public conflictCriterias: any[] = [
-    { 'value': 'ALL', 'label' : 'All' },
-    { 'value': 'CONTENT', 'label' : 'Content' },
-    { 'value': 'FONT', 'label' : 'Font' },
-    { 'value': 'GRAMMAR_SPELLING', 'label' : 'Spell Check' },
-    { 'value': 'ORDER', 'label' : 'Order' },
+    { 'value': 'ALL', 'label': 'All' },
+    { 'value': 'CONTENT', 'label': 'Content' },
+    { 'value': 'FONT', 'label': 'Font' },
+    { 'value': 'GRAMMAR_SPELLING', 'label': 'Spell Check' },
+    { 'value': 'ORDER', 'label': 'Order' },
   ];
   public conflictType: string = "ALL";
   public conflicts = {
@@ -65,7 +66,7 @@ export class CompareComponent implements OnInit {
 
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
-    private pdfViewer: SimplePdfViewerModule, private loggedInUserService : LoggedInUserService) {
+    private pdfViewer: SimplePdfViewerModule, private loggedInUserService: LoggedInUserService) {
 
     this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
@@ -80,7 +81,7 @@ export class CompareComponent implements OnInit {
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   // Get Updated Document
   getDocument() {
@@ -171,7 +172,7 @@ export class CompareComponent implements OnInit {
   openConfirmationModal(action, comments, conflictTypeLabel) {
     const dialogRef = this.dialog.open(CommentsConfirmationModal, {
       width: '35vw',
-      data: { commentsList: comments, projectDetails: this.projectDetails, action: action, conflictTypeLabel : conflictTypeLabel }
+      data: { commentsList: comments, projectDetails: this.projectDetails, action: action, conflictTypeLabel: conflictTypeLabel }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -194,7 +195,7 @@ export class CompareComponent implements OnInit {
 
   acceptOrRejectComment(action, item) {
     this.projectDetails.comments.find((x) => {
-      if(x.comment_id === item.comment_id) {
+      if (x.comment_id === item.comment_id) {
         if (action == 'Accept') {
           if (x.action == '' || x.action == null) {
             x.action = 'ACCEPT';
@@ -217,33 +218,32 @@ export class CompareComponent implements OnInit {
     })
   }
 
-
   acceptRejectDocumentsComments() {
     const obj = {
       'user': this.loggedInUserService.getNativeWindowRef(),
       'projectId': this.projectDetails.project._id,
       'comments': this.projectDetails.comments.filter(comment => (comment.action == 'ACCEPT' || comment.action == 'REJECT')),
-      'commentAction' : {
-        'action' : 'accept/reject',
-        'type' : ''
+      'commentAction': {
+        'action': 'accept/reject',
+        'type': ''
       }
     };
     if (obj.comments.length) {
       this.projectViewService.acceptRejectDocumentsComments(obj).subscribe((updateDocCommentsResp: any) => {
         if (updateDocCommentsResp != undefined && updateDocCommentsResp != "") {
-          if ( updateDocCommentsResp.status.code == 0 ) {
+          if (updateDocCommentsResp.status.code == 0) {
             this.projectDetails = updateDocCommentsResp.result;
             this.filteredItems = this.projectDetails.comments;
             this.filterItem(this.conflictType);
             this.totalCount = this.projectDetails.comments.length;
-  
+
             this.conflicts.font = this.projectDetails.comments.filter((x) => {
               return x.conflict_type === 'FONT_NAME' || x.conflict_type === 'FONT_SIZE'
             })
             this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'ORDER' });
             this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'GRAMMAR_SPELLING' });
-            this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });              
-          }else {
+            this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'CONTENT' });
+          } else {
             // alert(updateDocCommentsResp.status.message);
           }
         }
@@ -254,13 +254,8 @@ export class CompareComponent implements OnInit {
   downloadCommentedLabelDoc() {
     window.open(this.labelCopy, '_blank');
   }
-  
-  /* 
-    setUrl(destination: any) {
-      return "https://docs.google.com/gview?url=" + this.projectViewService.endPointAddress + destination + "&embedded=true";
-  } */
 
-  filterItem(event) {    
+  filterItem(event) {
     let value = event; //.target.value;
     if (value) {
       if (value == 'ALL') {
@@ -283,6 +278,17 @@ export class CompareComponent implements OnInit {
     this.filteredItems = Object.assign([], this.projectDetails.comments)
   }
 
+  /** Below functions are exposed for simple-pdf-viewer functionality */
+  onLoadComplete(){
+    this.pdfViewers.setZoomInPercent(90);
+  }
+
+  onProgress( event : any ) {}
+
+  onError( event : any ) {}
+
+  onSearchStateDetect(event: any) {}
+
 }
 
 
@@ -296,15 +302,15 @@ export class CommentsConfirmationModal {
   public commentsList: any;
   public projectDetails: any;
   public action: string;
-  public conflictTypeLabel : string;
+  public conflictTypeLabel: string;
 
   constructor(private projectViewService: ProjectViewService,
     public dialogRef: MatDialogRef<CommentsConfirmationModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private loggedInUserService : LoggedInUserService) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private loggedInUserService: LoggedInUserService) {
     this.commentsList = data.commentsList;
     this.projectDetails = data.projectDetails;
     this.action = data.action;
-    this.conflictTypeLabel = data['conflictTypeLabel'] 
+    this.conflictTypeLabel = data['conflictTypeLabel']
   }
 
   // Accept All
@@ -324,9 +330,9 @@ export class CommentsConfirmationModal {
       'user': this.loggedInUserService.getNativeWindowRef(),
       'projectId': this.projectDetails.project._id,
       'comments': acceptedComments,
-      'commentAction' : {
-        'action' : this.action === 'Accept' ? 'acceptAll' : 'rejectAll',
-        'type' : this.conflictTypeLabel
+      'commentAction': {
+        'action': this.action === 'Accept' ? 'acceptAll' : 'rejectAll',
+        'type': this.conflictTypeLabel
       }
     };
     if (object.comments.length) {

@@ -5,3 +5,7 @@
 #projectTable {
     overflow: hidden;
 }
+
+.mat-row .mat-cell a{
+    cursor: pointer !important;
+}

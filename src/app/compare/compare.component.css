@@ -2,7 +2,7 @@
   
   .example-sidenav {
     padding: 20px;
-    width: 40%
+    width: 36%; /** 40%*/
   }
   
   .font-2{
@@ -36,3 +36,20 @@
   #criteria .mat-form-field-appearance-legacy .mat-form-field-wrapper {
     padding-bottom: 0rem !important; 
   }
+
+
+/* Temp Css */
+/* .example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+} */
+
+.example-radio-group {
+  display: block;
+  border: 1px solid #555;
+  margin: 20px;
+  padding: 10px;
+}

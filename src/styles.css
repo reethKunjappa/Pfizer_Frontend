@@ -53,7 +53,18 @@
   .main-panel {
     position: relative;
     float: right;
-    width: calc(100% - 220px) !important;
+    /* width: calc(100% - 220px) !important; */
+    width: calc(100% - 220px);
+    transition: 0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1);
+  }
+}
+
+@media( min-width: 960px ) {
+  .main-panel {
+    position: relative;
+    float: right;
+    /* width: calc(100% - 220px) !important; */
+    width: calc(100% - 220px);
     transition: 0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1);
   }
 }

@@ -1,5 +1,5 @@
 // Dependency Imports
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
@@ -21,7 +21,10 @@ export class NavbarComponent implements OnInit {
     private sidebarVisible: boolean;
     public loggedInUserData: any;
 
-    constructor(location: Location, private element: ElementRef, private router: Router, private loggedInUserService : LoggedInUserService) {
+    @Output() sideBarToggle = new EventEmitter();
+    public hideSidebar: boolean = false;
+
+    constructor(location: Location, private element: ElementRef, private router: Router, private loggedInUserService: LoggedInUserService) {
         this.location = location;
         this.sidebarVisible = false;
         this.loggedInUserData = this.loggedInUserService.getNativeWindowRef();
@@ -29,7 +32,7 @@ export class NavbarComponent implements OnInit {
 
     logout() {
         localStorage.clear();
-        this.router.navigate(['/login',{}]);
+        this.router.navigate(['/login', {}]);
     }
 
     ngOnInit() {
@@ -64,15 +67,18 @@ export class NavbarComponent implements OnInit {
         body.classList.remove('nav-open');
     };
     sidebarToggle() {
-        // const toggleButton = this.toggleButton;
-        // const body = document.getElementsByTagName('body')[0];
         var $toggle = document.getElementsByClassName('navbar-toggler')[0];
-
         if (this.sidebarVisible === false) {
             this.sidebarOpen();
         } else {
             this.sidebarClose();
         }
+
+        // Below two lines are to hide the main sidebar - Shashank
+        // Pass this event boolean value to admin-layout.component.ts file [ child to parent data passing ].
+        this.hideSidebar = !this.hideSidebar;
+        this.sideBarToggle.emit(this.hideSidebar);
+
         const body = document.getElementsByTagName('body')[0];
 
         if (this.mobile_menu_visible == 1) {

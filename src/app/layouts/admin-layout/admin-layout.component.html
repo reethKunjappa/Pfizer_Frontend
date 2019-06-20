@@ -1,10 +1,10 @@
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
-        <app-sidebar></app-sidebar>
+    <div [ngStyle]="{width: hideSideBar ? '0%' : '' }" class="sidebar" data-color="purple" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+        <app-sidebar [hidden]="hideSideBar"></app-sidebar>
         <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"></div>
     </div>
-    <div class="main-panel">
-        <app-navbar></app-navbar>
+    <div class="main-panel" [ngStyle]="{width: hideSideBar ? '100%' : '' }">
+        <app-navbar (sideBarToggle)="sideBarToggleCondition($event)"></app-navbar>
         <router-outlet></router-outlet>
         <div *ngIf="isMaps('maps')">
             <app-footer></app-footer>

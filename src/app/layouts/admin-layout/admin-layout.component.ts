@@ -22,8 +22,12 @@ export class AdminLayoutComponent implements OnInit {
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
 
-    constructor(public location: Location, private router: Router, private loggedInUserService: LoggedInUserService) {
-        // this.loggedInUserService.getNativeWindowRef();
+    public hideSideBar : boolean = false;
+
+    constructor(public location: Location, private router: Router, private loggedInUserService: LoggedInUserService) {}
+
+    sideBarToggleCondition( event : any ) {
+        this.hideSideBar = event;
     }
 
     ngOnInit() {

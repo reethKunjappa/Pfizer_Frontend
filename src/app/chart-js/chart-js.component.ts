@@ -1,5 +1,5 @@
 // Dependency Imports
-import { Component, OnInit, Input, SimpleChanges, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, ChangeDetectionStrategy, IterableDiffers, NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-chart-js',
@@ -37,26 +37,30 @@ export class ChartJsComponent implements OnInit, OnChanges {
   @Input('offsetGridLines') offsetGridLines: any;
   @Input('headerLabelArray') headerLabelArray: any;
   @Input('chartData') chartData: any;
+  @Input('refreshChart') refreshChart: string;
 
-  constructor() { }
+  public iterableDiffer: any = {};
+
+  constructor() {}
 
   ngOnInit() {
     this.initializeChart();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log("changes:",changes);
     if ( changes['chartTypes'] && changes['chartTypes'].currentValue != undefined ) {
       this.chartTypes = changes['chartTypes'].currentValue;
       this.initializeChart();
     }
 
-    if ( changes['chartData'] && changes['chartData'].currentValue ) {
-      this.chartData = changes['chartData'].currentValue;
-      // console.log("Change in chartData:",this.chartData);
+    if ( changes['refreshChart'] && changes['refreshChart'].currentValue != undefined ) {
       this.initializeChart();
     }
 
+    if ( changes['chartData'] && changes['chartData'].currentValue ) {
+      this.chartData = changes['chartData'].currentValue;
+      this.initializeChart();
+    }
   }
 
   initializeChart() {
@@ -109,6 +113,7 @@ export class ChartJsComponent implements OnInit, OnChanges {
           },
           ticks: {
             fontColor: this.yAxisDataLabelColor ? this.yAxisDataLabelColor : "black",
+            beginAtZero : true
           }
         }],
         gridLines: {

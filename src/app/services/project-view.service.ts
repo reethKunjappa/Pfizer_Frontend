@@ -393,4 +393,22 @@ export class ProjectViewService {
     );
   }
   
+  /* Below API are for Dashboard Data */
+  // API FOR FETCHING DASHBOARD STATISCAL DATA
+  fetchDashboardStatisticData( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/dashboard';
+    return this.http.post<any>( url, requestData, this.httpOptions )
+    .pipe(
+      map((response: any )=> {
+        if ( response.status.code === 0 ) {
+          return response;    
+        }else {
+          throw new Error('Value expected!');  
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+
 }
