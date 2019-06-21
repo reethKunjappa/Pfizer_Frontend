@@ -93,10 +93,11 @@
                         <!-- <p class="card-category">Last Campaign Performance</p> -->
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <!-- <i class="material-icons">access_time</i> -->
-                            <i class="material-icons">date_range</i>{{ dashboardStatics.lastUploadedDocumentDate | date : 'dd-MMM-yyyy' }}<!-- campaign sent 2 days ago -->
-                        </div>
+                        <p class="card-category text-right my-0 w-100">
+                            <small><!-- <i class="material-icons">access_time</i> -->
+                                <i class="material-icons">date_range</i>{{ dashboardStatics.lastUploadedDocumentDate | date : 'dd-MMM-yyyy' }}<!-- campaign sent 2 days ago -->
+                            </small>
+                        </p> 
                     </div>
                 </div>
             </div>
@@ -134,10 +135,11 @@
                         </p> -->
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <!-- <i class="material-icons">access_time</i> -->
-                            <i class="material-icons">date_range</i>{{ dashboardStatics.lastConflictCreated | date : 'dd-MMM-yyyy' }}<!-- updated 4 minutes ago -->
-                        </div>
+                        <p class="card-category text-right my-0 w-100">
+                            <small><!-- <i class="material-icons">access_time</i> -->
+                                <i class="material-icons">date_range</i>{{ dashboardStatics.lastConflictCreated | date : 'dd-MMM-yyyy' }}<!-- updated 4 minutes ago -->
+                            </small>
+                        </p>     
                     </div>
                 </div>
             </div>
