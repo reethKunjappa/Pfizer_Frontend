@@ -17,16 +17,18 @@ import { LoggedInUserService } from '../../services/logged-in-user.service';
     templateUrl: './admin-layout.component.html',
     styleUrls: ['./admin-layout.component.scss']
 })
+
 export class AdminLayoutComponent implements OnInit {
+
     private _router: Subscription;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
 
-    public hideSideBar : boolean = false;
+    public hideSideBar: boolean = false;
 
-    constructor(public location: Location, private router: Router, private loggedInUserService: LoggedInUserService) {}
+    constructor(public location: Location, private router: Router, private loggedInUserService: LoggedInUserService) { }
 
-    sideBarToggleCondition( event : any ) {
+    sideBarToggleCondition(event: any) {
         this.hideSideBar = event;
     }
 
@@ -35,17 +37,18 @@ export class AdminLayoutComponent implements OnInit {
 
         if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
             // if we are on windows OS we activate the perfectScrollbar function
-
             document.getElementsByTagName('body')[0].classList.add('perfect-scrollbar-on');
         } else {
             document.getElementsByTagName('body')[0].classList.remove('perfect-scrollbar-off');
         }
+
         const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
         const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
 
         this.location.subscribe((ev: PopStateEvent) => {
             this.lastPoppedUrl = ev.url;
         });
+
         this.router.events.subscribe((event: any) => {
             if (event instanceof NavigationStart) {
                 if (event.url != this.lastPoppedUrl)
@@ -58,18 +61,22 @@ export class AdminLayoutComponent implements OnInit {
                     window.scrollTo(0, 0);
             }
         });
+
         this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
             elemMainPanel.scrollTop = 0;
             elemSidebar.scrollTop = 0;
         });
+
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             let ps = new PerfectScrollbar(elemMainPanel);
             ps = new PerfectScrollbar(elemSidebar);
         }
     }
+
     ngAfterViewInit() {
         this.runOnRouteChange();
     }
+
     isMaps(path) {
         var titlee = this.location.prepareExternalUrl(this.location.path());
         titlee = titlee.slice(1);
@@ -80,6 +87,7 @@ export class AdminLayoutComponent implements OnInit {
             return true;
         }
     }
+
     runOnRouteChange(): void {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
@@ -87,6 +95,7 @@ export class AdminLayoutComponent implements OnInit {
             ps.update();
         }
     }
+
     isMac(): boolean {
         let bool = false;
         if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {

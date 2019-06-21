@@ -335,6 +335,7 @@ export class CommentsConfirmationModal {
         'type': this.conflictTypeLabel
       }
     };
+    
     if (object.comments.length) {
       this.projectViewService.acceptRejectDocumentsComments(object).subscribe((res: any) => {
         if (res.status.code === 0) {
@@ -346,4 +347,5 @@ export class CommentsConfirmationModal {
       });
     }
   }
+
 }
