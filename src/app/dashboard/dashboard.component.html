@@ -9,9 +9,9 @@
                         <h3 class="card-title">{{ dashboardStatics.projectCount }}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats" style="margin-left: 65%;">
-                            <a routerLink="/project">Go to Projects</a>
-                        </div>
+                        <p class="card-category text-right my-0 w-100">
+                            <small><a routerLink="/project">Go to Projects</a></small>
+                        </p>   
                     </div>
                 </div>
             </div>
@@ -23,9 +23,9 @@
                         <h3 class="card-title">{{ dashboardStatics.documentsCount }}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats" style="margin-left: 58%;">
-                            <i class="material-icons">date_range</i>{{ dashboardStatics.lastUploadedDocumentDate | date : 'dd-MMM-yyyy' }}  <!--Last Uploaded 24 Hours ago -->
-                        </div>
+                        <p class="card-category text-right my-0 w-100">
+                            <small><i class="material-icons md-18">date_range</i>{{ dashboardStatics.lastUploadedDocumentDate | date : 'dd-MMM-yyyy' }}</small>
+                        </p>    
                     </div>
                 </div>
             </div>
@@ -37,9 +37,9 @@
                         <h3 class="card-title">{{ dashboardStatics.favouritesCount }}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats" style="margin-left: 65%;">
-                            <a routerLink="/favorite">Go to Favorite</a>
-                        </div>
+                        <p class="card-category text-right my-0 w-100">
+                            <small><a routerLink="/favorite">Go to Favorite</a></small>
+                        </p>  
                     </div>
                 </div>
             </div>
@@ -51,9 +51,9 @@
                         <h3 class="card-title">{{ dashboardStatics.totalConflictsCount }}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats" style="margin-left: 55%;">
-                            <i class="material-icons">update</i> Just Updated
-                        </div>
+                        <p class="card-category text-right my-0 w-100">
+                            <small><i class="material-icons">update</i> Just Updated</small>
+                        </p> 
                     </div>
                 </div>
             </div>
