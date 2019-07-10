@@ -21,7 +21,7 @@
                           <i class="fa fa-star-o"></i>
                         </button> -->
                       <button (click)="unMarkFavorite(project)" [disabled]="false" mat-raised-button type="button"
-                        matTooltip="Remove from Favorite" class="btn btn-link btn-sm btn-just-icon">
+                      [matTooltipPosition]="'above'" matTooltip="Remove from Favorite" class="btn btn-link btn-sm btn-just-icon">
                         <i class="fa fa-star"></i>
                       </button>
                       <a href="javascript:void(0)" (click)="openProject(project)">{{ project.projectName }}</a></td>
@@ -37,22 +37,10 @@
                           <mat-card-content>
                             <table class="table table-borderless table-sm table-light">
                               <tbody>
-                                <tr *ngIf="project.conflicts.types.font">
-                                  <td style="padding:5px;">Font Conflicts</td>
-                                  <td style="padding:5px;">{{ project.conflicts.types.font }}</td>
-                                </tr>
-                                <tr *ngIf="project.conflicts.types.content">
-                                  <td style="padding:5px;">Content Conflicts</td>
-                                  <td style="padding:5px;">{{ project.conflicts.types.content }}</td>
-                                </tr>
-                                <tr *ngIf="project.conflicts.types.order">
-                                  <td style="padding:5px;">Order Conflicts</td>
-                                  <td style="padding:5px;">{{ project.conflicts.types.order }}</td>
-                                </tr>
-                                <tr *ngIf="project.conflicts.types.spell_grammar">
-                                    <td style="padding:5px;">Spell Check Conflicts</td>
-                                    <td style="padding:5px;">{{ project.conflicts.types.spell_grammar }}</td>
-                                </tr>
+                                  <tr *ngFor="let item of project.conflicts.types">
+                                    <td style="padding:5px;">{{ item.label }}</td>
+                                    <td style="padding:5px;">{{ item.value }}</td>
+                                  </tr>
                               </tbody>
                             </table>
                           </mat-card-content>

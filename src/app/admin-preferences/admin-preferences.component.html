@@ -1,108 +1,549 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
+      <div class="col-12 pad-0 text-right">
+        <button mat-raised-button (click)="addPreferenceRules()" type="submit" class="btn btn-primary btn-spec">Update Rules</button>
+      </div>
+    </div>
+
+    <!-- Rule 1-->
+    <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
             <div>
-              <h4 class="card-title">Preferences</h4>
+              <h4 class="card-title">Rule #1: {{ rule1Details.action }}</h4>
               <div class="card-category"></div>
             </div>
           </div>
           <div class="card-body">
-            <div class="card-header">
-              <h6 class="card-title">Set Country Language</h6>
-            </div>
-            <hr style="margin:0.5rem;" />
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md-12">
-                  <mat-accordion class="example-headers-align">
-                    <mat-expansion-panel [expanded]="panelOpenState" hideToggle disabled>
-                      <mat-expansion-panel-header collapsedHeight="80px" expandedHeight="80px"
-                        style="background-color: #F7F6F6;">
-                        <div class="row w-100">
-                          <div class="col-md-4">
-                            <mat-form-field class="example-full-width">
-                              <mat-select [(ngModel)]="countryName" placeholder="Country">
-                                <mat-select-trigger>
-                                  <span><img src="{{countrySelected.id}}" width="20" height="20" />
-                                    {{ countrySelected.name }}</span>
-                                </mat-select-trigger>
-                                <mat-option *ngFor="let item of countryData" [value]="item.name"
-                                  (onSelectionChange)="setCountry($event, item)">
-                                  <img src="{{ item.flag }}" width="20" height="20" />&nbsp;&nbsp;{{item.name}}
-                                </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-md-4">
-                            <mat-form-field class="example-full-width">
-                              <mat-select [(ngModel)]="language" placeholder="Language">
-                                <mat-option *ngFor="let item of languages" [value]="item.name">
-                                  {{item.name}}
-                                </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                          </div>
-                          <div class="col-md-4 pull-right">
-                            <button (click)="setCountryLanguage()" [disabled]="!countryName || !language"
-                              mat-raised-button type="submit" class="btn btn-primary btn-spec">Set Language
-                              Preference</button>
-                            <button mat-raised-button class="btn btn-primary btn-spec my-0"
-                              (click)="togglePanel()">View</button>
-                          </div>
-                        </div>
-                      </mat-expansion-panel-header>
-                      <hr style="margin: 0rem -1.5rem;" />
-                      <table class="table">
-                        <thead>
-                          <th [ngStyle]="{width: header.width}" *ngFor="let header of countryLanguageTableHeaders"
-                            class="{{ header.class }}">{{ header.headerName }}</th>
-                        </thead>
-                        <tbody *ngIf="adminPrefData">
-                          <tr *ngIf="adminPrefData.countryPreferences.length < 1">
-                            <td colspan="2" class="mx-auto text-center">
-                              <div class="badge badge-pill badge-primary p-3">No preferences to show.</div>
-                            </td>
-                          </tr>
-                          <tr class="mat-row" style="height:30px !important;"
-                            *ngFor="let item of adminPrefData.countryPreferences; let i = index">
-                            <td class="mat-cell">{{ item.countryName }}</td>
-                            <td class="mat-cell">
-                              <span *ngIf="i != selectedIndex">{{ item.language }}</span>
-                              <span *ngIf="i == selectedIndex">
-                                <mat-form-field class="example-full-width">
-                                  <mat-select [(ngModel)]="item.language">
-                                    <mat-option *ngFor="let lang of languages" [value]="lang.name">
-                                      {{lang.name}}
-                                    </mat-option>
-                                  </mat-select>
-                                </mat-form-field>
-                              </span>
-                            </td>
-                            <td class="mat-cell">
-                              <button (click)="editLanguage(i)" mat-raised-button type="button" matTooltip="Edit"
-                                [matTooltipPosition]="'above'" class="btn btn-link btn-sm btn-just-icon">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button *ngIf="i == selectedIndex" (click)="saveLanguage(i)" mat-raised-button
-                                type="button" matTooltip="Save" [matTooltipPosition]="'above'"
-                                class="btn btn-link btn-sm btn-just-icon">
-                                <i class="material-icons">save</i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                </div>
+            <div class="row">
+              <div class="col-md-3">
+                <ng-select [items]="countryData" bindLabel="name" [multiple]="true" placeholder="Select Country" [(ngModel)]="createRule1.country"></ng-select>
+              </div>
+              <div class="col-md-8">
+                <ng-select [disabled]="rule1Checked" appearance="fill" autoCapitalize="on" dropdownPosition="bottom" 
+                  bindValue="value" bindLabel="label" [addTag]=true [addTagText]="addTagText" [multiple]="true"
+                  placeholder="Select / Add Section Names" [(ngModel)]="createRule1.sectionName"></ng-select>
+                <mat-checkbox class="example-margin" (ngModelChange)="setScope($event, rule1Details.ruleName )" [(ngModel)]="rule1Checked">All Sections</mat-checkbox>
+              </div>
+              <div class="col-md-1 text-right">
+                <button [disabled]="disableRule1(createRule1)" mat-mini-fab color="primary" (click)="addRule1();" type="button" matTooltip="Add Rule" [matTooltipPosition]="'above'">
+                    <i class="material-icons">add</i>
+                </button>
               </div>
             </div>
+            <hr style="margin:0.5rem 0">
+            <table class="table">
+              <thead>
+                <!-- <th *ngFor="let item of countryLanguageTableHeaders" [ngStyle]="{width: item.width}" class="{{ item.class }}">{{ item.headerName }}</th> -->
+                <th class="px-2" style="width:20%">Country</th>
+                <th class="px-2" style="width:35%">Section(s)</th>
+                <!-- <th class="px-2">Content</th> -->
+                <th class="px-2" style="width:20%">Created By</th>
+                <th class="px-2" style="width:15%">Created On</th>
+                <th class="px-2" style="width:10%">Actions</th>
+              </thead>
+              <tbody *ngIf="rule1Details">
+                <tr *ngIf="rule1Details.details.length < 1">
+                  <td colspan="6" class="mx-auto text-center">
+                    <div class="badge badge-pill badge-primary p-3">No {{ rule1Details.action }} rules to show.</div>
+                  </td>
+                </tr>
+                <tr class="mat-row" *ngFor="let r1Item of rule1Details.details;let i = index;">
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r1Item.country;let i1 = index">{{ x.name }}<span *ngIf="i1 < r1Item.country.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r1Item.sectionName;let i1 = index">{{ x }}<span *ngIf="i1 < r1Item.sectionName.length-1">, </span></span>
+                  </td>
+                  <!-- <td class="mat-cell">
+                    <span *ngFor="let x of r1Item.content">{{ x }}, </span>
+                  </td> -->
+                  <td class="mat-cell">{{ r1Item.createdBy.name }}</td>
+                  <td class="mat-cell">{{ r1Item.createdOn | date : 'dd-MMM-yyyy' }}</td>  
+                  <td class="mat-cell">
+                    <!-- <button (click)="editRule1(r1Item)" mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-just-icon flex">
+                      <i class="material-icons">edit</i>
+                    </button> -->
+                    <button (click)="deletePreferenceRule(rule1Details, i)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
+                      class="btn btn-danger btn-link btn-just-icon flex">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+
         </div>
       </div>
     </div>
+
+    <!-- Rule 2 -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div>
+              <h4 class="card-title">Rule #2: {{ rule2Details.action }}</h4>
+              <div class="card-category"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <ng-select [items]="countryData" bindLabel="name" [multiple]="true" placeholder="Select Country" [(ngModel)]="createRule2.country"></ng-select>
+              </div>
+              <div class="col-md-8">
+                <ng-select [items]="languages" bindValue="name" bindLabel="name" [multiple]="false" placeholder="Select Language" [(ngModel)]="createRule2.content[0]"></ng-select>
+              </div>
+              <div class="col-md-1 text-right">
+                <button [disabled]="disableRule2(createRule2)" mat-mini-fab color="primary" (click)="addRule2();" type="button" matTooltip="Add Rule" [matTooltipPosition]="'above'">
+                    <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+            <hr style="margin:0.5rem 0">
+            <table class="table">
+              <thead>
+                <!-- <th *ngFor="let item of countryLanguageTableHeaders" [ngStyle]="{width: item.width}" class="{{ item.class }}">{{ item.headerName }}</th> -->
+                <th class="px-2" style="width:20%">Country</th>
+                <!-- <th class="px-2">Section(s)</th> -->
+                <th class="px-2" style="width:35%">Content</th>
+                <th class="px-2" style="width:20%">Created By</th>
+                <th class="px-2" style="width:15%">Created On</th>
+                <th class="px-2" style="width:10%">Actions</th>
+              </thead>
+              <tbody *ngIf="rule2Details">
+                <tr *ngIf="rule2Details.details.length < 1">
+                  <td colspan="6" class="mx-auto text-center">
+                    <div class="badge badge-pill badge-primary p-3">No {{ rule2Details.action }} rules to show.</div>
+                  </td>
+                </tr>
+                <tr class="mat-row" *ngFor="let r2Item of rule2Details.details;let i = index;">
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r2Item.country;let i=index;">{{ x.name }}<span *ngIf="i < r2Item.country.length-1">, </span></span>
+                  </td>
+                  <!-- <td class="mat-cell">
+                    <span *ngFor="let x of r2Item.sectionName">{{ x }}, </span>
+                  </td> -->
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r2Item.content;let i=index;">{{ x }}<span *ngIf="i < r2Item.content.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">{{ r2Item.createdBy.name }}</td>
+                  <td class="mat-cell">{{ r2Item.createdOn | date : 'dd-MMM-yyyy' }}</td>  
+                  <td class="mat-cell">
+                    <!-- <button mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-just-icon flex">
+                      <i class="material-icons">edit</i>
+                    </button> -->
+                    <button (click)="deletePreferenceRule(rule2Details, i)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
+                      class="btn btn-danger btn-link btn-just-icon flex">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 3-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div>
+              <h4 class="card-title">Rule #3: {{ rule3Details.action }}</h4>
+              <div class="card-category"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <ng-select [items]="countryData" bindLabel="name" [multiple]="true" placeholder="Select Country" [(ngModel)]="createRule3.country"></ng-select>
+              </div>
+              <div class="col-md-5">
+                <ng-select [disabled]="rule3Checked" appearance="fill" autoCapitalize="on" dropdownPosition="bottom"
+                  bindValue="value" bindLabel="label" [addTag]=true [addTagText]="addTagText" [multiple]="true"
+                  placeholder="Select / Add Section Names" [(ngModel)]="createRule3.sectionName"></ng-select>
+                  <mat-checkbox class="example-margin" (ngModelChange)="setScope($event, rule3Details.ruleName )" [(ngModel)]="rule3Checked">All Sections</mat-checkbox>
+                </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" class="example-full-width m-0">
+                  <input matInput placeholder="Add content" [(ngModel)]="createRule3.content[0]" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-1 text-right">
+                <button [disabled]="disableRuleRest(createRule3)" mat-mini-fab color="primary" (click)="addRule3();" type="button" matTooltip="Add Rule" [matTooltipPosition]="'above'">
+                    <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+            <hr style="margin:0.5rem 0">
+            <table class="table">
+              <thead>
+                <!-- <th *ngFor="let item of countryLanguageTableHeaders" [ngStyle]="{width: item.width}" class="{{ item.class }}">{{ item.headerName }}</th> -->
+                <th class="px-2" style="width:20%">Country</th>
+                <th class="px-2" style="width:20%">Section(s)</th>
+                <th class="px-2" style="width:20%">Content</th>
+                <th class="px-2" style="width:20%">Created By</th>
+                <th class="px-2" style="width:10%">Created On</th>
+                <th class="px-2" style="width:10%">Actions</th>
+              </thead>
+              <tbody *ngIf="rule3Details">
+                <tr *ngIf="rule3Details.details.length < 1">
+                  <td colspan="6" class="mx-auto text-center">
+                    <div class="badge badge-pill badge-primary p-3">No {{ rule3Details.action }} rules to show.</div>
+                  </td>
+                </tr>
+                <tr class="mat-row" *ngFor="let r3Item of rule3Details.details;let i = index;">
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r3Item.country;let i=index;">{{ x.name }}<span *ngIf="i < r3Item.country.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r3Item.sectionName;let i=index;">{{ x }}<span *ngIf="i < r3Item.sectionName.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r3Item.content;let i=index;">{{ x }}<span *ngIf="i < r3Item.content.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">{{ r3Item.createdBy.name }}</td>
+                  <td class="mat-cell">{{ r3Item.createdOn | date : 'dd-MMM-yyyy' }}</td>  
+                  <td class="mat-cell">
+                    <!-- <button mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-just-icon flex">
+                      <i class="material-icons">edit</i>
+                    </button> -->
+                    <button (click)="deletePreferenceRule(rule3Details, i)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
+                      class="btn btn-danger btn-link btn-just-icon flex">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 4 -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div>
+              <h4 class="card-title">Rule #4: {{ rule4Details.action }}</h4>
+              <div class="card-category"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <ng-select [items]="countryData" bindLabel="name" [multiple]="true" placeholder="Select Country" [(ngModel)]="createRule4.country"></ng-select>
+              </div>
+              <div class="col-md-5">
+                <ng-select [disabled]="rule4Checked" appearance="fill" autoCapitalize="on" dropdownPosition="bottom"
+                  bindValue="value" bindLabel="label" [addTag]=true [addTagText]="addTagText" [multiple]="true"
+                  placeholder="Select / Add Section Names" [(ngModel)]="createRule4.sectionName"></ng-select>
+                  <mat-checkbox class="example-margin" (ngModelChange)="setScope($event, rule4Details.ruleName )" [(ngModel)]="rule4Checked">All Sections</mat-checkbox>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" class="example-full-width m-0">
+                  <input matInput [(ngModel)]="createRule4.content[0]" placeholder="Add content" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-1 text-right">
+                <button [disabled]="disableRuleRest(createRule4)" mat-mini-fab color="primary" (click)="addRule4();" type="button" matTooltip="Add Rule" [matTooltipPosition]="'above'">
+                    <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+            <hr style="margin:0.5rem 0">
+            <table class="table">
+              <thead>
+                <!-- <th *ngFor="let item of countryLanguageTableHeaders" [ngStyle]="{width: item.width}" class="{{ item.class }}">{{ item.headerName }}</th> -->
+                <th class="px-2" style="width:20%">Country</th>
+                <th class="px-2" style="width:20%">Section(s)</th>
+                <th class="px-2" style="width:20%">Content</th>
+                <th class="px-2" style="width:20%">Created By</th>
+                <th class="px-2" style="width:10%">Created On</th>
+                <th class="px-2" style="width:10%">Actions</th>
+              </thead>
+              <tbody *ngIf="rule4Details">
+                <tr *ngIf="rule4Details.details.length < 1">
+                  <td colspan="6" class="mx-auto text-center">
+                    <div class="badge badge-pill badge-primary p-3">No {{ rule4Details.action }} rules to show.</div>
+                  </td>
+                </tr>
+                <tr class="mat-row" *ngFor="let r4Item of rule4Details.details;let i = index;">
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r4Item.country;let i=index;">{{ x.name }}<span *ngIf="i < r4Item.country.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r4Item.sectionName;let i=index;">{{ x }}<span *ngIf="i < r4Item.sectionName.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r4Item.content;let i=index;">{{ x }}<span *ngIf="i < r4Item.content.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">{{ r4Item.createdBy.name }}</td>
+                  <td class="mat-cell">{{ r4Item.createdOn | date : 'dd-MMM-yyyy' }}</td>  
+                  <td class="mat-cell">
+                    <!-- <button mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-just-icon flex">
+                      <i class="material-icons">edit</i>
+                    </button> -->
+                    <button (click)="deletePreferenceRule(rule4Details, i)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
+                      class="btn btn-danger btn-link btn-just-icon flex">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 5 -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div>
+              <h4 class="card-title">Rule #5: {{ rule5Details.action }}</h4>
+              <div class="card-category"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                  <ng-select [items]="countryData" bindLabel="name" [multiple]="true" placeholder="Select Country" [(ngModel)]="createRule5.country"></ng-select>
+              </div>
+              <div class="col-md-5">
+                <ng-select [disabled]="rule5Checked" appearance="fill" autoCapitalize="on" dropdownPosition="bottom"
+                  bindValue="value" bindLabel="label" [addTag]=true [addTagText]="addTagText" [multiple]="true"
+                  placeholder="Select / Add Section Names" [(ngModel)]="createRule5.sectionName"></ng-select>
+                  <mat-checkbox class="example-margin" (ngModelChange)="setScope($event, rule5Details.ruleName )" [(ngModel)]="rule5Checked">All Sections</mat-checkbox>
+                </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" class="example-full-width m-0">
+                  <input matInput [(ngModel)]="createRule5.content[0]" placeholder="Add content" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-1 text-right">
+                <button [disabled]="disableRuleRest(createRule5)" mat-mini-fab color="primary" (click)="addRule5();" type="button" matTooltip="Add Rule" [matTooltipPosition]="'above'">
+                    <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+            <hr style="margin:0.5rem 0">
+            <table class="table">
+              <thead>
+                <!-- <th *ngFor="let item of countryLanguageTableHeaders" [ngStyle]="{width: item.width}" class="{{ item.class }}">{{ item.headerName }}</th> -->
+                <th class="px-2" style="width:20%">Country</th>
+                <th class="px-2" style="width:20%">Section(s)</th>
+                <th class="px-2" style="width:20%">Content</th>
+                <th class="px-2" style="width:20%">Created By</th>
+                <th class="px-2" style="width:10%">Created On</th>
+                <th class="px-2" style="width:10%">Actions</th>
+              </thead>
+              <tbody *ngIf="rule5Details">
+                <tr *ngIf="rule5Details.details.length < 1">
+                  <td colspan="6" class="mx-auto text-center">
+                    <div class="badge badge-pill badge-primary p-3">No {{ rule5Details.action }} rules to show.</div>
+                  </td>
+                </tr>
+                <tr class="mat-row" *ngFor="let r5Item of rule5Details.details;let i = index;">
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r5Item.country;let i=index;">{{ x.name }}<span *ngIf="i < r5Item.country.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r5Item.sectionName;let i=index;">{{ x }}<span *ngIf="i < r5Item.sectionName.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r5Item.content;let i=index;">{{ x }}<span *ngIf="i < r5Item.content.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">{{ r5Item.createdBy.name }}</td>
+                  <td class="mat-cell">{{ r5Item.createdOn | date : 'dd-MMM-yyyy' }}</td>  
+                  <td class="mat-cell">
+                    <!-- <button mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-just-icon flex">
+                      <i class="material-icons">edit</i>
+                    </button> -->
+                    <button (click)="deletePreferenceRule(rule5Details, i)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
+                      class="btn btn-danger btn-link btn-just-icon flex">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 6-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div>
+              <h4 class="card-title">Rule #6: {{ rule6Details.action }}</h4>
+              <div class="card-category"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <ng-select [items]="countryData" bindLabel="name" [multiple]="true" placeholder="Select Country" [(ngModel)]="createRule6.country"></ng-select>
+              </div>
+              <div class="col-md-5">
+                <ng-select appearance="fill" [disabled]="rule6Checked" autoCapitalize="on" dropdownPosition="bottom"
+                  bindValue="value" bindLabel="label" [addTag]=true [addTagText]="addTagText" [multiple]="true"
+                  placeholder="Select / Add Section Names" [(ngModel)]="createRule6.sectionName"></ng-select>
+                  <mat-checkbox class="example-margin" (ngModelChange)="setScope($event, rule6Details.ruleName )" [(ngModel)]="rule6Checked">All Sections</mat-checkbox>
+              </div>
+              <div class="col-md-3">
+                <mat-form-field appearance="outline" class="example-full-width m-0">
+                  <input matInput [(ngModel)]="createRule6.content[0]" placeholder="Add content" />
+                </mat-form-field>
+              </div>
+              <div class="col-md-1 text-right">
+                <button [disabled]="disableRuleRest(createRule6)" mat-mini-fab color="primary" (click)="addRule6();" type="button" matTooltip="Add Rule" [matTooltipPosition]="'above'">
+                    <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+            <hr style="margin:0.5rem 0">
+            <table class="table">
+              <thead>
+                <!-- <th *ngFor="let item of countryLanguageTableHeaders" [ngStyle]="{width: item.width}" class="{{ item.class }}">{{ item.headerName }}</th> -->
+                <th class="px-2" style="width:20%">Country</th>
+                <th class="px-2" style="width:20%">Section(s)</th>
+                <th class="px-2" style="width:20%">Content</th>
+                <th class="px-2" style="width:20%">Created By</th>
+                <th class="px-2" style="width:10%">Created On</th>
+                <th class="px-2" style="width:10%">Actions</th>
+              </thead>
+              <tbody *ngIf="rule6Details">
+                <tr *ngIf="rule6Details.details.length < 1">
+                  <td colspan="6" class="mx-auto text-center">
+                    <div class="badge badge-pill badge-primary p-3">No {{ rule6Details.action }} rules to show.</div>
+                  </td>
+                </tr>
+                <tr class="mat-row" *ngFor="let r6Item of rule6Details.details;let i = index;">
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r6Item.country;let i=index;">{{ x.name }}<span *ngIf="i < r6Item.country.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r6Item.sectionName;let i=index;">{{ x }}<span *ngIf="i < r6Item.sectionName.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r6Item.content;let i=index;">{{ x }}<span *ngIf="i < r6Item.content.length-1">, </span></span>
+                  </td>
+                  <td class="mat-cell">{{ r6Item.createdBy.name }}</td>
+                  <td class="mat-cell">{{ r6Item.createdOn | date : 'dd-MMM-yyyy' }}</td>  
+                  <td class="mat-cell">
+                    <!-- <button mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-just-icon flex">
+                      <i class="material-icons">edit</i>
+                    </button> -->
+                    <button (click)="deletePreferenceRule(rule6Details, i)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
+                      class="btn btn-danger btn-link btn-just-icon flex">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Rule 7-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <div>
+              <h4 class="card-title">Rule #7: {{ rule7Details.action }}</h4>
+              <div class="card-category"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                  <ng-select [items]="countryData" bindLabel="name" [multiple]="true" placeholder="Select Country" [(ngModel)]="createRule7.country"></ng-select>
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="example-full-width m-0">
+                  <input matInput [(ngModel)]="createRule7.content[0]" placeholder="From Text" />
+                </mat-form-field>    
+              </div>
+              <div class="col-md-4">
+                <mat-form-field appearance="outline" class="example-full-width m-0">
+                  <input matInput [(ngModel)]="createRule7.content[1]" placeholder="To Text" />
+                </mat-form-field>    
+              </div>
+              <div class="col-md-1 text-right">
+                <button [disabled]="disableRule7(createRule7)" mat-mini-fab color="primary" (click)="addRule7();" type="button" matTooltip="Add Rule" [matTooltipPosition]="'above'">
+                    <i class="material-icons">add</i>
+                </button>
+              </div>
+            </div>
+            <hr style="margin:0.5rem 0">
+            <table class="table">
+              <thead>
+                <!-- <th *ngFor="let item of countryLanguageTableHeaders" [ngStyle]="{width: item.width}" class="{{ item.class }}">{{ item.headerName }}</th> -->
+                <th class="px-2" style="width:20%">Country</th>
+                <!-- <th class="px-2">Section(s)</th> -->
+                <th class="px-2" style="width:35%">Content</th>
+                <th class="px-2" style="width:20%">Created By</th>
+                <th class="px-2" style="width:15%">Created On</th>
+                <th class="px-2" style="width:10%">Actions</th>
+              </thead>
+              <tbody *ngIf="rule7Details">
+                <tr *ngIf="rule7Details.details.length < 1">
+                  <td colspan="6" class="mx-auto text-center">
+                    <div class="badge badge-pill badge-primary p-3">No {{ rule7Details.action }} rules to show.</div>
+                  </td>
+                </tr>
+                <tr class="mat-row" *ngFor="let r7Item of rule7Details.details;let i = index;">
+                  <td class="mat-cell">
+                    <span *ngFor="let x of r7Item.country;let i=index;">{{ x.name }}<span *ngIf="i < r7Item.country.length-1">, </span></span>
+                  </td>
+                  <!-- <td class="mat-cell">
+                    <span *ngFor="let x of r7Item.sectionName">{{ x }}, </span>
+                  </td> -->
+                  <td class="mat-cell">
+                    <span  *ngFor="let x of r7Item.content; let i = index">{{ x }} <i class="material-icons align-middle" *ngIf="i < r7Item.content.length-1">arrow_right_alt</i> </span>
+                  </td>
+                  <td class="mat-cell">{{ r7Item.createdBy.name }}</td>
+                  <td class="mat-cell">{{ r7Item.createdOn | date : 'dd-MMM-yyyy' }}</td>  
+                  <td class="mat-cell">
+                    <!-- <button mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" class="btn btn-primary btn-link btn-just-icon flex">
+                      <i class="material-icons">edit</i>
+                    </button> -->
+                    <button (click)="deletePreferenceRule(rule7Details, i)" mat-raised-button type="button" matTooltip="Remove" [matTooltipPosition]="'above'" 
+                      class="btn btn-danger btn-link btn-just-icon flex">
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

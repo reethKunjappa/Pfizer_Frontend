@@ -45,13 +45,17 @@ export class DashboardComponent implements OnInit {
       if (dashboardData != undefined && dashboardData != null && dashboardData != "") {
         this.dashboardStatics = dashboardData.result;
         this.dashboardStatics.documentsTypeCount.map((e) => {
-          this.documentsHeaderArray.push(e._id);
-          this.documentsChartData[0].data.push(e.count);
+          if ( e._id !== null && e._id !== undefined && e._id !== "" ) {
+            this.documentsHeaderArray.push(e._id);
+            this.documentsChartData[0].data.push(e.count);              
+          }
         });
 
         this.dashboardStatics.conflictTypeCount.map((e) => {
-          this.conflictHeaderArray.push(e._id);
-          this.conflictChartData[0].data.push(e.count);
+          if ( e._id !== null && e._id !== undefined && e._id !== "" ) {
+            this.conflictHeaderArray.push(e._id);
+            this.conflictChartData[0].data.push(e.count);              
+          }
         });
 
         // this.chart1 = this.typeOfCharts[0];

@@ -28,74 +28,30 @@
               [mdePopoverTriggerFor]="appPopover"
               mdePopoverTriggerOn="hover">{{ projectDetails.project.conflicts.total }}</button>
             <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
-              <mat-card style="max-width: 300px;padding: 5px;">
+              <mat-card style="max-width: 320px;padding: 5px;">
                 <mat-card-content>
                   <table class="table table-borderless table-sm table-light">
                     <tbody>
-                      <tr *ngIf="projectDetails.project.conflicts.types.font">
-                        <td style="padding:5px;">Font Conflicts</td>
-                        <td style="padding:5px;">{{ projectDetails.project.conflicts.types.font }}</td>
-                        <td><button mat-raised-button type="button" matTooltip="Accept All"
+                      <tr *ngFor="let item of projectDetails.project.conflicts.types">
+                        <td>{{ item.label }}</td>
+                        <td style="padding:5px;">{{ item.value }}</td>
+                        <td>
+                          <button mat-raised-button type="button" matTooltip="Accept All" [matTooltipPosition]="'above'"
                             class="btn btn-success btn-link btn-sm py-0 px-1 m-0"
-                            [disabled]="projectDetails.project.conflicts.types.font.length < 1"
-                            (click)="openConfirmationModal('Accept', conflicts.font, 'FONT CONFLICTS')">
+                            [disabled]="item.value < 1"
+                            *ngIf="item.key != 'spell' && item.key != 'order' && item.key != 'configRules'"
+                            (click)="openConfirmationModal('Accept', item.key, item.label)">
                             <i class="material-icons">done_all</i>
                           </button>
-                          <button mat-raised-button type="button" matTooltip="Reject All"
+                          <button mat-raised-button type="button" matTooltip="Reject All" [matTooltipPosition]="'above'"
                             class="btn btn-danger btn-link btn-sm py-0 px-1 m-0"
-                            [disabled]="projectDetails.project.conflicts.types.font.length < 1"
-                            (click)="openConfirmationModal('Reject', conflicts.font, 'FONT CONFLICTS')">
+                            [disabled]="item.value < 1"
+                            *ngIf="item.key != 'spell' && item.key != 'order' && item.key != 'configRules'"
+                            (click)="openConfirmationModal('Reject', item.key, item.label)">
                             <i class="material-icons">close</i>
-                          </button></td>
-                      </tr>
-                      <tr *ngIf="projectDetails.project.conflicts.types.content">
-                        <td style="padding:5px;">Content Conflicts</td>
-                        <td style="padding:5px;">{{ projectDetails.project.conflicts.types.content }}</td>
-                        <td><button mat-raised-button type="button" matTooltip="Accept All"
-                            class="btn btn-success btn-link btn-sm py-0 px-1 m-0"
-                            [disabled]="projectDetails.project.conflicts.types.content.length < 1"
-                            (click)="openConfirmationModal('Accept', conflicts.content, 'CONTENT CONFLICTS')">
-                            <i class="material-icons">done_all</i>
                           </button>
-                          <button mat-raised-button type="button" matTooltip="Reject All"
-                            class="btn btn-danger btn-link btn-sm py-0 px-1 m-0"
-                            [disabled]="projectDetails.project.conflicts.types.content.length < 1"
-                            (click)="openConfirmationModal('Reject', conflicts.content, 'CONTENT CONFLICTS')">
-                            <i class="material-icons">close</i>
-                          </button></td>
-                      </tr>
-                      <tr *ngIf="projectDetails.project.conflicts.types.order">
-                        <td style="padding:5px;">Order Conflicts</td>
-                        <td style="padding:5px;">{{ projectDetails.project.conflicts.types.order }}</td>
-                        <td><button mat-raised-button type="button" matTooltip="Accept All"
-                            class="btn btn-success btn-link btn-sm py-0 px-1 m-0"
-                            [disabled]="projectDetails.project.conflicts.types.order.length < 1"
-                            (click)="openConfirmationModal('Accept', conflicts.order, 'ORDER CONFLICTS')">
-                            <i class="material-icons">done_all</i>
-                          </button>
-                          <button mat-raised-button type="button" matTooltip="Reject All"
-                            class="btn btn-danger btn-link btn-sm py-0 px-1 m-0"
-                            [disabled]="projectDetails.project.conflicts.types.order.length < 1"
-                            (click)="openConfirmationModal('Reject', conflicts.order, 'ORDER CONFLICTS')">
-                            <i class="material-icons">close</i>
-                          </button></td>
-                      </tr>
-                      <tr *ngIf="projectDetails.project.conflicts.types.spell_grammar">
-                        <td style="padding:5px;">Spell Check Conflicts</td>
-                        <td style="padding:5px;">{{ projectDetails.project.conflicts.types.spell_grammar }}</td>
-                        <td><button mat-raised-button type="button" matTooltip="Accept All"
-                            class="btn btn-success btn-link btn-sm py-0 px-1 m-0"
-                            [disabled]="projectDetails.project.conflicts.types.spell_grammar.length < 1"
-                            (click)="openConfirmationModal('Accept', conflicts.spell, 'SPELL CHECK CONFLICTS')">
-                            <i class="material-icons">done_all</i>
-                          </button>
-                          <button mat-raised-button type="button" matTooltip="Reject All"
-                            class="btn btn-danger btn-link btn-sm py-0 px-1 m-0"
-                            [disabled]="projectDetails.project.conflicts.types.spell_grammar.length < 1"
-                            (click)="openConfirmationModal('Reject', conflicts.spell, 'SPELL CHECK CONFLICTS')">
-                            <i class="material-icons">close</i>
-                          </button></td>
-                      </tr>
+                        </td>
+                      </tr>                      
                     </tbody>
                   </table>
                 </mat-card-content>
@@ -108,9 +64,8 @@
           <mat-sidenav #sidenav position="end" mode="side" style="width:40%;background: transparent;">
             <div class="row mx-0 py-2">
               <div class="col-12 text-right">
-                <button mat-raised-button type="button" matTooltip="Close Reference Document"
+                <button mat-raised-button type="button" matTooltip="Close Reference Document" [matTooltipPosition]="'above'"
                   class="btn btn-danger btn-spec  btn-sm py-0 px-1 m-0" (click)="sidenav.close()">
-                  <!-- btn-link -->
                   <i class="material-icons">cancel</i>
                 </button>
               </div>
@@ -124,7 +79,7 @@
 
           <mat-sidenav-content>
             <div id="main">
-              <div class="row mx-1 w-100">
+              <div class="row mx-1 w-100 mt-1">
                 <div style="width:65%">
                   <div class="row">
                     <div class="col-4">
@@ -132,21 +87,20 @@
                         class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">save_alt</i></button>  -->
                     </div>
                     <div class="col-4 text-center">
-                      <button (click)="pdfViewer.zoomIn()" mat-raised-button type="button" matTooltip="Zoom In"
-                        class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">zoom_in</i></button>
-                      <button (click)="pdfViewer.zoomOut()" mat-raised-button type="button" matTooltip="Zoom Out"
-                        class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">zoom_out</i></button>
+                      <button (click)="pdfViewer.zoomIn()" mat-raised-button type="button" matTooltip="Zoom In" [matTooltipPosition]="'above'"
+                        class="btn btn-spec btn-link btn-just-icon"><i class="material-icons" style="font-size: larger;">zoom_in</i></button>
+                      <button (click)="pdfViewer.zoomOut()" mat-raised-button type="button" matTooltip="Zoom Out" [matTooltipPosition]="'above'"
+                        class="btn btn-spec btn-link btn-just-icon"><i class="material-icons" style="font-size: larger;">zoom_out</i></button>
                     </div>
                     <div class="col-4 text-right">
-                      <button (click)="pdfViewer.prevPage()" mat-raised-button type="button" matTooltip="Prev Page"
-                        class="btn btn-spec btn-link btn-just-icon"><i
-                          class="material-icons">navigate_before</i></button>
-                      <button (click)="pdfViewer.nextPage()" mat-raised-button type="button" matTooltip="Next Page"
-                        class="btn btn-spec btn-link btn-just-icon"><i class="material-icons">navigate_next</i></button>
+                      <button (click)="pdfViewer.prevPage()" mat-raised-button type="button" matTooltip="Prev Page" [matTooltipPosition]="'above'"
+                        class="btn btn-spec btn-link btn-just-icon"><i class="material-icons" style="font-size: larger;">navigate_before</i></button>
+                      <button (click)="pdfViewer.nextPage()" mat-raised-button type="button" matTooltip="Next Page" [matTooltipPosition]="'above'"
+                        class="btn btn-spec btn-link btn-just-icon"><i class="material-icons" style="font-size: larger;">navigate_next</i></button>
                     </div>
                   </div>
 
-                  <div class="card m-0 mt-1" style="height: 91vh !important">
+                  <div class="card my-2" style="height: 91vh !important">
                     <section id="viewer">
                       <simple-pdf-viewer #pdfViewer [src]="labelDocUrl" (onLoadComplete)="onLoadComplete()"
                         [removePageBorders]=false (onError)="onError($event)" (onProgress)="onProgress($event)"
@@ -157,39 +111,42 @@
 
                 <!-- COMMENTS SECTION -->
                 <div style="width:35%;">
-                  <div class="row mx-2">
-                    <ng-select class="w-100 my-1" autoCapitalize="on" dropdownPosition="bottom"
+                  <div class="row mx-2 pl-1">
+                    <ng-select id="conflictTypeNgSelect" class="w-100 my-0 py-0" autoCapitalize="on" dropdownPosition="bottom"
                       [items]="conflictCriterias" bindValue="value" bindLabel="label"
                       placeholder="Select Conflict Criteria" (ngModelChange)="filterItem($event)"
                       [(ngModel)]="conflictType"></ng-select>
                   </div>
-                  <div class="row mx-0 pl-2" style="overflow-x: hidden; overflow-y: auto; height: 93vh;">
+                  <div class="row mx-0 pl-2" style="overflow-x: hidden; overflow-y: auto; max-height: 93vh;">
                     <div *ngFor="let item of filteredItems;let i = index" class=" border-info m-1 mr-2 w-100">
                       <mat-card class="p-2" id="{{ i }}">
                         <mat-card-content class="mb-0">
                           <div class="small"
                             [ngClass]="item.action == 'ACCEPT' ? 'btn-success pl-2 rounded' :  (item.action == 'REJECT' ? 'btn-danger pl-2 rounded' : '' )">
-                            {{item.conflict_type}} CONFLICT</div>
+                            {{item.conflict_type}} Conflict</div>
                           <hr style="margin: 0.5rem 0" />
                           <!-- (click)="pdfViewer.search(item.comment_text)" -->
                           <div class="small" (click)="pdfViewer.search(item.comment_id)" style="cursor: pointer;">
                             {{item.comment_text}}</div>
                         </mat-card-content>
                         <mat-card-actions class="text-right">
-                          <button mat-raised-button type="button" matTooltip="Accept"
+                          <!-- *ngIf="item.conflict_type != 'GRAMMAR_SPELLING' && item.conflict_type != 'ORDER'" -->
+                          <button mat-raised-button type="button" matTooltip="Accept" [matTooltipPosition]="'above'"
                             class="btn btn-success btn-link btn-sm btn-just-icon"
+                            [hidden]="showAcceptRejectConditions(item)"
                             (click)="acceptOrRejectComment('Accept',item)">
                             <i class="material-icons">check</i>
                           </button>
-                          <button mat-raised-button type="button" matTooltip="Reject"
+                          <button mat-raised-button type="button" matTooltip="Reject" [matTooltipPosition]="'above'"
                             class="btn btn-danger btn-link btn-sm btn-just-icon"
+                            [hidden]="showAcceptRejectConditions(item)"
                             (click)="acceptOrRejectComment('Reject',item)">
                             <i class="material-icons">close</i>
                           </button>
                           <button mat-raised-button
-                            *ngIf="(item.reference_doc!='' && item.reference_doc!=null && item.reference_doc!=undefined)"
-                            type="button" (click)="sidenav.open();getReferenceDocument(item, i);"
-                            matTooltip="Refer Document" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                            *ngIf="(item.reference_doc!='' && item.reference_doc!=null && item.reference_doc!=undefined && item.conflict_type != 'Spell and Grammar' && item.conflict_type != 'Configured rules' )"
+                            type="button" (click)="sidenav.open();getReferenceDocument(item, i);" [matTooltipPosition]="'above'"
+                            matTooltip="Reference Document" class="btn btn-primary btn-link btn-sm btn-just-icon">
                             <i class="material-icons">find_in_page</i></button>
                         </mat-card-actions>
                       </mat-card>

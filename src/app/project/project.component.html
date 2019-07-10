@@ -28,18 +28,17 @@
                                     <tr class="mat-row" *ngFor="let project of allProjectList">
                                         <td class="mat-cell">
                                             <button *ngIf="!project.favorite" (click)="markFavorite(project)"
-                                                [disabled]="false" mat-raised-button type="button"
+                                                [disabled]="false" mat-raised-button type="button" [matTooltipPosition]="'above'"
                                                 matTooltip="Add as Favorite" class="btn btn-link btn-sm btn-just-icon">
                                                 <i class="fa fa-star-o"></i>
                                             </button>
                                             <button *ngIf="project.favorite" (click)="unMarkFavorite(project)"
                                                 [disabled]="false" mat-raised-button type="button"
-                                                matTooltip="Remove from Favorite"
+                                                matTooltip="Remove from Favorite" [matTooltipPosition]="'above'"
                                                 class="btn btn-link btn-sm btn-just-icon">
                                                 <i class="fa fa-star"></i>
                                             </button>
-                                            <a href="javascript:void(0)"
-                                                (click)="openProject(project)">{{ project.projectName }}</a></td>
+                                            <a href="javascript:void(0)" (click)="openProject(project)">{{ project.projectName }}</a></td>
                                         <td class="mat-cell">{{ project.country.name }}</td>
                                         <td class="mat-cell">{{ project.createdBy.name }}</td>
                                         <td class="mat-cell">{{ project.createdOn | date : 'dd-MMM-yyyy' }}</td>
@@ -53,21 +52,9 @@
                                                     <mat-card-content>
                                                         <table class="table table-borderless table-sm table-light">
                                                             <tbody>
-                                                                <tr *ngIf="project.conflicts.types.font">
-                                                                    <td style="padding:5px;">Font Conflicts</td>
-                                                                    <td style="padding:5px;">{{ project.conflicts.types.font }}</td>
-                                                                </tr>
-                                                                <tr *ngIf="project.conflicts.types.content">
-                                                                    <td style="padding:5px;">Content Conflicts</td>
-                                                                    <td style="padding:5px;">{{ project.conflicts.types.content }}</td>
-                                                                </tr>
-                                                                <tr *ngIf="project.conflicts.types.order">
-                                                                    <td style="padding:5px;">Order Conflicts</td>
-                                                                    <td style="padding:5px;">{{ project.conflicts.types.order }}</td>
-                                                                </tr>
-                                                                <tr *ngIf="project.conflicts.types.spell_grammar">
-                                                                    <td style="padding:5px;">Spell Check Conflicts</td>
-                                                                    <td style="padding:5px;">{{ project.conflicts.types.spell_grammar }}</td>
+                                                                <tr *ngFor="let item of project.conflicts.types">
+                                                                    <td style="padding:5px;">{{ item.label }}</td>
+                                                                    <td style="padding:5px;">{{ item.value }}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

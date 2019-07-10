@@ -151,7 +151,7 @@ export class ProjectViewService {
       '_id': requestData
     }
     return this.http.post(url, reqInput, this.httpOptions).pipe(
-      map((response: any) => {
+      map(( response: any ) => {
         if ( response.status.code === 0 ) {
           return response;
         }
@@ -166,7 +166,7 @@ export class ProjectViewService {
       '_id': requestData
     }
     return this.http.post(url, reqInput, this.httpOptions).pipe(
-      map((response: any) => {
+      map(( response: any) => {
         if ( response.status.code === 0 ) {
           return response;
         }
@@ -178,7 +178,7 @@ export class ProjectViewService {
   acceptComment( commentReq ): Observable<any> {
     const url = this.endPointAddress + '';
     return this.http.post(url, commentReq, this.httpOptions).pipe(
-      map((response: any) => {
+      map(( response: any) => {
         if ( response.status.code === 0 ) {
           return response;
         }
@@ -190,7 +190,7 @@ export class ProjectViewService {
   rejectComment( commentReq ): Observable<any> {
     const url = this.endPointAddress + '';
     return this.http.post(url, commentReq, this.httpOptions).pipe(
-      map((response: any) => {
+      map(( response: any) => {
         if ( response.status.code === 0 ) {
           return response;
         }
@@ -203,7 +203,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/viewConflictProject';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;                
         }else {
@@ -220,7 +220,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/getAllComments';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;                
         }else {
@@ -236,7 +236,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/createComments';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;                
         }else {
@@ -252,7 +252,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/updateComments';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;                
         }else {
@@ -268,7 +268,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/deleteDocument';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;              
         }else {
@@ -284,7 +284,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/auditHistory';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;              
         }else {
@@ -300,7 +300,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/commentAck';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
 
         }else {
@@ -318,7 +318,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/checkList';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;
         }else {
@@ -334,7 +334,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/getMappingSpec';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;              
         }else {
@@ -350,7 +350,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/preferencesCreate';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;              
         }else {
@@ -366,7 +366,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/getAllPreferences';
     return this.http.post<any>( url, null, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;              
         }else {
@@ -382,7 +382,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/updatePreference';
     return this.http.post<any>( url, requestData, this.httpOptions)
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;              
         }else {
@@ -399,7 +399,7 @@ export class ProjectViewService {
     let url = this.endPointAddress + '/api/labelling/dashboard';
     return this.http.post<any>( url, requestData, this.httpOptions )
     .pipe(
-      map((response: any )=> {
+      map(( response: any )=> {
         if ( response.status.code === 0 ) {
           return response;    
         }else {
@@ -410,5 +410,70 @@ export class ProjectViewService {
     );
   }
 
+  /* Below API are for New Preference Rules */
+  // GET ALL PREFERENCE RULES
+  getPreferenceRules() : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/getAllRules';
+    return this.http.post<any>( url, null, this.httpOptions )
+    .pipe(
+      map(( response: any )=> {
+        if ( response.status.code === 0 ) {
+          return response;    
+        }else {
+          throw new Error('Value expected!');  
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // CREATE PREFERENCE RULE
+  createPreferenceRules( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/createRules';
+    return this.http.post<any>( url, requestData, this.httpOptions )
+    .pipe(
+      map(( response: any )=> {
+        if ( response.status.code === 0 ) {
+          return response;    
+        }else {
+          throw new Error('Value expected!');  
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // UPDATE PREFERENCE RULES
+  addPreferenceRules( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/addRules';
+    return this.http.post<any>( url, requestData, this.httpOptions )
+    .pipe(
+      map(( response: any )=> {
+        if ( response.status.code === 0 ) {
+          return response;    
+        }else {
+          throw new Error('Value expected!');  
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // DELETE PREFERNCE RULES
+  deletePreferenceRule( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/deleteRules';
+    return this.http.post<any>( url, requestData, this.httpOptions )
+    .pipe(
+      map(( response: any )=> {
+        if ( response.status.code === 0 ) {
+          return response;    
+        }else {
+          throw new Error('Value expected!');  
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
 
 }
+ 

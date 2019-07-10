@@ -11,7 +11,7 @@ export class CountryCodeService {
 
   constructor() { 
     this.countryCodeData = [
-      // Remove the first two and uncomment the rest later when needed. - Shashank
+      // Remove the first three and uncomment the rest later when needed. - Shashank
       {
         'name':'Saudi Arabia',
         'countryCode':'+966',
@@ -21,7 +21,12 @@ export class CountryCodeService {
         'name':'Bosnia',
         'countryCode':'+387',
         'flag':'../../assets/countryFlags/bosnia_and_herzegovina.gif'
-      }
+      },
+      {
+        'name':'South Africa',
+        'countryCode':'+27',
+        'flag':'../../assets/countryFlags/south_africa.gif'
+      },
       // {
       //   'name':'Afghanistan',
       //   'countryCode':'+91',

@@ -4,6 +4,8 @@
 @import "./app/compare/compare.component.css";
 @import "./app/login/login.component.css";
 
+@import "~@ng-select/ng-select/themes/material.theme.css";
+            
 .ng-sidebar {
   background: rgb(255, 255, 255);
   width: 13rem;
@@ -47,6 +49,24 @@
   margin-top: 50px;
   padding: 0px 15px;
   min-height: calc(100vh - 123px);
+}
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  /* margin: .25em 0; */
+  margin: 0 !important;
+}
+
+.table .table {
+  background-color: transparent !important;
+}
+
+.ng-select .ng-select-container::after {
+  border-bottom: none !important;
+}
+
+.sidebar-disabled {
+  pointer-events: none !important;
+  cursor: not-allowed;
 }
 
 @media( min-width: 992px ) {

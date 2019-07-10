@@ -1,4 +1,6 @@
-
+#conflictTypeNgSelect .ng-value {
+  padding-left: 10px;
+}
   
   .example-sidenav {
     padding: 20px;

@@ -20,10 +20,10 @@
                 <tbody>
                   <tr class="mat-row" *ngFor="let sec of mappingSpec">
                     <td class="mat-cell">{{ sec.lpd_Section }}</td>
-                    <td class="mat-cell">{{ sec.final_matched }}</td>
+                    <td class="mat-cell">{{ sec.predicted_mapping_content }}</td> <!-- final_matched -->
                     <!-- <td class="mat-cell">{{ sec.actual_mapping }} </td> -->
                     <td class="mat-cell">
-                      <div [ngClass]="convertToPercent(sec.confidence_score) > 80 ? 'btn-success' : convertToPercent(sec.confidence_score) < 30 ? 'btn-danger' : 'btn-warning' " class="badge badge-pill btn-success" style="padding:10px !important;">
+                      <div [ngClass]="convertToPercent(sec.confidence_score) > 70 ? 'btn-success' : convertToPercent(sec.confidence_score) < 30 ? 'btn-danger' : 'btn-warning' " class="badge badge-pill btn-success" style="padding:10px !important;">
                         {{ convertToPercent(sec.confidence_score) }}
                       </div>
                     </td>

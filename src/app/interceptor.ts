@@ -4,6 +4,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } fr
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { HttpInterceptorService } from './services/http-interceptor.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 // Below Imports only for showing error msg on modal
 import { StatusComponent } from './status/status.component';
@@ -16,7 +17,7 @@ export class I1 implements HttpInterceptor {
   // Property Declarations
   public statusDialog : any;
 
-  constructor(public spinnerService: HttpInterceptorService, public dialog: MatDialog) {}
+  constructor(public spinnerService: HttpInterceptorService, public dialog: MatDialog, private router : Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -55,7 +56,11 @@ export class I1 implements HttpInterceptor {
       },
     });
     
-    this.statusDialog.afterClosed().subscribe(result => {});
+    this.statusDialog.afterClosed().subscribe(result => {
+      if ( result == 'Cancel' ) {
+        this.router.navigate(['/project',{}]);
+      }
+    });
   }
 
 }
