@@ -17,6 +17,7 @@ export class CreateProjectData {
     createdOn: string = "";
     _id : string = "";
     documents: any = [];
+    proprietaryName : string = "";
 
     constructor() { }
 }

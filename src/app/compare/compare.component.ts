@@ -16,6 +16,14 @@ export interface DialogData {
   action: string;
 }
 
+export class FilterCommentsArray {
+  'font': any = [];
+  'order': any = [];
+  'spell': any = [];
+  'content': any = [];
+  'preferenceRules': any = [];
+}
+
 @Component({
   selector: 'app-compare',
   templateUrl: './compare.component.html',
@@ -47,6 +55,8 @@ export class CompareComponent implements OnInit {
   public spellCheckCount: any;
   public commentsAcceptedRejected = [];
   public labelDocUrl: any;
+  public refDocUrl : any;
+  public refSearchText : string;
 
   public conflictCriterias: any[] = [
     { 'value': 'ALL', 'label': 'All' },
@@ -86,7 +96,8 @@ export class CompareComponent implements OnInit {
   ngOnInit() {}
 
   filterCommentsArray(){
-    this.conflicts.font = this.comments.filter((x) => {
+    this.conflicts = new FilterCommentsArray();
+    this.conflicts.font = this.projectDetails.comments.filter((x) => {
       return x.conflict_type === 'Font Name' || x.conflict_type === 'Font Size' || x.conflict_type === 'Font Colour'
     })
     this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Order' });
@@ -100,9 +111,7 @@ export class CompareComponent implements OnInit {
     this.projectViewService.getDocument(this.projectId).subscribe((res: any) => {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
-        this.comments = this.projectDetails.comments;
         this.assignCopy();
-
         this.totalCount = this.projectDetails.comments.length;
         this.filterCommentsArray();
 
@@ -129,9 +138,7 @@ export class CompareComponent implements OnInit {
     this.projectViewService.viewProjectConflicts({ '_id': this.projectId }).subscribe((res: any) => {
       if (res != undefined && res != "") {
         this.projectDetails = res.result;
-        this.comments = res.result.comments;
         this.assignCopy();
-
         this.totalCount = this.projectDetails.comments.length;
         this.filterCommentsArray();
 
@@ -160,6 +167,10 @@ export class CompareComponent implements OnInit {
         setTimeout(() => {
           document.getElementById('showRefDoc').setAttribute('src', refDocUrl);
         }, 1000);
+        // this.refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);        
+        // this.refSearchText = docDetails['right_search'];
+        // console.log("Ref Text:",this.refSearchText);
+        // this.pdfViewers.search(refDocUrl);
       }
     });
   }
@@ -188,7 +199,6 @@ export class CompareComponent implements OnInit {
         this.projectDetails = result;
         this.filteredItems = result.comments;
         this.filterItem(this.conflictType);
-        this.comments = result.comments;
         this.totalCount = this.projectDetails.comments.length;
         this.filterCommentsArray();
 
@@ -313,6 +323,10 @@ export class CompareComponent implements OnInit {
     this.pdfViewers.setZoomInPercent(88);
   }
 
+  onLoadCompleteRef() {
+    this.pdfViewers.search(this.refSearchText);
+  }
+
   onProgress( event : any ) {}
 
   onError( event : any ) {}
@@ -322,7 +336,7 @@ export class CompareComponent implements OnInit {
   openUrl(url: string) {
     if (url && url.length > 0) {
       this.pdfViewers.openUrl(url);
-      console.log("OpenUrl:", this.pdfViewers);
+      // console.log("OpenUrl:", this.pdfViewers);
     }
   }
 
@@ -334,9 +348,10 @@ export class CompareComponent implements OnInit {
   selector: 'comments-confirmation-modal',
   templateUrl: 'commentsConfirmationModal.html',
 })
+
 export class CommentsConfirmationModal {
 
-  public commentsList: any;
+  public commentsList: any[] = [];
   public projectDetails: any;
   public action: string;
   public conflictTypeLabel: string;
