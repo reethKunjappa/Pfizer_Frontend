@@ -208,10 +208,18 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <!-- <mat-form-field appearance="outline">
+            </div>
+          </div>
+          
+          <div *ngIf="rulesConfig.rulesSetup.ruleName == 'Local Phrase Reference'" class="row mt-3">
+            <div class="col-md-2 text-right">
+              <label>{{ rulesConfig.rulesSetup.ruleName }}</label>
+            </div>
+            <div class="col-md-10">
+              <mat-form-field appearance="outline">
                 <mat-label>{{ rulesConfig.additionalInformation.addInfo[0].label }}</mat-label>
                 <input [(ngModel)]="rulesConfig.additionalInformation.addInfo[0].value[0]" matInput placeholder="{{ rulesConfig.additionalInformation.addInfo[0].label }}" autocomplete="off" />
-              </mat-form-field> -->
+              </mat-form-field>
             </div>
           </div>
 

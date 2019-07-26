@@ -39,6 +39,8 @@ export class RulesConfigComponent implements OnInit {
     { name: 'Spell Check' },
     { name: 'Grammar Check' },
     { name: 'Proprietary Name' },
+    { name: 'Local Phrase Reference' },
+    { name: 'Multiple Dosages Check' },
   ];
   public sectionSelectionTypes : any[] = [
     { name: 'Include' },
@@ -128,6 +130,12 @@ export class RulesConfigComponent implements OnInit {
       obj2 = { "label" : "Should be in", "value" : [] };
       this.rulesConfig.additionalInformation.addInfo.push(obj2);
       this.rulesConfig.additionalInformation.additionalInfo = true; 
+    }else if( event === 'Local Phrase Reference' ) {
+      obj1 = { "label" : "Local Phrase", "value" : [] };    
+      this.rulesConfig.additionalInformation.addInfo.push(obj1);      
+      this.rulesConfig.additionalInformation.additionalInfo = true; 
+    }else if( event === 'Multiple Dosages Check' ) {
+      this.rulesConfig.additionalInformation.additionalInfo = false; 
     }else {
       return;
     }
