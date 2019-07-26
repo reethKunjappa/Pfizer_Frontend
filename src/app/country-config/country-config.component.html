@@ -1,0 +1,116 @@
+<div class="mat-dialog-title d-flex">
+  <div class="col-6 p-0 w-auto">Configuration</div>
+  <div class="col-6 w-auto p-0 text-right">
+    <button (click)="close()" mat-raised-button type="button" matTooltip="Close"
+      class="btn  btn-link btn-sm btn-just-icon">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+</div>
+<hr style="margin: 0px -24px 20px;" />
+<div class="mat-dialog-content" style="height: auto;min-height:10em;">
+  <strong>Country Configuration</strong>
+  <div class="row mt-3">
+    <div class="col-12">
+      <form [formGroup]="countryConfigForm" class="mb-0">
+        <fieldset>
+          <div class="row">
+            <div class="col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Country(s)</mat-label>
+                <mat-select [(ngModel)]="countryConfig.country" formControlName="country"
+                  placeholder="Select Country(s)" multiple>
+                  <mat-option [value]="country" *ngFor="let country of countryData; let d = index">
+                    {{ country.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Country Grouping</mat-label>
+                <input [(ngModel)]="countryConfig.countryGrouping" formControlName="countryGrouping" matInput
+                  placeholder="Country Grouping" autocomplete="off" required />
+              </mat-form-field>
+            </div>
+            <div class="col-md-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Language</mat-label>
+                <mat-select [(ngModel)]="countryConfig.languagePreference" formControlName="languagePreference"
+                  placeholder="Select Language" multiple="false">
+                  <mat-option [value]="language.name" *ngFor="let language of languages; let d = index">
+                    {{ language.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>  
+  <div *ngIf="countryConfigData">
+    <hr />
+    <strong>Upload Regulatory Documents</strong>
+    <div class="row mt-1">
+      <div class="col-12 text-center">
+        <button (click)="uploadConfigDoc()" mat-raised-button type="submit"
+          class="btn btn-primary btn-spec">Upload Documents</button>
+      </div>
+    </div>
+  <!-- </div> -->
+  <hr />
+  <div>
+    <table class="table">
+      <thead>
+        <th [ngStyle]="{width: header.width}" *ngFor="let header of documentTableHeaders" class="{{ header.class }}">
+          {{ header.headerName }}</th>
+      </thead>
+      <tbody *ngIf="countryConfigData.documents">
+        <tr *ngIf="countryConfigData.documents.length < 1">
+          <td colspan="5" class="mx-auto text-center">
+            <div class="badge badge-pill badge-primary p-3">No documents to show.</div>
+          </td>
+        </tr>
+        <tr class="mat-row" *ngFor="let document of countryConfigData.documents">
+          <td class="mat-cell">{{ document.documentName }}</td>
+          <td class="mat-cell">{{ document.fileType }}</td>
+          <td class="mat-cell">{{ document.uploadedBy.name }}</td>
+          <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
+          <td class="mat-cell">
+            <button [disabled]="true" (click)="reUploadDocument(document)" mat-raised-button type="button" matTooltip="Re-upload"
+              [matTooltipPosition]="'above'" class="btn btn-link  btn-just-icon">
+              <i class="material-icons" style="color:black;">cloud_upload</i>
+            </button>
+            <button [disabled]="true" (click)="downloadDocument(document)" mat-raised-button type="button" matTooltip="Download"
+              [matTooltipPosition]="'above'" class="btn btn-link btn-just-icon"
+              *ngIf="document.mimetype != 'application/pdf'">
+              <i class="material-icons" style="color:black;">cloud_download</i>
+            </button>
+            <button [disabled]="true" (click)="downloadCommentedLabelDoc(document)" mat-raised-button type="button"
+              matTooltip="Commented Label" [matTooltipPosition]="'above'" class="btn btn-link btn-just-icon"
+              *ngIf="document.labelCopy">
+              <i class="material-icons" style="color:black;">cloud_download</i>
+            </button>
+            <button [disabled]="true" (click)="viewDocument(document)" style="color:#0275d8 !important;" mat-raised-button type="button"
+              matTooltip="View" [matTooltipPosition]="'above'" class="btn btn-link btn-just-icon"
+              *ngIf="document.mimetype == 'application/pdf'">
+              <i class="material-icons">visibility</i>
+            </button>
+            <button [disabled]="true" (click)="deleteDocument(document)" mat-raised-button type="button" matTooltip="Remove"
+              [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-just-icon flex">
+              <i class="material-icons">delete</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+<div class="mat-dialog-actions" style="border-top:0;display:block !important;">
+  <button (click)="createCountryConfig()" [disabled]="!countryConfigForm.valid || disableCreate"
+    [class.disabled]="!countryConfigForm.valid" mat-raised-button type="submit"
+    class="btn btn-primary pull-right btn-spec">Create</button>
+  <button (click)="close();" mat-raised-button type="submit" class="btn btn-default pull-right btn-spec">Close</button>
+</div>

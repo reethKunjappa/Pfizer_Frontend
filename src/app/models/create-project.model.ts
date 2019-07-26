@@ -18,6 +18,7 @@ export class CreateProjectData {
     _id : string = "";
     documents: any = [];
     proprietaryName : string = "";
+    drugName : string = "";
 
     constructor() { }
 }

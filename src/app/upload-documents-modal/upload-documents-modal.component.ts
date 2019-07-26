@@ -35,9 +35,16 @@ export class UploadDocumentsModalComponent implements OnInit {
   public disableLabelText: boolean = false;
   public selectedFileTypeList = [];
   public uploadingComplete : boolean = false;
+  public section : string;
+  public configurationData : any = {};
 
   constructor(public dialogRef: MatDialogRef<UploadDocumentsModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any, private projectViewService: ProjectViewService, private loggedInUserService : LoggedInUserService) {
-    this.createProjectData = data.projectDetails;
+    this.section = data.section;
+    if ( this.section === 'project' ) {
+      this.createProjectData = data.projectDetails;
+    }else if (this.section === 'configuration') {
+      this.configurationData = data.configDetails;
+    }else { return; }
     this.allowMultiple = data.allowMultiple;
     this.re_upload_documentId = data.documentId ? data.documentId : '';
     this.reUploadFileType = data.fileType ? data.fileType : '';
@@ -57,16 +64,32 @@ export class UploadDocumentsModalComponent implements OnInit {
     this.intializeFileUploader();
   }
 
-  fileTypeOptions() {
-    for (var i = 0; i < this.createProjectData.documents.length; i++) {
-      if (this.createProjectData.documents[i].fileType == "Label") {
-        this.fileTypes.filter((value) => {
-          if (value.value == "Label") {
-            this.fileSelectOptionDisable = true;
-          }
-        })
+  /* Below function is to check whether documents array from respective object
+     is already having "Label" document. If Yes then disable the "Label" option
+     from FileTypes Dropdown.
+  */
+  fileTypeOptions() {   
+    if ( this.section === 'project' ) {
+      for (var i = 0; i < this.createProjectData.documents.length; i++) {
+        if (this.createProjectData.documents[i].fileType == "Label") {
+          this.fileTypes.filter((value) => {
+            if (value.value == "Label") {
+              this.fileSelectOptionDisable = true;
+            }
+          })
+        }
+      }        
+    }else if( this.section === 'configuration' ){
+      for (var i = 0; i < this.configurationData.documents.length; i++) {
+        if (this.configurationData.documents[i].fileType == "Label") {
+          this.fileTypes.filter((value) => {
+            if (value.value == "Label") {
+              this.fileSelectOptionDisable = true;
+            }
+          })
+        }
       }
-    }
+    }else{ return; }
   }
 
   intializeFileUploader() {
@@ -87,30 +110,59 @@ export class UploadDocumentsModalComponent implements OnInit {
       file.withCredentials = false;
       file['fileType'] = '';
       
-      if (!this.allowMultiple) {
-        file['fileType'] = this.reUploadFileType;
-        file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
-        this.disableDropDown = true;
+      if ( this.section === 'project' ) {
+        if ( !this.allowMultiple ) {
+          file['fileType'] = this.reUploadFileType;
+          file['url'] = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
+          this.disableDropDown = true;
+        }else {
+          file['fileType'] = this.reUploadFileType;
+          file['url'] = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + this.reUploadFileType + '&documentId=' + this.re_upload_documentId;
+          this.disableDropDown = false; //true;
+        }
+      }else if( this.section === 'configuration' ) {
+        if ( !this.allowMultiple ) {
+          file['fileType'] = this.reUploadFileType;
+          file['url'] = this.projectViewService.endPointAddress + '/api/labelling/configFileUpload?projectId=' + this.configurationData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + this.reUploadFileType;
+          this.disableDropDown = true;  
+        }else {
+          // For Re-Upload of Configuration Documents - Yet to be implemented
+          file['fileType'] = this.reUploadFileType;
+          file['url'] = this.projectViewService.endPointAddress + '/api/labelling/configFileUpload?projectId=' + this.configurationData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + this.reUploadFileType;
+          this.disableDropDown = false;  
+        }
+      }else {
+        return;
       }
-
     };
 
     this.uploader.onErrorItem = (item: any, response: any, status: any, headers: any) => {}  
     // this.uploader.uploadItem = (value : FileItem) => { }
 
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      if ( response != "" && response != undefined && response != {} ) {
+      if ( response != "" && response != undefined && response != {} && response != null ) {
         if (JSON.parse(response).status.code == 0) {
-          if (this.allowMultiple) {
-            this.createProjectData.documents.push(JSON.parse(response).result);
-          } else {
-            this.createProjectData.documents.map((e) => {
-              if (e._id == this.re_upload_documentId) {
-                let index = this.createProjectData.documents.indexOf(e);
-                this.createProjectData.documents.splice(index, 1, JSON.parse(response).result);
-              }
-            });
-          }
+          if ( this.section === 'project' ) {
+            if ( this.allowMultiple ) {
+              this.createProjectData.documents.push(JSON.parse(response).result);              
+            }else {
+              this.createProjectData.documents.map((e) => {
+                if (e._id == this.re_upload_documentId) {
+                  let index = this.createProjectData.documents.indexOf(e);
+                  this.createProjectData.documents.splice(index, 1, JSON.parse(response).result);
+                }
+              });               
+            }            
+          }else if( this.section === 'configuration' ) {
+            this.configurationData.documents.push(JSON.parse(response).result);
+            // if ( !this.allowMultiple ) {
+            //   this.configurationData.documents.push(JSON.parse(response).result);
+            // }else {
+            //   // For Allowing multiple Documents Upload - Not implemented yet
+            //   this.configurationData.documents.push(JSON.parse(response).result);              
+            // }
+          }else { return; }
+
         } 
       }
     };
@@ -143,11 +195,22 @@ export class UploadDocumentsModalComponent implements OnInit {
   setFileType(item, i) {
     let count = 0;
     this.uploader.queue[i].formData = this.uploader.queue[i]['some'];
-    if (!this.allowMultiple) {
-      this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + item.fileType + '&documentId=' + this.re_upload_documentId;
-    } else {
-      this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + item.fileType;
+    if ( this.section === 'project' ) {
+      if (!this.allowMultiple) {
+        this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/re-upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + item.fileType + '&documentId=' + this.re_upload_documentId;
+      } else {
+        this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/upload?projectId=' + this.createProjectData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + item.fileType;
+      }        
+    }else if( this.section === 'configuration' ) {
+      if (!this.allowMultiple) {
+        this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/configFileUpload?projectId=' + this.configurationData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + item.fileType;
+      } else {
+        this.uploader.queue[i].url = this.projectViewService.endPointAddress + '/api/labelling/configFileUpload?projectId=' + this.configurationData._id + '&uploadedBy=' + JSON.stringify(this.loggedInUserService.getNativeWindowRef()) + '&fileType=' + item.fileType;
+      }  
+    }else {
+      return;
     }
+
     this.checkUploadAllStatus();
     if (item.fileType === 'Label' && item.file.name.split('.').pop() != 'docx') {
       this.uploader.queue = this.uploader.queue.splice(i, -1);

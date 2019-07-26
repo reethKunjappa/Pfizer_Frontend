@@ -13,6 +13,8 @@
                 <h4 class="card-title">History</h4>
                 <h4 class="card-title">{{projectDetails.projectName}}</h4>
                 <div class="card-category">
+                  <span *ngIf="projectDetails.proprietaryName">Proprietary Name : {{ projectDetails.proprietaryName }} | </span>
+                  <span *ngIf="projectDetails.drugName">Drug Name : {{ projectDetails.drugName }} | </span>    
                   <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
                     Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
                 </div>

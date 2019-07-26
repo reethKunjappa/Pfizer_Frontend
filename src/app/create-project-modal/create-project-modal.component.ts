@@ -38,7 +38,8 @@ export class CreateProjectModalComponent implements OnInit {
     this.projectForm = new FormGroup({
       projectName: new FormControl('', Validators.required),
       country: new FormControl('', Validators.required),
-      proprietaryName : new FormControl('', Validators.required),
+      proprietaryName : new FormControl(''),
+      drugName : new FormControl(''),      
     });
   }
 

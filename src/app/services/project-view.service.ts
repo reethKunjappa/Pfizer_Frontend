@@ -18,13 +18,10 @@ export class ProjectViewService {
   public _initializeProjectId$: BehaviorSubject<any> = new BehaviorSubject<any>('');
   public _initializeProjectId = this._initializeProjectId$.asObservable();   // asObservable declarations for listening to the
 
-  public _initializeMappingSpec$: BehaviorSubject<any> = new BehaviorSubject<any>('');
-  public _initializeMappingSpec = this._initializeMappingSpec$.asObservable();   // asObservable declarations for listening to the
-
-  public mappingFileData : any;
   // public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
   public loggedInUser : any = this.loggedInUserService.getNativeWindowRef();
   public endPointAddress : string = environment.serverUrl; //configuration based on environment
+  // public endPointAddress : string = 'http://192.168.0.82:3005';
 
   // public endPointAddress : string = 'http://54.164.151.252:3005'; //Dev Server URL
   // public endPointAddress: string = 'http://3.90.245.202:3005'; //Sand box server URL
@@ -45,10 +42,6 @@ export class ProjectViewService {
   // Setter Method for Maintaining Project Id 
   public projectID(v : any) {
     this.projectId = v._id;
-  }
-
-  fetchMappingFileData(){
-    return this.mappingFileData;
   }
 
   // Create Project API Call
@@ -410,15 +403,31 @@ export class ProjectViewService {
     );
   }
 
-  /* Below API are for New Preference Rules */
-  // GET ALL PREFERENCE RULES
-  getPreferenceRules() : Observable<any> {
-    let url = this.endPointAddress + '/api/labelling/getAllRules';
-    return this.http.post<any>( url, null, this.httpOptions )
+  /** Below API for Re-Designed - Rules Configuration */
+  // GET ALL CONFIGURATIONS DETAILS INCLUDING RULES & COUNTRY CONFIGS
+  getAllConfigurations( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/getAllConfig';
+    return this.http.post<any>( url, requestData, this.httpOptions )
     .pipe(
       map(( response: any )=> {
         if ( response.status.code === 0 ) {
-          return response;    
+          return response;
+        }else {
+          throw new Error('Value expected!');  
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+  
+  // CREATE COUNTRY CONFIGURATION
+  createCountryConfig( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/createCountryConfig';
+    return this.http.post<any>( url, requestData, this.httpOptions )
+    .pipe(
+      map(( response: any )=> {
+        if ( response.status.code === 0 ) {
+          return response;
         }else {
           throw new Error('Value expected!');  
         }
@@ -427,14 +436,14 @@ export class ProjectViewService {
     );
   }
 
-  // CREATE PREFERENCE RULE
-  createPreferenceRules( requestData : any ) : Observable<any> {
-    let url = this.endPointAddress + '/api/labelling/createRules';
+  // CREATE RULES CONFIGURATION
+  createRulesConfig( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/createRuleConfig';
     return this.http.post<any>( url, requestData, this.httpOptions )
     .pipe(
       map(( response: any )=> {
         if ( response.status.code === 0 ) {
-          return response;    
+          return response;
         }else {
           throw new Error('Value expected!');  
         }
@@ -443,30 +452,14 @@ export class ProjectViewService {
     );
   }
 
-  // UPDATE PREFERENCE RULES
-  addPreferenceRules( requestData : any ) : Observable<any> {
-    let url = this.endPointAddress + '/api/labelling/addRules';
+  // DELETE PREFERENCE CONFIGURATION
+  deleteConfiguration( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/deleteConfig';
     return this.http.post<any>( url, requestData, this.httpOptions )
     .pipe(
       map(( response: any )=> {
         if ( response.status.code === 0 ) {
-          return response;    
-        }else {
-          throw new Error('Value expected!');  
-        }
-      }),
-      // catchError(err => of([]))
-    );
-  }
-
-  // DELETE PREFERNCE RULES
-  deletePreferenceRule( requestData : any ) : Observable<any> {
-    let url = this.endPointAddress + '/api/labelling/deleteRules';
-    return this.http.post<any>( url, requestData, this.httpOptions )
-    .pipe(
-      map(( response: any )=> {
-        if ( response.status.code === 0 ) {
-          return response;    
+          return response;
         }else {
           throw new Error('Value expected!');  
         }

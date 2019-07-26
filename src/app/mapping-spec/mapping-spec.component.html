@@ -9,7 +9,15 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <h4 class="card-title">Mapping Specs</h4>
+            <div *ngIf="projectDetails">
+              <h4 class="card-title">Mapping Specs</h4>
+              <div class="card-category">
+                <span *ngIf="projectDetails.proprietaryName">Proprietary Name : {{ projectDetails.proprietaryName }} | </span>
+                <span *ngIf="projectDetails.drugName">Drug Name : {{ projectDetails.drugName }} | </span>    
+                <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
+                  Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <div class="table-responsive">

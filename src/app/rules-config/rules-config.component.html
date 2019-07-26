@@ -1,0 +1,295 @@
+<div class="mat-dialog-title d-flex">
+  <div class="col-6 p-0 w-auto">Rules Configuration</div>
+  <div class="col-6 w-auto p-0 text-right">
+    <button (click)="close()" mat-raised-button type="button" matTooltip="Close"
+      class="btn  btn-link btn-sm btn-just-icon">
+      <i class="material-icons">close</i>
+    </button>
+  </div>
+</div>
+<hr style="margin: 0px -24px 20px;" />
+<div class="mat-dialog-content" style="height: auto;min-height:10em;">
+  <div class="row">
+    <div class="col-12">
+      <!-- <form [formGroup]="rulesConfigForm" class="mb-0"> -->
+        <fieldset>
+          <strong>Rules Setup</strong>
+          <div class="row mt-3">
+            <div class="col-md-5">
+              <mat-form-field appearance="outline">
+                <mat-label>Rule Name</mat-label>
+                <!-- formControlName="ruleNameControl" -->
+                <mat-select [(ngModel)]="rulesConfig.rulesSetup.ruleName" (ngModelChange)="ruleName($event)" placeholder="Rule Name" multiple="false" required>
+                  <mat-option [value]="rule.name" *ngFor="let rule of ruleNames; let r = index">
+                    {{ rule.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-7">
+              <mat-form-field appearance="outline">
+                <mat-label>Rule Description</mat-label>
+                <!-- formControlName="ruleDescriptionControl" -->
+                <input [(ngModel)]="rulesConfig.rulesSetup.ruleDescription" matInput placeholder="Rule Description" autocomplete="off" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <strong>Rules Application</strong>
+          <div class="row mt-0">
+            <div class="col-md-12 text-right">
+              <section class="example-section">
+                <mat-checkbox [(ngModel)]="rulesConfig.rulesApplication.global" (change)="globalCheck($event)" [labelPosition]="'before'" class="example-margin">Global</mat-checkbox>
+              </section>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field appearance="outline">
+                <mat-label>Country Group</mat-label>
+                <mat-select [disabled]="true" [(ngModel)]="rulesConfig.rulesApplication.countryGroup" placeholder="Country Group" multiple="false">
+                  <mat-option [value]="country.name" *ngFor="let country of countryGroup; let c = index">
+                    {{ country.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-7">
+              <mat-form-field appearance="outline">
+                <mat-label>Country Names</mat-label>
+                <mat-select [disabled]="rulesConfig.rulesApplication.global" [(ngModel)]="rulesConfig.rulesApplication.country" placeholder="Country Names" multiple="true">
+                  <mat-option [value]="country" *ngFor="let country of countryData; let c = index">
+                    {{ country.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row mt-0">
+            <div class="col-md-12 text-right">
+              <section class="example-section">
+                <mat-checkbox [(ngModel)]="rulesConfig.rulesApplication.allSections" (change)="sectionAllCheck($event)" [labelPosition]="'before'" class="example-margin">All</mat-checkbox>
+              </section>
+            </div>    
+            <div class="col-md-5">
+              <mat-form-field appearance="outline">
+                <mat-label>Section Selection</mat-label>
+                <!-- formControlName="sectionSelectionTypesControl" -->
+                <mat-select [(ngModel)]="rulesConfig.rulesApplication.sections.condition" [disabled]="rulesConfig.rulesApplication.allSections" placeholder="Section Selection" multiple="false">
+                  <mat-option [value]="item.name" *ngFor="let item of sectionSelectionTypes; let i = index">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-7">
+                <ng-select [(ngModel)]="rulesConfig.rulesApplication.sections.value" id="sections" appearance="fill" autoCapitalize="on" dropdownPosition="bottom"
+                bindValue="value" bindLabel="label" [addTag]=true [addTagText]="addTagText" [multiple]="true"
+                placeholder="Select / Add Section Names" [disabled]="rulesConfig.rulesApplication.allSections"></ng-select>
+            </div>
+          </div>
+          <hr />
+
+          <strong>Actions</strong>
+          <div class="row mt-3">
+            <div class="col-md-5 text-right">
+              <label>Conflict Type</label>
+            </div>
+            <div class="col-md-7">
+              <mat-form-field appearance="outline">
+                <mat-label>Conflict Type</mat-label>
+                <!-- formControlName="conflictTypeControl" -->
+                <mat-select [(ngModel)]="rulesConfig.action.conflictType" placeholder="Conflict Type" multiple="false" required>
+                  <mat-option [value]="criteria.label" *ngFor="let criteria of conflictCriterias; let c = index">
+                    {{ criteria.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row mt-1">
+            <div class="col-md-5 text-right">
+              <label>Reference Document</label>
+            </div>
+            <div class="col-md-7">
+              <button [disabled]="!disableCreate" (click)="uploadConfigDoc()" mat-raised-button type="submit"
+                class="btn btn-primary btn-spec mb-4">Upload Documents</button>
+            </div>
+          </div>
+
+          <div class="row mt-1">
+            <div class="col-md-5 text-right">
+              <label>Comments</label>
+            </div>
+            <div class="col-md-7">
+              <mat-form-field appearance="outline">
+                <mat-label>Comments</mat-label>
+                <!-- formControlName="commentsControl" -->
+                <input [(ngModel)]="rulesConfig.action.comments" matInput placeholder="Comments" autocomplete="off" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row mt-1">
+            <div class="col-md-5 text-right">
+              <label>Modify Label on Accept</label>
+            </div>
+            <div class="col-md-7 d-inline-flex">
+              <section class="example-section w-50">
+                <mat-checkbox [(ngModel)]="rulesConfig.action.modifyLabelOnAccept" class="example-margin"></mat-checkbox>
+              </section>
+              <section class="example-section text-right w-50">
+                <mat-checkbox [(ngModel)]="rulesConfig.action.allowReject" [labelPosition]="'before'" class="example-margin text-right">Allow Reject</mat-checkbox>
+              </section>  
+            </div>
+          </div>
+
+          <!-- *ngIf="rulesConfig.rulesSetup.ruleName == 'Phrase Replacement' || rulesConfig.rulesSetup.ruleName == 'Formatting Entity' || rulesConfig.rulesSetup.ruleName == 'Formatting Phrase'" -->
+          <div *ngIf="rulesConfig.additionalInformation.additionalInfo">
+          <hr/>
+          <strong>Additional Information</strong>
+          <div *ngIf="rulesConfig.rulesSetup.ruleName == 'Phrase Replacement'" class="row mt-3">
+            <div class="col-md-2 text-right">
+              <label>{{ rulesConfig.rulesSetup.ruleName }}</label>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ rulesConfig.additionalInformation.addInfo[0].label }}</mat-label>
+                <input [(ngModel)]="rulesConfig.additionalInformation.addInfo[0].value[0]" matInput placeholder="{{ rulesConfig.additionalInformation.addInfo[0].label }}" autocomplete="off" />
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ rulesConfig.additionalInformation.addInfo[1].label }}</mat-label>
+                <input [(ngModel)]="rulesConfig.additionalInformation.addInfo[1].value[0]" matInput placeholder="{{ rulesConfig.additionalInformation.addInfo[1].label }}" autocomplete="off" />
+              </mat-form-field>
+            </div>
+          </div>
+          <div *ngIf="rulesConfig.rulesSetup.ruleName == 'Formatting Entity' || rulesConfig.rulesSetup.ruleName == 'Formatting Phrase'" class="row mt-1">
+            <div class="col-md-2 text-right">
+              <label>{{ rulesConfig.rulesSetup.ruleName }}</label>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field *ngIf="rulesConfig.rulesSetup.ruleName == 'Formatting Phrase'" appearance="outline">
+                <mat-label>{{ rulesConfig.additionalInformation.addInfo[0].label }}</mat-label>
+                <input [(ngModel)]="rulesConfig.additionalInformation.addInfo[0].value[0]" matInput placeholder="{{ rulesConfig.additionalInformation.addInfo[0].label }}" autocomplete="off" />
+              </mat-form-field>
+
+              <mat-form-field *ngIf="rulesConfig.rulesSetup.ruleName == 'Formatting Entity'" appearance="outline">
+                <mat-label>{{ rulesConfig.additionalInformation.addInfo[0].label }}</mat-label>
+                <mat-select [(ngModel)]="rulesConfig.additionalInformation.addInfo[0].value" placeholder="{{ rulesConfig.additionalInformation.addInfo[0].label }}" multiple="true">
+                  <mat-option [value]="item.name" *ngFor="let item of formattingDataList; let i = index">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ rulesConfig.additionalInformation.addInfo[1].label }}</mat-label>
+                <mat-select [(ngModel)]="rulesConfig.additionalInformation.addInfo[1].value" placeholder="{{ rulesConfig.additionalInformation.addInfo[1].label }}" multiple="true">
+                  <mat-option [value]="item.name" *ngFor="let item of shouldBeInValue; let i = index">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngIf="rulesConfig.rulesSetup.ruleName == 'Spell Check' || rulesConfig.rulesSetup.ruleName == 'Grammar Check'" class="row mt-3">
+            <div class="col-md-2 text-right">
+              <label>{{ rulesConfig.rulesSetup.ruleName }}</label>
+            </div>
+            <div class="col-md-10">
+              <mat-form-field appearance="outline">
+                <mat-label>{{ rulesConfig.additionalInformation.addInfo[0].label }}</mat-label>
+                <mat-select [(ngModel)]="rulesConfig.additionalInformation.addInfo[0].value[0]" placeholder="{{ rulesConfig.additionalInformation.addInfo[0].label }}" multiple="false">
+                  <mat-option [value]="language.name" *ngFor="let language of languages; let d = index">
+                    {{ language.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- <mat-form-field appearance="outline">
+                <mat-label>{{ rulesConfig.additionalInformation.addInfo[0].label }}</mat-label>
+                <input [(ngModel)]="rulesConfig.additionalInformation.addInfo[0].value[0]" matInput placeholder="{{ rulesConfig.additionalInformation.addInfo[0].label }}" autocomplete="off" />
+              </mat-form-field> -->
+            </div>
+          </div>
+
+        </div>
+
+          <hr />
+          <strong>Exceptions</strong>
+          <div class="row mt-3">
+            <div class="col-md-5 text-right">
+              <label>Exceptions</label>
+            </div>
+            <div class="col-md-7">
+              <!-- formControlName="exceptionsControl" -->
+              <!-- <input [(ngModel)]="rulesConfig.exceptionData" matInput placeholder="Exception Data Value" autocomplete="off" /> -->
+              <ng-select [(ngModel)]="rulesConfig.exceptionData" appearance="fill" autoCapitalize="on" dropdownPosition="bottom"
+              bindValue="value" bindLabel="label" [addTag]=true [addTagText]="addTagText" [multiple]="true"
+              placeholder="Exception Data Value"></ng-select>
+            </div>
+          </div>
+
+        </fieldset>
+      <!-- </form> -->
+
+    </div>
+  </div>
+  
+  <div *ngIf="rulesConfigData">
+    <hr/>
+    <table class="table">
+      <thead>
+        <th [ngStyle]="{width: header.width}" *ngFor="let header of documentTableHeaders" class="{{ header.class }}">
+          {{ header.headerName }}</th>
+      </thead>
+      <tbody *ngIf="rulesConfigData">
+        <tr *ngIf="rulesConfigData.documents.length < 1">
+          <td colspan="5" class="mx-auto text-center">
+            <div class="badge badge-pill badge-primary p-3">No documents to show.</div>
+          </td>
+        </tr>
+        <tr class="mat-row" *ngFor="let document of rulesConfigData.documents">
+          <td class="mat-cell">{{ document.documentName }}</td>
+          <td class="mat-cell">{{ document.fileType }}</td>
+          <td class="mat-cell">{{ document.uploadedBy.name }}</td>
+          <td class="mat-cell">{{ document.uploadedDate | date : 'dd-MMM-yyyy' }}</td>
+          <td class="mat-cell">
+            <fieldset disabled="disabled">
+            <button (click)="reUploadDocument(document)" mat-raised-button type="button" matTooltip="Re-upload"
+              [matTooltipPosition]="'above'" class="btn btn-link  btn-just-icon">
+              <i class="material-icons" style="color:black;">cloud_upload</i>
+            </button>
+            <button (click)="downloadDocument(document)" mat-raised-button type="button" matTooltip="Download"
+              [matTooltipPosition]="'above'" class="btn btn-link btn-just-icon"
+              *ngIf="document.mimetype != 'application/pdf'">
+              <i class="material-icons" style="color:black;">cloud_download</i>
+            </button>
+            <button (click)="downloadCommentedLabelDoc(document)" mat-raised-button type="button"
+              matTooltip="Commented Label" [matTooltipPosition]="'above'" class="btn btn-link btn-just-icon"
+              *ngIf="document.labelCopy">
+              <i class="material-icons" style="color:black;">cloud_download</i>
+            </button>
+            <button (click)="viewDocument(document)" style="color:#0275d8 !important;" mat-raised-button type="button"
+              matTooltip="View" [matTooltipPosition]="'above'" class="btn btn-link btn-just-icon"
+              *ngIf="document.mimetype == 'application/pdf'">
+              <i class="material-icons">visibility</i>
+            </button>
+            <button (click)="deleteDocument(document)" mat-raised-button type="button" matTooltip="Remove"
+              [matTooltipPosition]="'above'" class="btn btn-danger btn-link btn-just-icon flex">
+              <i class="material-icons">delete</i>
+            </button>
+          </fieldset>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="mat-dialog-actions" style="border-top:0;display:block !important;">
+  <button (click)="createRulesConfig()" [disabled]="!rulesConfig.rulesSetup.ruleName || !rulesConfig.action.conflictType || disableCreate" [class.disabled]="!rulesConfig.rulesSetup.ruleName || disableCreate"
+    mat-raised-button type="submit" class="btn btn-primary pull-right btn-spec">Create</button>
+  <button (click)="close();" mat-raised-button type="submit" class="btn btn-default pull-right btn-spec">Close</button>
+</div>

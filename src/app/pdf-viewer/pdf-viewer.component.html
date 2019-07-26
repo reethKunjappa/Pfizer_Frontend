@@ -1,0 +1,34 @@
+<div class="row mx-0" style="background-color: lightgrey;">
+  <div class="col-4 px-0 text-center">
+    <button (click)="pdfViewer.zoomIn()" mat-raised-button type="button" matTooltip="Zoom In"
+      [matTooltipPosition]="'above'" class="btn btn-spec btn-link btn-just-icon"><i class="material-icons"
+        style="font-size: larger;">zoom_in</i></button>
+    <button (click)="pdfViewer.zoomOut()" mat-raised-button type="button" matTooltip="Zoom Out"
+      [matTooltipPosition]="'above'" class="btn btn-spec btn-link btn-just-icon"><i class="material-icons"
+        style="font-size: larger;">zoom_out</i></button>
+  </div>
+  <div class="col-4 px-0 text-right">
+    <button (click)="pdfViewer.prevPage()" mat-raised-button type="button" matTooltip="Prev Page"
+      [matTooltipPosition]="'above'" class="btn btn-spec btn-link btn-just-icon"><i class="material-icons"
+        style="font-size: larger;">navigate_before</i></button>
+    <button (click)="pdfViewer.nextPage()" mat-raised-button type="button" matTooltip="Next Page"
+      [matTooltipPosition]="'above'" class="btn btn-spec btn-link btn-just-icon"><i class="material-icons"
+        style="font-size: larger;">navigate_next</i></button>
+  </div>
+  <div class="col-4 pl-0 text-right">
+    <button *ngIf="showCloseButton" mat-raised-button type="button" matTooltip="Close Reference Document" [matTooltipPosition]="'above'"
+      class="btn btn-danger btn-spec btn-sm px-1 my-2" (click)="closeSideBar();">
+      <i class="material-icons">cancel</i>
+    </button>
+  </div>
+</div>
+<div class="row mx-0">
+  <div class="col-12 px-0">
+    <section id="viewer">
+      <simple-pdf-viewer #pdfViewer [src]="url" (onLoadComplete)="onLoadComplete()" [removePageBorders]=false
+        (onError)="onError($event)" (onProgress)="onProgress($event)"
+        (onSearchStateChange)="onSearchStateDetect($event)">
+      </simple-pdf-viewer>
+    </section>
+  </div>
+</div>

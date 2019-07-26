@@ -29,11 +29,10 @@
         </div>
       </div>
       <div *ngIf="loginMessage" class="mt-2 p-1 alert alert-danger">{{ loginMessage }}</div>
-    </form>
     <div id="formFooter">
       <button [disabled]="!authForm.valid" (click)="login()" mat-raised-button type="submit" class="w-100 btn btn-primary btn-spec">Login</button>
       <!-- <button type="button" class="underlineHover" [disabled]="!authForm.valid" (click)="login()">Login</button> -->
-      <!-- routerLink="/dashboard" -->
     </div>
+  </form>
   </div>
 </div>

@@ -21,21 +21,19 @@ export class MappingSpecComponent implements OnInit {
     // { 'headerName': 'Actual Section', 'class': '', 'width' : '30%' },
     { 'headerName': 'Similarity Score (%)', 'class': '', 'width': '20%' }
   ];
-  public fileData: any;
   public mappingSpec: any[] = [];
+  public projectDetails: any = {};
 
   constructor(private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService) {
     this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
-    });    
-
-    this.fileData = this.projectViewService.fetchMappingFileData();
-    // this.fileData = JSON.parse(localStorage.getItem('mappingData'));
-    if( this.fileData ) {
-      this.projectViewService.getMappingSpec(this.fileData).subscribe((getMappingSpecResp: any) => {
-        this.mappingSpec = JSON.parse(getMappingSpecResp.result);
-      });  
-    }
+      this.projectViewService.openProject(params.get('id')).subscribe((projectDetails: any) => {
+        this.projectDetails = projectDetails;
+      });
+      this.projectViewService.getMappingSpec({ "_id" : this.projectId }).subscribe((getMappingSpecResp: any) => {
+        this.mappingSpec = getMappingSpecResp.result;
+      });
+    });
   }
 
   ngOnInit() { }

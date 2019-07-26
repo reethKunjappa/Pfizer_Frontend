@@ -1,10 +1,11 @@
 // Dependency Imports
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { Location, PopStateEvent } from '@angular/common';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SimplePdfViewerModule, SimplePdfViewerComponent } from 'simple-pdf-viewer';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
+import { MatSidenav } from '@angular/material';
 
 // Service Imports
 import { ProjectViewService } from 'app/services/project-view.service';
@@ -21,7 +22,8 @@ export class FilterCommentsArray {
   'order': any = [];
   'spell': any = [];
   'content': any = [];
-  'preferenceRules': any = [];
+  // 'preferenceRules': any = [];
+  'regulatory' : any = [];
 }
 
 @Component({
@@ -33,7 +35,9 @@ export class FilterCommentsArray {
 export class CompareComponent implements OnInit {
 
   @ViewChild(SimplePdfViewerComponent) private pdfViewers: SimplePdfViewerComponent;
-
+  @ViewChild(SimplePdfViewerComponent) private pdfViewerRef: SimplePdfViewerComponent;
+  @ViewChild('sidenav') public sidenavsection: MatSidenav;
+  
   sampleImages: any[] = [];
   sampleRevImages: any[] = [];
   comments: any[] = [];
@@ -57,6 +61,7 @@ export class CompareComponent implements OnInit {
   public labelDocUrl: any;
   public refDocUrl : any;
   public refSearchText : string;
+  public labelTextSearch : string;
 
   public conflictCriterias: any[] = [
     { 'value': 'ALL', 'label': 'All' },
@@ -64,7 +69,8 @@ export class CompareComponent implements OnInit {
     { 'value': 'Font', 'label': 'Font' },
     { 'value': 'Spell and Grammar', 'label': 'Spell and Grammar' },
     { 'value': 'Order', 'label': 'Order' },
-    { 'value': 'Configured rules', 'label': 'Configured Rules' },
+    // { 'value': 'Configured rules', 'label': 'Configured Rules' },
+    { 'value': 'Regulatory', 'label': 'Regulatory' },
   ];
   public conflictType: string = "ALL";
   public conflicts = {
@@ -72,9 +78,11 @@ export class CompareComponent implements OnInit {
     'order': [],
     'spell': [],
     'content': [],
-    'preferenceRules': []
+    // 'preferenceRules': [],
+    'regulatory' : []
   }
   filteredItems: any;
+  public setZoomInPercent : number = 100;
 
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
@@ -98,12 +106,13 @@ export class CompareComponent implements OnInit {
   filterCommentsArray(){
     this.conflicts = new FilterCommentsArray();
     this.conflicts.font = this.projectDetails.comments.filter((x) => {
-      return x.conflict_type === 'Font Name' || x.conflict_type === 'Font Size' || x.conflict_type === 'Font Colour'
+      return x.conflict_type === 'Font Name' || x.conflict_type === 'Font Size' || x.conflict_type === 'Font Colour' || x.conflict_type === 'Text Alignment'  || x.conflict_type === 'Formatting'
     })
     this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Order' });
     this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Spell and Grammar' });
     this.conflicts.content = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Content' });
-    this.conflicts.preferenceRules = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Configured rules' });
+    // this.conflicts.preferenceRules = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Configured rules' });
+    this.conflicts.regulatory = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Regulatory' });
   }
 
   // Get Updated Document
@@ -141,7 +150,6 @@ export class CompareComponent implements OnInit {
         this.assignCopy();
         this.totalCount = this.projectDetails.comments.length;
         this.filterCommentsArray();
-
         // Below lines execution for finding unique from an array - Shashank - Implement after Reeth's approval
         // let unique = new Set(this.projectDetails.comments.map(item => item.conflict_type ));
 
@@ -163,16 +171,24 @@ export class CompareComponent implements OnInit {
     this.projectDetails.project.documents.map((element: any) => {
       if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) == element.documentName) {
         this.referenceDocuments.push(element);
-        let refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);
-        setTimeout(() => {
-          document.getElementById('showRefDoc').setAttribute('src', refDocUrl);
-        }, 1000);
-        // this.refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);        
-        // this.refSearchText = docDetails['right_search'];
-        // console.log("Ref Text:",this.refSearchText);
-        // this.pdfViewers.search(refDocUrl);
+        this.refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);        
+        // Below Line to highlight text in reference document viewer. 
+        // Once the below field is assigned text it will fire "onLoadCompleteRef" function  
+        this.refSearchText = docDetails['right_search'];
+        // this.setZoomInPercent = 50;
+        console.log("Ref Text:",this.refSearchText,this.refDocUrl);
       }
     });
+  }
+
+  // Search Text in Label Document
+  searchLabelText( item : any ) {
+    console.log("searchLabelText:", item.comment_id);
+    if ( item.comment_id ) this.labelTextSearch = item.comment_id;
+  }
+
+  closeSideBarToggle( event : any ) {
+    if ( event === 'Close' ) this.sidenavsection.close();
   }
 
   // Open Confirmation Modal
@@ -182,10 +198,12 @@ export class CompareComponent implements OnInit {
       commentsArray = this.conflicts.font;
     }else if ( conflictTypeKey === 'spell' ) {
       commentsArray = this.conflicts.spell;      
-    }else if( conflictTypeKey === 'content' ) {
+    }else if ( conflictTypeKey === 'content' ) {
       commentsArray = this.conflicts.content;
-    }else if( conflictTypeKey === 'order' ){
+    }else if ( conflictTypeKey === 'order' ){
       commentsArray = this.conflicts.order;
+    }else if (conflictTypeKey === 'regulatory') {
+      commentsArray = this.conflicts.regulatory;      
     }else {
       commentsArray = [];
     }
@@ -207,7 +225,6 @@ export class CompareComponent implements OnInit {
             if (a.hasOwnProperty('pdfPath')) {
               this.labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
               this.labelCopy = this.projectViewService.endPointAddress + a.labelCopy.destination;
-              this.openUrl(this.labelDocUrl);
             }
           }
         });
@@ -265,12 +282,11 @@ export class CompareComponent implements OnInit {
                 if (a.hasOwnProperty('pdfPath')) {
                   this.labelDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(a.pdfPath.destination);
                   this.labelCopy = this.projectViewService.endPointAddress + a.labelCopy.destination;
-                  this.openUrl(this.labelDocUrl);
                 }
               }
             });
           } else {
-            // alert(updateDocCommentsResp.status.message);
+            return;
           }
         }
       });
@@ -287,17 +303,17 @@ export class CompareComponent implements OnInit {
       if (value == 'ALL') {
         this.assignCopy();
       } else if (value == 'Font') {
-        this.filteredItems = this.filterAssign('Font Size', 'Font Name', 'Font Colour');
+        this.filteredItems = this.filterAssign('Font Size', 'Font Name', 'Font Colour', 'Text Alignment', 'Formatting');
       } else {
-        this.filteredItems = this.filterAssign(value, '', '');
+        this.filteredItems = this.filterAssign(value, '', '', '', '');
       }
     } else {
       this.assignCopy();
     }
   }
 
-  filterAssign(value1, value2, value3) {
-    return this.projectDetails.comments.filter((x) => { return x.conflict_type === value1 || x.conflict_type === value2 || x.conflict_type === value3 });
+  filterAssign(value1, value2, value3, value4, value5) {
+    return this.projectDetails.comments.filter((x) => { return x.conflict_type === value1 || x.conflict_type === value2 || x.conflict_type === value3 || x.conflict_type === value4 || x.conflict_type === value5 });
   }
 
   showAcceptRejectConditions(item : any) {
@@ -316,28 +332,6 @@ export class CompareComponent implements OnInit {
 
   assignCopy() {
     this.filteredItems = Object.assign([], this.projectDetails.comments)
-  }
-
-  /** Below functions are exposed for simple-pdf-viewer functionality */
-  onLoadComplete(){
-    this.pdfViewers.setZoomInPercent(88);
-  }
-
-  onLoadCompleteRef() {
-    this.pdfViewers.search(this.refSearchText);
-  }
-
-  onProgress( event : any ) {}
-
-  onError( event : any ) {}
-
-  onSearchStateDetect(event: any) {}
-
-  openUrl(url: string) {
-    if (url && url.length > 0) {
-      this.pdfViewers.openUrl(url);
-      // console.log("OpenUrl:", this.pdfViewers);
-    }
   }
 
 }
@@ -393,7 +387,6 @@ export class CommentsConfirmationModal {
         if (res.status.code === 0) {
           this.dialogRef.close(res.result);
         } else {
-          // alert(res.status.message);
           this.dialogRef.close();
         }
       });

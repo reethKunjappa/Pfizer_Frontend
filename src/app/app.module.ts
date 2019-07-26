@@ -13,6 +13,7 @@ import { CommonModule, APP_BASE_HREF } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ChartsModule } from 'ng2-charts-x';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 // Services Imports
 import { ProjectViewService } from './services/project-view.service';
@@ -23,6 +24,8 @@ import { LoggedInUserService } from './services/logged-in-user.service';
 // Component Imports
 import { LoginComponent } from './login/login.component';
 import { StatusComponent } from './status/status.component';
+import { CountryConfigComponent } from './country-config/country-config.component';
+import { RulesConfigComponent } from './rules-config/rules-config.component';
 // import { ChartJsComponent } from './chart-js/chart-js.component';
 
 @NgModule({
@@ -43,12 +46,15 @@ import { StatusComponent } from './status/status.component';
     MaterialModule,
     ReactiveFormsModule,
     ChartsModule,
+    NgSelectModule,
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
     StatusComponent,
+    CountryConfigComponent,
+    RulesConfigComponent,
     // ChartJsComponent,
   ],
   exports: [
@@ -57,6 +63,7 @@ import { StatusComponent } from './status/status.component';
     ReactiveFormsModule,
     HttpClientModule,
     ChartsModule,
+    NgSelectModule,
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
@@ -69,7 +76,7 @@ import { StatusComponent } from './status/status.component';
     },
     LoggedInUserService,
   ],
-  entryComponents:[ StatusComponent ],
+  entryComponents:[ StatusComponent, CountryConfigComponent, RulesConfigComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

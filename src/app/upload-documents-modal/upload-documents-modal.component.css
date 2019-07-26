@@ -1,14 +1,18 @@
+.uploadComplete {
+  background-color: #d0d0d0;
+}
+
 .material-icons {
   cursor: pointer !important;
 }
 
-.my-drop-zone { 
-  border: dotted 3px lightgray; 
-  height: 200px;   
-  text-align: center; 
+.my-drop-zone {
+  border: dotted 3px lightgray;
+  height: 150px;
+  text-align: center;
   width: 50%;
   margin-left: 25%;
-  padding: 4%;
+  padding: 1.5%;
 }
 
 .another-file-over-class { 

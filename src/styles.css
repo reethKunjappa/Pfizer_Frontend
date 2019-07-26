@@ -69,6 +69,10 @@
   cursor: not-allowed;
 }
 
+.navbar.navbar-absolute {
+  z-index: 1000 !important;
+}
+
 @media( min-width: 992px ) {
   .main-panel {
     position: relative;

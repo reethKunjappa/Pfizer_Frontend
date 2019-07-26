@@ -27,7 +27,9 @@ export class I1 implements HttpInterceptor {
       (event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           if( event.body.status.code !== 0 ){
-            this.displayErrorMessage( event.body.status );
+            // let headerMessage = event.url.substring(event.url.lastIndexOf('/') + 1) === 'compare' && event.body.status.code == -2  ? 'Message' : 'Error';
+            let headerMessage = (event.url.substring(event.url.lastIndexOf('/') + 1) === 'compare' || event.url.substring(event.url.lastIndexOf('/') + 1) === 'commentAck') && event.body.status.code == -2  ? 'Message' : 'Error';
+            this.displayErrorMessage( event.body.status, headerMessage );
           }
           this.spinnerService.hide();
         }
@@ -35,20 +37,20 @@ export class I1 implements HttpInterceptor {
       (err: any) => {
         if ( err ) {
           this.spinnerService.hide();
-          this.displayErrorMessage(err);
+          this.displayErrorMessage(err, '');
         }
       }
     );
 
   }
 
-  displayErrorMessage( errMessage ){
+  displayErrorMessage( errMessage, headerMessage ){
     this.statusDialog = this.dialog.open(StatusComponent, {
       disableClose: true,
       width: '400px',
       data: {
         statusText: errMessage.message,
-        statusTitle: 'Error',
+        statusTitle: headerMessage ? headerMessage : 'Error',//'Error',
         showSubmit: false,
         showCancel: true,
         submitText: 'Ok',

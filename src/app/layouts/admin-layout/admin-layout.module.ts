@@ -37,6 +37,12 @@ import { MappingSpecComponent } from '../../mapping-spec/mapping-spec.component'
 import { QualityChecklistComponent } from '../../quality-checklist/quality-checklist.component';
 import { AdminPreferencesComponent } from '../../admin-preferences/admin-preferences.component';
 
+import { SpeedDialFabComponent } from '../../speed-dial-fab/speed-dial-fab.component';
+import { PdfViewerComponent } from '../../pdf-viewer/pdf-viewer.component';
+// import { RulesConfigComponent } from '../../rules-config/rules-config.component';
+// import { CountryConfigComponent } from '../../country-config/country-config.component';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -84,9 +90,15 @@ import { AdminPreferencesComponent } from '../../admin-preferences/admin-prefere
     MappingSpecComponent,
     QualityChecklistComponent,
     AdminPreferencesComponent,
+    SpeedDialFabComponent,
+    PdfViewerComponent,
+    // RulesConfigComponent,
+    // CountryConfigComponent,
   ],
   entryComponents: [
-    CreateProjectModalComponent,UploadDocumentsModalComponent, CommentsConfirmationModal,
+    CreateProjectModalComponent,
+    UploadDocumentsModalComponent, 
+    CommentsConfirmationModal,
   ],
 })
 

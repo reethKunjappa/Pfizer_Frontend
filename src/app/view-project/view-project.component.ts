@@ -54,7 +54,7 @@ export class ViewProjectComponent implements OnInit {
     this.uploadDocumentDialog = this.dialog.open(UploadDocumentsModalComponent, {
       disableClose: true,//true,
       width: '1000px',
-      data: { projectDetails: this.projectDetails, allowMultiple: true } //, allowMultiple : true
+      data: { section : 'project', projectDetails: this.projectDetails, allowMultiple: true } //, allowMultiple : true
     });
 
     this.uploadDocumentDialog.afterClosed().subscribe((result) => { 
@@ -65,25 +65,6 @@ export class ViewProjectComponent implements OnInit {
   }
 
   showMappingSpec(doc) {
-    var inputResponse = {
-      "label_filepath" : "",
-      "reference_filepath" : [],
-      "_id": this.projectDetails._id,
-      "user" : this.loggedInUserService.getNativeWindowRef()  
-    }
-    
-    for(var i = 0 ; i < doc.length;i++){
-      if(doc[i].fileType == 'Label'){
-        // inputResponse.label_filepath = "C:\\Users\\Reeth\\projects\\Pfizer_Backend\\fs\\"+doc[i].documentid+"\\"+doc[i].documentName;        
-        inputResponse.label_filepath = doc[i].originalPath.location.replace('pdf', 'docx');
-      }else if(doc[i].fileType == 'Reference'){
-        inputResponse.reference_filepath[0] = doc[i].pdfPath.location;
-      }
-    }
-
-    this.projectViewService._initializeMappingSpec$.next(inputResponse); 
-    this.projectViewService.mappingFileData = inputResponse;
-    // localStorage.setItem('mappingData', JSON.stringify(inputResponse));
     this.router.navigate(['/mappingSpec', this.projectDetails._id]);
   }
 
@@ -96,7 +77,7 @@ export class ViewProjectComponent implements OnInit {
     this.reUploadDocumentDialog = this.dialog.open(UploadDocumentsModalComponent, {
       disableClose: true,//true,
       width: '1000px',
-      data: { projectDetails: this.projectDetails, allowMultiple: false, documentId: document._id, fileType: document.fileType } //, allowMultiple : false
+      data: { section : 'project', projectDetails: this.projectDetails, allowMultiple: false, documentId: document._id, fileType: document.fileType } //, allowMultiple : false
     });
 
     this.reUploadDocumentDialog.afterClosed().subscribe((result) => { 
