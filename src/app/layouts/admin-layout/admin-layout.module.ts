@@ -15,7 +15,7 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MatIconModule } from '@angular/material/icon';
 import { MdePopoverModule } from '@material-extended/mde';
-import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTooltipModule,MatSelectModule,MatCardModule,MatSidenavModule,MatDialogModule } from '@angular/material';
+import { MatButtonModule,MatInputModule,MatRippleModule,MatFormFieldModule,MatTooltipModule,MatSelectModule,MatCardModule,MatSidenavModule,MatDialogModule,MatSnackBarModule } from '@angular/material';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 
@@ -39,8 +39,6 @@ import { AdminPreferencesComponent } from '../../admin-preferences/admin-prefere
 
 import { SpeedDialFabComponent } from '../../speed-dial-fab/speed-dial-fab.component';
 import { PdfViewerComponent } from '../../pdf-viewer/pdf-viewer.component';
-// import { RulesConfigComponent } from '../../rules-config/rules-config.component';
-// import { CountryConfigComponent } from '../../country-config/country-config.component';
 
 
 @NgModule({
@@ -67,6 +65,7 @@ import { PdfViewerComponent } from '../../pdf-viewer/pdf-viewer.component';
     SimplePdfViewerModule,
     NgSelectModule,
     ChartsModule,
+    MatSnackBarModule,
   ],
   declarations: [
     ChartJsComponent,
@@ -92,8 +91,6 @@ import { PdfViewerComponent } from '../../pdf-viewer/pdf-viewer.component';
     AdminPreferencesComponent,
     SpeedDialFabComponent,
     PdfViewerComponent,
-    // RulesConfigComponent,
-    // CountryConfigComponent,
   ],
   entryComponents: [
     CreateProjectModalComponent,

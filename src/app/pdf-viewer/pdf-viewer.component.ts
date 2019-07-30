@@ -24,7 +24,6 @@ export class PdfViewerComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log("Changes::", changes);   
     if ( changes['url'] && changes['url'].currentValue != undefined && changes['url'].currentValue != "" && changes['url'].currentValue != null ) {
       this.url = changes['url'].currentValue;
       this.pdfViewers.openUrl(changes['url'].currentValue);

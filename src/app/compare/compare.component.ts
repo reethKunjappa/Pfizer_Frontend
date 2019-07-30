@@ -176,14 +176,12 @@ export class CompareComponent implements OnInit {
         // Once the below field is assigned text it will fire "onLoadCompleteRef" function  
         this.refSearchText = docDetails['right_search'];
         // this.setZoomInPercent = 50;
-        console.log("Ref Text:",this.refSearchText,this.refDocUrl);
       }
     });
   }
 
   // Search Text in Label Document
   searchLabelText( item : any ) {
-    console.log("searchLabelText:", item.comment_id);
     if ( item.comment_id ) this.labelTextSearch = item.comment_id;
   }
 
