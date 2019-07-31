@@ -186,8 +186,8 @@
             <div class="col-md-5">
               <mat-form-field appearance="outline">
                 <mat-label>{{ rulesConfig.additionalInformation.addInfo[1].label }}</mat-label>
-                <mat-select [(ngModel)]="rulesConfig.additionalInformation.addInfo[1].value" placeholder="{{ rulesConfig.additionalInformation.addInfo[1].label }}" multiple="true">
-                  <mat-option [value]="item.name" *ngFor="let item of shouldBeInValue; let i = index">
+                <mat-select [(ngModel)]="rulesConfig.additionalInformation.addInfo[1].value" (ngModelChange)="conditionalDisable($event)" placeholder="{{ rulesConfig.additionalInformation.addInfo[1].label }}" multiple="true">
+                  <mat-option [value]="item.name" *ngFor="let item of shouldBeInValue; let i = index" [disabled]="item.disable">
                     {{ item.name }}
                   </mat-option>
                 </mat-select>

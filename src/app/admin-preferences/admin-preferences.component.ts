@@ -29,22 +29,26 @@ export class AdminPreferencesComponent implements OnInit {
     { 'headerName': 'Country Group', 'class': 'px-2', 'width': '10%' },
     { 'headerName': 'Document(s)', 'class': 'px-2', 'width': '40%' },
     { 'headerName': 'Language', 'class': 'px-2', 'width': '10%' },    
+    { 'headerName': 'Actions', 'class': 'px-2', 'width': '5%' },
     // { 'headerName': 'Created By', 'class': 'px-2', 'width': '20%' },
     // { 'headerName': 'Created On', 'class': 'px-2', 'width': '10%' },
-    { 'headerName': 'Actions', 'class': 'px-2', 'width': '5%' }
   ];
   public rulesConfigTableHeaders: any[] = [
-    { 'headerName': 'Rule Name', 'class': 'px-2', 'width': '20%' },
-    { 'headerName': 'Rule Description', 'class': 'px-2', 'width': '10%' },
-    { 'headerName': 'Country(s)', 'class': 'px-2', 'width': '10%' },
-    { 'headerName': 'Conflict Type', 'class': 'px-2', 'width': '20%' },
-    { 'headerName': 'Document(s)', 'class': 'px-2', 'width': '20%' },    
-    { 'headerName': 'Comments', 'class': 'px-2', 'width': '10%' },
-    { 'headerName': 'Modify Label on Access', 'class': 'px-2', 'width': '10%' },
-    { 'headerName': 'Allow Reject', 'class': 'px-2', 'width': '10%' },
-    // { 'headerName': 'Created By', 'class': 'px-2', 'width': '10%' },
-    // { 'headerName': 'Created On', 'class': 'px-2', 'width': '10%' },
-    { 'headerName': 'Actions', 'class': 'px-2', 'width': '10%' }
+    { 'headerName': 'Name', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Description', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Country(s)', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Condition', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Section(s)', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Conflict Type', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Comments', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Additional Information', 'class': 'px-2', 'width': '15%' },
+    { 'headerName': 'Exception(s)', 'class': 'px-2', 'width': '10%' },
+    { 'headerName': 'Created By', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Created On', 'class': 'px-2', 'width': '7%' },
+    { 'headerName': 'Actions', 'class': 'px-2', 'width': '5%' },
+    // { 'headerName': 'Document(s)', 'class': 'px-2', 'width': '20%' },    
+    // { 'headerName': 'Modify Label on Access', 'class': 'px-2', 'width': '10%' },
+    // { 'headerName': 'Allow Reject', 'class': 'px-2', 'width': '10%' },
   ];
   // Fab Dial Declarations
   public speedDialFabButtons = [

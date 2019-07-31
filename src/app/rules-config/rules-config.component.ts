@@ -71,10 +71,10 @@ export class RulesConfigComponent implements OnInit {
     { name: 'Date' },
   ];
   public shouldBeInValue : any[] = [
-    { name: 'Bold' },
-    { name: 'Italic' },
-    { name: 'Lower' },
-    { name: 'Upper' },
+    { name: 'Bold', disable : false },
+    { name: 'Italic', disable : false },
+    { name: 'Lower', disable : false },
+    { name: 'Upper', disable : false },
   ];
   public documentTableHeaders = [
     { 'headerName': 'Document Name', 'class': '', 'width': '35%' },
@@ -138,6 +138,26 @@ export class RulesConfigComponent implements OnInit {
       this.rulesConfig.additionalInformation.additionalInfo = false; 
     }else {
       return;
+    }
+  }
+
+  conditionalDisable( event : any ) {
+    let value = [];
+    value = event.filter((x) => { return x === 'Lower' || x === 'Upper' });
+    if ( value[0] === 'Lower' ) {
+      this.shouldBeInValue.filter((e)=>{
+        if ( e.name === 'Upper' ) e.disable = true;
+        else e.disable = false;
+      });
+    }else if ( value[0] === 'Upper' ) {
+      this.shouldBeInValue.filter((e)=>{
+        if ( e.name === 'Lower' ) e.disable = true;
+        else e.disable = false;
+      });      
+    }else {
+      this.shouldBeInValue.filter((e)=>{
+        e.disable = false;
+      });      
     }
   }
 

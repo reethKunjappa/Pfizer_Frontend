@@ -66,7 +66,7 @@
                 </div>
                 <div class="card-body">
                     <div id="projectTable" class="table-responsive">
-                        <table class="table">
+                        <table class="table" style="min-width:1800px;">
                             <thead>
                                 <th [ngStyle]="{width: header.width}" *ngFor="let header of rulesConfigTableHeaders"
                                     class="{{ header.class }}">{{ header.headerName }}</th>
@@ -86,21 +86,44 @@
                                             <div *ngFor="let item of config.rulesApplication.country">{{ item.name }}</div>
                                         </div>
                                     </td>  
-                                    <td class="mat-cell">{{ config.action.conflictType }}</td>
+                                    <td class="mat-cell">{{ config.rulesApplication.sections.condition }}</td>
                                     <td class="mat-cell">
-                                      <div *ngFor="let item of config.documents">{{ item.documentName }}</div>
+                                        <div *ngIf="config.rulesApplication.allSections">All</div>
+                                        <div *ngIf="!config.rulesApplication.allSections">
+                                            <div *ngFor="let item of config.rulesApplication.sections.value">{{ item }}</div>
+                                        </div>                                        
                                     </td>
+                                    <td class="mat-cell">{{ config.action.conflictType }}</td>
+                                    <!-- <td class="mat-cell">
+                                      <div *ngFor="let item of config.documents">{{ item.documentName }}</div>
+                                    </td> -->
                                     <td class="mat-cell">{{ config.action.comments }}</td>
                                     <td class="mat-cell">
+                                        <div *ngIf="!config.additionalInformation.additionalInfo">
+                                            <i class="material-icons">remove</i>
+                                        </div>
+                                        <div *ngIf="config.additionalInformation.additionalInfo">
+                                            <div *ngFor="let info of config.additionalInformation.addInfo" class="col">
+                                                <td>{{ info.label }}</td>
+                                                <td><i class="material-icons">arrow_right_alt</i></td>
+                                                <td><div *ngFor="let x of info.value">{{ x }}</div></td>                
+                                            </div>            
+                                        </div>
+                                    </td>
+                                    <td class="mat-cell">
+                                        <div *ngFor="let item of config.exceptionData">{{ item }}</div>
+                                    </td>
+
+                                    <!-- <td class="mat-cell">
                                         <i *ngIf="config.action.modifyLabelOnAccept" class="material-icons" style="color: lightgreen !important;font-size: xx-large;">check</i>
                                         <i *ngIf="!config.action.modifyLabelOnAccept" class="material-icons" style="color: red !important;font-size: xx-large;">clear</i>                  
                                     </td>
                                     <td class="mat-cell">
                                         <i *ngIf="config.action.allowReject" class="material-icons" style="color: lightgreen !important;font-size: xx-large;">check</i>
                                         <i *ngIf="!config.action.allowReject" class="material-icons" style="color: red !important;font-size: xx-large;">clear</i>                  
-                                    </td>
-                                    <td *ngIf="false" class="mat-cell">{{ config.createdBy.name }}</td>
-                                    <td *ngIf="false" class="mat-cell">{{ config.created_at | date : 'dd-MMM-yyyy' }}</td>                                    
+                                    </td> -->
+                                    <td class="mat-cell">{{ config.createdBy.name }}</td>
+                                    <td class="mat-cell">{{ config.created_at | date : 'dd-MMM-yyyy' }}</td>                                    
                                     <th class="mat-cell text-center" scope="row">
                                       <button *ngIf="false" (click)="editRuleConfig(config)" mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" 
                                         class="btn btn-primary btn-link btn-just-icon flex">
