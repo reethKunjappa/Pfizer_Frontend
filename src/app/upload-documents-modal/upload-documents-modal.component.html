@@ -57,12 +57,11 @@
                     </div>
                   </td>
                   <td class="p-0">
-                    <mat-form-field id="fileTypes" class="example-full-width">
-                      <mat-select [(ngModel)]="item.fileType" (ngModelChange)="setFileType(item,i);disableFileType()"
-                        [class.disabled]="item.isUploaded" [disabled]="item.isUploaded || disableDropDown" required>
+                    <mat-form-field id="fileTypes" appearance="outline">
+                      <mat-select [(ngModel)]="item.fileType" (ngModelChange)="setFileType(item,i);disableFileType()" placeholder="File Type" [class.disabled]="item.isUploaded" [disabled]="item.isUploaded || disableDropDown" required>
                         <mat-option *ngFor="let file of fileTypes" [value]="file.value" [disabled]="(disableLabelText && file.value == 'Label') || (fileSelectOptionDisable && file.value == 'Label')">
-                          {{file.value}}</mat-option>
-                        <!-- (onSelectionChange)="disableFileType($event, file)" -->
+                          {{file.value}}
+                        </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </td>

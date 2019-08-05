@@ -51,10 +51,10 @@
   min-height: calc(100vh - 123px);
 }
 
-.mat-form-field-appearance-outline .mat-form-field-wrapper {
-  /* margin: .25em 0; */
+/* .mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: .25em 0;
   margin: 0 !important;
-}
+} */
 
 .table .table {
   background-color: transparent !important;

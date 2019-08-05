@@ -7,19 +7,22 @@
     </button>
   </div>
 </div>
-<hr style="margin: 0px -24px 20px;"/>
-<div class="mat-dialog-content">
+<hr style="margin: 0px -24px"/>
+<div class="mat-dialog-content pt-2">
   <form [formGroup]="projectForm" class="mb-0">
     <fieldset>
     <div class="row">
       <div class="col-md-6">                
-        <mat-form-field class="example-full-width">
+          <!-- class="example-full-width" -->
+        <mat-form-field appearance="outline">
+          <mat-label>Project Name</mat-label>
           <input [(ngModel)]="createProjectData.projectName" formControlName="projectName" matInput
             placeholder="Project Name" autocomplete="off" required />
         </mat-form-field>                  
       </div>
       <div class="col-md-6">
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline">
+          <mat-label>Country</mat-label>
           <mat-select [(ngModel)]="createProjectData.country.name" formControlName="country" placeholder="Country" required>
             <mat-select-trigger>
               <span><img src="{{createProjectData.country.id}}" width="20" height="20" /> {{ createProjectData.country.name }}</span>
@@ -33,12 +36,14 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline">
+          <mat-label>Proprietary Name</mat-label>
           <input [(ngModel)]="createProjectData.proprietaryName" formControlName="proprietaryName" matInput placeholder="Proprietary Name" autocomplete="off" />
         </mat-form-field>  
       </div>
       <div class="col-md-6">
-        <mat-form-field class="example-full-width">
+        <mat-form-field appearance="outline">
+          <mat-label>Drug Name</mat-label>
           <input [(ngModel)]="createProjectData.drugName" formControlName="drugName" matInput placeholder="Drug Name" autocomplete="off" />
         </mat-form-field>  
       </div>

@@ -13,6 +13,11 @@
                   <th [ngStyle]="{width: header.width}" *ngFor="let header of projectTableHeaders" class="{{header.class}}">{{ header.headerName }}</th>
                 </thead>
                 <tbody>
+                  <tr *ngIf="allFavoriteList.length < 1">
+                      <td colspan="6" class="mx-auto text-center">
+                          <div class="badge badge-pill badge-primary p-3">No projects to show.</div>
+                      </td>
+                  </tr>
                   <tr class="mat-row" *ngFor="let project of allFavoriteList">
                     <td class="mat-cell">
                       <!-- <button *ngIf="!project.favorite" (click)="markFavorite(project)" [disabled]="false"

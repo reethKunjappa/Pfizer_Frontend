@@ -12,7 +12,7 @@ import { LoggedInUserService } from '../services/logged-in-user.service';
   selector: 'app-upload-documents-modal',
   templateUrl: './upload-documents-modal.component.html',
   styleUrls: ['./upload-documents-modal.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 
 export class UploadDocumentsModalComponent implements OnInit {
