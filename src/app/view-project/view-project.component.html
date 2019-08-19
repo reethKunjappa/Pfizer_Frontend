@@ -5,7 +5,7 @@
         <button mat-raised-button (click)="uploadMoreDocuments()" type="submit" class="btn btn-primary btn-spec">Add Documents</button>
         <button mat-raised-button *ngIf="projectDetails.documents.length > 0 && !projectDetails.conflicted" (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger btn-spec">Review Label</button>
         <button mat-raised-button *ngIf="projectDetails.conflicted" (click)="viewConflict(projectDetails)" type="submit" class="btn btn-danger btn-spec">View Conflicts</button>
-        <button mat-raised-button *ngIf="projectDetails.documents.length > 0 && projectDetails.country.name == 'Saudi Arabia' && projectDetails.conflicted" (click)="showMappingSpec(projectDetails.documents);" type="submit" class="btn btn-primary btn-spec" >Show Mapping Spec</button>
+        <button mat-raised-button *ngIf="projectDetails.documents.length > 0 && projectDetails.country.name != 'Bosnia' && projectDetails.conflicted" (click)="showMappingSpec(projectDetails.documents);" type="submit" class="btn btn-primary btn-spec" >Show Mapping Spec</button>
         <button mat-raised-button  (click)="showCheckList(projectDetails)" type="submit" class="btn btn-danger btn-spec" *ngIf="projectDetails.conflicted">QC Report</button>        
       </div>
     </div>
