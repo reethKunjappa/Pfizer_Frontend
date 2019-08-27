@@ -47,7 +47,16 @@ export class ViewProjectComponent implements OnInit {
   ngOnInit() { }
 
   showConflict(projectDetails) {
-    this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
+    // this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
+    this.projectDetails.inProcess = true;
+    this.projectViewService.getDocument(projectDetails._id).subscribe((res: any) => {
+      if (res != undefined && res != "" && res.status.code === 0) {
+        let obj = {};
+        obj = res.result;
+        this.projectDetails.inProcess = false; 
+        this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
+      }
+    })
   }
 
   uploadMoreDocuments() {

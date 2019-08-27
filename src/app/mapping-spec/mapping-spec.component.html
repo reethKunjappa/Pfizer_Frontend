@@ -9,8 +9,9 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <div *ngIf="projectDetails">
+            <div *ngIf="projectDetails._id">
               <h4 class="card-title">Mapping Specs</h4>
+              <h4 class="card-title" *ngIf="projectDetails.projectName">{{projectDetails.projectName}}</h4>
               <div class="card-category">
                 <span *ngIf="projectDetails.proprietaryName">Proprietary Name : {{ projectDetails.proprietaryName }} | </span>
                 <span *ngIf="projectDetails.drugName">Drug Name : {{ projectDetails.drugName }} | </span>    

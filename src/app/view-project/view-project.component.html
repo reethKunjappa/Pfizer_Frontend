@@ -6,20 +6,29 @@
         <button mat-raised-button *ngIf="projectDetails.documents.length > 0 && !projectDetails.conflicted" (click)="showConflict(projectDetails)" type="submit" class="btn btn-danger btn-spec">Review Label</button>
         <button mat-raised-button *ngIf="projectDetails.conflicted" (click)="viewConflict(projectDetails)" type="submit" class="btn btn-danger btn-spec">View Conflicts</button>
         <button mat-raised-button *ngIf="projectDetails.documents.length > 0 && projectDetails.country.name != 'Bosnia' && projectDetails.conflicted" (click)="showMappingSpec(projectDetails.documents);" type="submit" class="btn btn-primary btn-spec" >Show Mapping Spec</button>
-        <button mat-raised-button  (click)="showCheckList(projectDetails)" type="submit" class="btn btn-danger btn-spec" *ngIf="projectDetails.conflicted">QC Report</button>        
+        <button mat-raised-button (click)="showCheckList(projectDetails)" type="submit" class="btn btn-danger btn-spec" *ngIf="projectDetails.conflicted">QC Report</button>        
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <div *ngIf="projectDetails.projectName">
-              <h4 class="card-title">{{projectDetails.projectName}}</h4>
-              <div class="card-category">
-                <span *ngIf="projectDetails.proprietaryName">Proprietary Name : {{ projectDetails.proprietaryName }} | </span>
-                <span *ngIf="projectDetails.drugName">Drug Name : {{ projectDetails.drugName }} | </span>
-                <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
-                  Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
+            <div class="row mx-0" *ngIf="projectDetails.projectName">
+              <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xl-10 text-left">
+                <h4 class="card-title">{{projectDetails.projectName}}</h4>
+                <div class="card-category">
+                  <span *ngIf="projectDetails.proprietaryName">Proprietary Name : {{ projectDetails.proprietaryName }} | </span>
+                  <span *ngIf="projectDetails.drugName">Drug Name : {{ projectDetails.drugName }} | </span>
+                  <span>Country : {{ projectDetails.country.name }} | Created By : {{ projectDetails.createdBy.name }} |
+                    Created On : {{ projectDetails.createdOn | date : 'dd-MMM-yyyy' }}</span>
+                </div>  
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 text-right pl-0">
+                <div *ngIf="projectDetails.inProcess">
+                  <img src="../../assets/img/loader/white_loader.gif" width="30" height="30" />
+                  <br/>
+                  <small>Review in Process</small>  
+                </div>
               </div>
             </div>
           </div>

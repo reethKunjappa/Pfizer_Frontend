@@ -23,7 +23,7 @@ export class FilterCommentsArray {
   'spell': any = [];
   'content': any = [];
   // 'preferenceRules': any = [];
-  'regulatory' : any = [];
+  'regulatory': any = [];
 }
 
 @Component({
@@ -37,7 +37,7 @@ export class CompareComponent implements OnInit {
   @ViewChild(SimplePdfViewerComponent) private pdfViewers: SimplePdfViewerComponent;
   @ViewChild(SimplePdfViewerComponent) private pdfViewerRef: SimplePdfViewerComponent;
   @ViewChild('sidenav') public sidenavsection: MatSidenav;
-  
+
   sampleImages: any[] = [];
   sampleRevImages: any[] = [];
   comments: any[] = [];
@@ -59,9 +59,11 @@ export class CompareComponent implements OnInit {
   public spellCheckCount: any;
   public commentsAcceptedRejected = [];
   public labelDocUrl: any;
-  public refDocUrl : any;
-  public refSearchText : string;
-  public labelTextSearch : string;
+  public refDocUrl: any;
+  public refSearchText: string;
+  public labelTextSearch: string;
+  public labelReload: boolean = false;
+  public referenceReload: boolean = false;
 
   public conflictCriterias: any[] = [
     { 'value': 'ALL', 'label': 'All' },
@@ -79,10 +81,10 @@ export class CompareComponent implements OnInit {
     'spell': [],
     'content': [],
     // 'preferenceRules': [],
-    'regulatory' : []
+    'regulatory': []
   }
   filteredItems: any;
-  public setZoomInPercent : number = 100;
+  public setZoomInPercent: number = 100;
 
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
@@ -101,12 +103,12 @@ export class CompareComponent implements OnInit {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  filterCommentsArray(){
+  filterCommentsArray() {
     this.conflicts = new FilterCommentsArray();
     this.conflicts.font = this.projectDetails.comments.filter((x) => {
-      return x.conflict_type === 'Font Name' || x.conflict_type === 'Font Size' || x.conflict_type === 'Font Colour' || x.conflict_type === 'Text Alignment'  || x.conflict_type === 'Formatting'
+      return x.conflict_type === 'Font Name' || x.conflict_type === 'Font Size' || x.conflict_type === 'Font Colour' || x.conflict_type === 'Text Alignment' || x.conflict_type === 'Formatting'
     })
     this.conflicts.order = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Order' });
     this.conflicts.spell = this.projectDetails.comments.filter((x) => { return x.conflict_type === 'Spell and Grammar' });
@@ -171,38 +173,39 @@ export class CompareComponent implements OnInit {
     this.projectDetails.project.documents.map((element: any) => {
       if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) == element.documentName) {
         this.referenceDocuments.push(element);
-        this.refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);        
+        this.refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);
         // Below Line to highlight text in reference document viewer. 
         // Once the below field is assigned text it will fire "onLoadCompleteRef" function  
         this.refSearchText = docDetails['right_search'];
+        this.referenceReload = true; //To reload the reference documents and search new text
         // this.setZoomInPercent = 50;
       }
     });
   }
 
   // Search Text in Label Document
-  searchLabelText( item : any ) {
-    if ( item.comment_id ) this.labelTextSearch = item.comment_id;
+  searchLabelText(item: any) {
+    if (item.comment_id) this.labelTextSearch = item.comment_id;
   }
 
-  closeSideBarToggle( event : any ) {
-    if ( event === 'Close' ) this.sidenavsection.close();
+  closeSideBarToggle(event: any) {
+    if (event === 'Close') this.sidenavsection.close();
   }
 
   // Open Confirmation Modal
-  openConfirmationModal(action, conflictTypeKey, conflictTypeLabel) {  
+  openConfirmationModal(action, conflictTypeKey, conflictTypeLabel) {
     let commentsArray = [];
-    if ( conflictTypeKey === 'font' ) {
+    if (conflictTypeKey === 'font') {
       commentsArray = this.conflicts.font;
-    }else if ( conflictTypeKey === 'spell' ) {
-      commentsArray = this.conflicts.spell;      
-    }else if ( conflictTypeKey === 'content' ) {
+    } else if (conflictTypeKey === 'spell') {
+      commentsArray = this.conflicts.spell;
+    } else if (conflictTypeKey === 'content') {
       commentsArray = this.conflicts.content;
-    }else if ( conflictTypeKey === 'order' ){
+    } else if (conflictTypeKey === 'order') {
       commentsArray = this.conflicts.order;
-    }else if (conflictTypeKey === 'regulatory') {
-      commentsArray = this.conflicts.regulatory;      
-    }else {
+    } else if (conflictTypeKey === 'regulatory') {
+      commentsArray = this.conflicts.regulatory;
+    } else {
       commentsArray = [];
     }
     const dialogRef = this.dialog.open(CommentsConfirmationModal, {
@@ -314,16 +317,16 @@ export class CompareComponent implements OnInit {
     return this.projectDetails.comments.filter((x) => { return x.conflict_type === value1 || x.conflict_type === value2 || x.conflict_type === value3 || x.conflict_type === value4 || x.conflict_type === value5 });
   }
 
-  showAcceptRejectConditions(item : any) {
-    if ( item.conflict_type == 'Spell and Grammar' || item.conflict_type == 'Order' || item.conflict_type == 'Configured rules' ) {
+  showAcceptRejectConditions(item: any) {
+    if (item.conflict_type == 'Spell and Grammar' || item.conflict_type == 'Order' || item.conflict_type == 'Configured rules') {
       return true;
-    }else if( item.conflict_type == 'Content' ){
-      if ( item.action_type == 'INSERT' || item.action_type == 'DELETE' ) {
+    } else if (item.conflict_type == 'Content') {
+      if (item.action_type == 'INSERT' || item.action_type == 'DELETE') {
         return false;
-      }else {
+      } else {
         return true;
       }
-    }else {
+    } else {
       return false;
     }
   }
@@ -379,7 +382,7 @@ export class CommentsConfirmationModal {
         'type': this.conflictTypeLabel
       }
     };
-    
+
     if (object.comments.length) {
       this.projectViewService.acceptRejectDocumentsComments(object).subscribe((res: any) => {
         if (res.status.code === 0) {

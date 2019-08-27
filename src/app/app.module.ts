@@ -14,18 +14,22 @@ import { AgmCoreModule } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ChartsModule } from 'ng2-charts-x';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // Services Imports
 import { ProjectViewService } from './services/project-view.service';
 import { I1 } from './interceptor';
 import { HttpInterceptorService } from './services/http-interceptor.service';
 import { LoggedInUserService } from './services/logged-in-user.service';
+import { AppConfigurations } from './app-configurations';
 
 // Component Imports
 import { LoginComponent } from './login/login.component';
 import { StatusComponent } from './status/status.component';
 import { CountryConfigComponent } from './country-config/country-config.component';
 import { RulesConfigComponent } from './rules-config/rules-config.component';
+import { SessionTimeoutModalComponent } from './session-timeout-modal/session-timeout-modal.component';
 // import { ChartJsComponent } from './chart-js/chart-js.component';
 
 @NgModule({
@@ -47,6 +51,8 @@ import { RulesConfigComponent } from './rules-config/rules-config.component';
     ReactiveFormsModule,
     ChartsModule,
     NgSelectModule,
+    NgIdleKeepaliveModule.forRoot(),
+    MatProgressBarModule,
   ],
   declarations: [
     AppComponent,
@@ -55,6 +61,7 @@ import { RulesConfigComponent } from './rules-config/rules-config.component';
     StatusComponent,
     CountryConfigComponent,
     RulesConfigComponent,
+    SessionTimeoutModalComponent,
     // ChartJsComponent,
   ],
   exports: [
@@ -68,15 +75,16 @@ import { RulesConfigComponent } from './rules-config/rules-config.component';
   providers: [
     { provide: APP_BASE_HREF, useValue: '/' },
     ProjectViewService,
+    LoggedInUserService,
+    AppConfigurations,  
     HttpInterceptorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: I1,
       multi: true
     },
-    LoggedInUserService,
   ],
-  entryComponents:[ StatusComponent, CountryConfigComponent, RulesConfigComponent ],
+  entryComponents:[ StatusComponent, CountryConfigComponent, RulesConfigComponent, SessionTimeoutModalComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

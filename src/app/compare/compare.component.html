@@ -1,3 +1,15 @@
+<div class="main-content" *ngIf="projectDetails == undefined">
+  <div class="row">
+    <div class="col-12 text-center" *ngIf="viewType == 'viewProjectConflicts'">
+      <div class="badge badge-pill badge-primary p-3" style="margin-top: 12rem;">Fetching Records...</div>
+    </div>
+    <div class="col-12 text-center" *ngIf="viewType == 'getConflicts'">
+      <div class="badge badge-pill badge-primary p-3" style="margin-top: 12rem;">Review Label in process.</div>
+      <br/>
+      <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-spec">Back</button>      
+    </div>
+  </div>  
+</div>
 <div class="main-content" *ngIf="projectDetails != undefined">
   <div class="row">
     <div class="col-12 pad-0 text-right">
@@ -71,7 +83,7 @@
               <div class="card mt-1" *ngIf="refDocUrl">
                 <div *ngIf="refDocUrl">
                   <app-pdf-viewer [url]="refDocUrl" [searchText]="refSearchText" [showCloseButton]=true
-                    (closeSideBarSection)="closeSideBarToggle($event)" [setZoomInPercent]="setZoomInPercent"></app-pdf-viewer>
+                    (closeSideBarSection)="closeSideBarToggle($event)" [setZoomInPercent]="setZoomInPercent" [reload]="referenceReload" ></app-pdf-viewer>
                 </div>
               </div>
             </div>
@@ -85,7 +97,7 @@
                   <div class="card my-0">
                     <div *ngIf="labelDocUrl">
                       <app-pdf-viewer [url]="labelDocUrl" [searchText]="labelTextSearch" [showCloseButton]=false
-                        (closeSideBarSection)="closeSideBarToggles($event)" [setZoomInPercent]="setZoomInPercent"></app-pdf-viewer>
+                        (closeSideBarSection)="closeSideBarToggles($event)" [setZoomInPercent]="setZoomInPercent" [reload]="labelReload"></app-pdf-viewer>
                     </div>
                   </div>
                 </div>
@@ -121,9 +133,9 @@
                               (click)="acceptOrRejectComment('Accept',item)">
                               <i class="material-icons">check</i>
                             </button>
+                            <!-- [hidden]="showAcceptRejectConditions(item)"  // Removed for allowing individual reject --> 
                             <button mat-raised-button type="button" matTooltip="Reject" [matTooltipPosition]="'above'"
-                              class="btn btn-danger btn-link btn-sm btn-just-icon"
-                              [hidden]="showAcceptRejectConditions(item)"
+                              class="btn btn-danger btn-link btn-sm btn-just-icon"                              
                               (click)="acceptOrRejectComment('Reject',item)">
                               <i class="material-icons">close</i>
                             </button>

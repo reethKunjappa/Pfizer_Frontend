@@ -21,14 +21,21 @@ export class I1 implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    this.spinnerService.show();
+    if ( req.url.substring(req.url.lastIndexOf('/') + 1) === 'compare' ) {
+      this.spinnerService.hide();
+    }else {
+      this.spinnerService.show();
+    }
+
+    // this.spinnerService.show();
 
     return next.handle(req).do(
       (event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           if( event.body.status.code !== 0 ){
             // let headerMessage = event.url.substring(event.url.lastIndexOf('/') + 1) === 'compare' && event.body.status.code == -2  ? 'Message' : 'Error';
-            let headerMessage = (event.url.substring(event.url.lastIndexOf('/') + 1) === 'compare' || event.url.substring(event.url.lastIndexOf('/') + 1) === 'commentAck') && event.body.status.code == -2  ? 'Message' : 'Error';
+            let headerMessage = ( event.url.substring(event.url.lastIndexOf('/') + 1) === 'compare' || event.url.substring(event.url.lastIndexOf('/') + 1) === 'compare' && event.url.substring(event.url.lastIndexOf('/') + 1) === 'commentAck') && event.body.status.code == -2  ? 'Message' : 'Error';
+            // event.url.substring(event.url.lastIndexOf('/') + 1) === 'compare' ||    // Condition removed as compare is getting called from view project page only.
             this.displayErrorMessage( event.body.status, headerMessage );
           }
           this.spinnerService.hide();

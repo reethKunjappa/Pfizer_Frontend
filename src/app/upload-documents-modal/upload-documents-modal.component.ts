@@ -144,7 +144,7 @@ export class UploadDocumentsModalComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       if (status === 200 && response != "" && response != undefined && response != {} && response != null) {
         if (JSON.parse(response).status.code == 0) {
-          this.uploadStatusNotification(JSON.parse(response).status.message, ['alert', 'alert-success']);
+          this.uploadStatusNotification(JSON.parse(response).status.message, ['alert', 'alert-success'], 1000);
           if (this.section === 'project') {
             if (this.allowMultiple) {
               this.createProjectData.documents.push(JSON.parse(response).result);
@@ -160,10 +160,10 @@ export class UploadDocumentsModalComponent implements OnInit {
             this.configurationData.documents.push(JSON.parse(response).result);
           } else { return; }
         } else {
-          this.uploadStatusNotification(JSON.parse(response).status.message, ['alert', 'alert-danger']);
+          this.uploadStatusNotification(JSON.parse(response).status.message, ['alert', 'alert-danger'], 1000);
         }
       } else {
-        this.uploadStatusNotification('Failed to connect & upload the document.', ['alert', 'alert-danger']);
+        this.uploadStatusNotification('Failed to connect & upload the document.', ['alert', 'alert-danger'], 1000);
       }
     };
 
@@ -178,13 +178,13 @@ export class UploadDocumentsModalComponent implements OnInit {
     }
   }
 
-  uploadStatusNotification(message: any, additionClasses: any) {
+  uploadStatusNotification(message: any, additionClasses: any, duration : number) {
     let config = new MatSnackBarConfig();
     config.verticalPosition = 'top';
     config.horizontalPosition = 'right';
-    config.duration = 1000;
+    config.duration = duration;
     config.panelClass = additionClasses;
-    let action: boolean = false;
+    let action: boolean = true;
     this.snackBar.open(message, action ? 'Close' : undefined, config);
   }
 
@@ -223,8 +223,10 @@ export class UploadDocumentsModalComponent implements OnInit {
 
     this.checkUploadAllStatus();
     if (item.fileType === 'Label' && item.file.name.split('.').pop() != 'docx') {
-      this.uploader.queue = this.uploader.queue.splice(i, -1);
-      alert('File type is not docx, please select docx file');
+      this.uploader.queue.splice(i, 1);
+      // this.uploader.queue = this.uploader.queue.splice(i, -1);
+      // alert('File type is not docx, please select docx file');
+      this.uploadStatusNotification('Label File Type cannot be a pdf, please select docx file.', ['alert', 'alert-danger'], 5000);
     }
   }
 

@@ -36,8 +36,7 @@ export class ProjectViewService {
 
   public projectId : string = "";
 
-  constructor(private http: HttpClient, private loggedInUserService : LoggedInUserService) {
-  }
+  constructor(private http: HttpClient, private loggedInUserService : LoggedInUserService) {}
 
   // Setter Method for Maintaining Project Id 
   public projectID(v : any) {
