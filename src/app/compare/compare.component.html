@@ -52,7 +52,7 @@
                         <td>
                           <button mat-raised-button type="button" matTooltip="Accept All" [matTooltipPosition]="'above'"
                             class="btn btn-success btn-link btn-sm py-0 px-1 m-0" [disabled]="item.value < 1"
-                            *ngIf="item.key != 'spell' && item.key != 'order' && item.key != 'configRules'"
+                            *ngIf="item.key != 'spell' && item.key != 'order' && item.key != 'configRules' && item.key != 'regulatory'"
                             (click)="openConfirmationModal('Accept', item.key, item.label)">
                             <i class="material-icons">done_all</i>
                           </button>
@@ -80,24 +80,38 @@
           <mat-sidenav #sidenav position="end" mode="side" style="width:40%;background: transparent;">
             <div class="row mx-1">
               <!-- style="height: 99vh !important" -->
-              <div class="card mt-1" *ngIf="refDocUrl">
-                <div *ngIf="refDocUrl">
-                  <app-pdf-viewer [url]="refDocUrl" [searchText]="refSearchText" [showCloseButton]=true
-                    (closeSideBarSection)="closeSideBarToggle($event)" [setZoomInPercent]="setZoomInPercent" [reload]="referenceReload" ></app-pdf-viewer>
+              <div class="w-100" *ngIf="refDocUrl">
+                <div class="card mt-1 mb-0" *ngIf="refDocUrl">
+                  <app-pdf-viewer [url]="refDocUrl" [documentCategory]="'Reference'" [searchText]="refSearchText" [showCloseButton]=true
+                    (closeSideBarSection)="closeSideBarToggle($event)" (onErrorStateMessage)="onErrorStateMessage($event)" [setZoomInPercent]="setZoomInPercent" [reload]="referenceReload" ></app-pdf-viewer>
+                </div>
+                <div class="text-center" *ngIf="referenceDocError.title">
+                  <div class="badge badge-pill badge-primary mt-5 p-3 text-center">
+                    <div><strong>{{ referenceDocError.title }}</strong></div>
+                    <br>
+                    <div>{{ referenceDocError.message }}</div>
+                  </div>
                 </div>
               </div>
             </div>
           </mat-sidenav>
 
           <mat-sidenav-content>
-            <div id="main">
+            <div id="main" >
               <div class="row mx-1 w-100 mt-1">
                 <div style="width:65%">
                   <!-- style="height: 91vh !important" -->
-                  <div class="card my-0">
-                    <div *ngIf="labelDocUrl">
-                      <app-pdf-viewer [url]="labelDocUrl" [searchText]="labelTextSearch" [showCloseButton]=false
-                        (closeSideBarSection)="closeSideBarToggles($event)" [setZoomInPercent]="setZoomInPercent" [reload]="labelReload"></app-pdf-viewer>
+                  <div *ngIf="labelDocUrl">
+                    <div class="card my-0" *ngIf="labelDocUrl">
+                      <app-pdf-viewer [url]="labelDocUrl" [documentCategory]="'Label'" [searchText]="labelTextSearch" [showCloseButton]=false
+                        (closeSideBarSection)="closeSideBarToggles($event)" (onErrorStateMessage)="onErrorStateMessage($event)" [setZoomInPercent]="setZoomInPercent" [reload]="labelReload"></app-pdf-viewer>
+                    </div>
+                    <div class="text-center" *ngIf="labelDocError.title">
+                      <div class="badge badge-pill badge-primary mt-5 p-3 text-center">
+                        <div><strong>{{ labelDocError.title }}</strong></div>
+                        <br>
+                        <div>{{ labelDocError.message }}</div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -110,10 +124,9 @@
                       placeholder="Select Conflict Criteria" (ngModelChange)="filterItem($event)"
                       [(ngModel)]="conflictType"></ng-select>
                   </div>
-                  <div class="row mx-2" style="overflow-x: hidden; overflow-y: auto; max-height: 124vh;">
+                  <div class="row mx-2" style="overflow-x: hidden; overflow-y: auto;max-height: 78vh;max-height: 124vh">
                     <div class="col-12 p-0 text-center">
-                      <div *ngIf="filteredItems.length < 1" class="badge badge-pill badge-primary mt-2 p-3">No
-                        conflict(s) to show.</div>
+                      <div *ngIf="filteredItems.length < 1" class="badge badge-pill badge-primary mt-5 p-3">No conflict(s) to show.</div>
                       <div *ngFor="let item of filteredItems;let i = index"
                         class="border-info m-1 mr-2 w-100 text-left">
                         <mat-card class="p-2" id="{{ i }}">

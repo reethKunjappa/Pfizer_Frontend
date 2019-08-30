@@ -30,6 +30,7 @@ import { StatusComponent } from './status/status.component';
 import { CountryConfigComponent } from './country-config/country-config.component';
 import { RulesConfigComponent } from './rules-config/rules-config.component';
 import { SessionTimeoutModalComponent } from './session-timeout-modal/session-timeout-modal.component';
+import { ReviewLabelChecksModalComponent } from './review-label-checks-modal/review-label-checks-modal.component';
 // import { ChartJsComponent } from './chart-js/chart-js.component';
 
 @NgModule({
@@ -62,6 +63,7 @@ import { SessionTimeoutModalComponent } from './session-timeout-modal/session-ti
     CountryConfigComponent,
     RulesConfigComponent,
     SessionTimeoutModalComponent,
+    ReviewLabelChecksModalComponent,
     // ChartJsComponent,
   ],
   exports: [
@@ -84,7 +86,7 @@ import { SessionTimeoutModalComponent } from './session-timeout-modal/session-ti
       multi: true
     },
   ],
-  entryComponents:[ StatusComponent, CountryConfigComponent, RulesConfigComponent, SessionTimeoutModalComponent ],
+  entryComponents:[ StatusComponent, CountryConfigComponent, RulesConfigComponent, SessionTimeoutModalComponent, ReviewLabelChecksModalComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

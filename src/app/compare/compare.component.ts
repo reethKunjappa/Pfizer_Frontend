@@ -17,6 +17,12 @@ export interface DialogData {
   action: string;
 }
 
+class DocumentError {
+  title : string = '';
+  message : string = '';
+  constructor(){}
+}
+
 export class FilterCommentsArray {
   'font': any = [];
   'order': any = [];
@@ -85,6 +91,8 @@ export class CompareComponent implements OnInit {
   }
   filteredItems: any;
   public setZoomInPercent: number = 100;
+  public labelDocError : DocumentError = new DocumentError();
+  public referenceDocError : DocumentError = new DocumentError();
 
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
@@ -170,17 +178,26 @@ export class CompareComponent implements OnInit {
   // Get Reference Document
   getReferenceDocument(docDetails: any) {
     this.referenceDocuments = [];
-    this.projectDetails.project.documents.map((element: any) => {
-      if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) == element.documentName) {
-        this.referenceDocuments.push(element);
-        this.refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);
-        // Below Line to highlight text in reference document viewer. 
-        // Once the below field is assigned text it will fire "onLoadCompleteRef" function  
-        this.refSearchText = docDetails['right_search'];
-        this.referenceReload = true; //To reload the reference documents and search new text
-        // this.setZoomInPercent = 50;
-      }
-    });
+    this.refDocUrl = "";
+    this.refSearchText = "";
+    if ( docDetails.conflict_type === 'Regulatory' ) {
+      this.refDocUrl = this.projectViewService.endPointAddress + docDetails.reference_doc;
+      this.refSearchText = docDetails['right_search'];
+      this.referenceReload = true; //To reload the reference documents and search new text
+    }else {
+      this.projectDetails.project.documents.map((element: any) => {
+        if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) == element.documentName) {
+          this.referenceDocuments.push(element);
+          this.refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);
+          // Below Line to highlight text in reference document viewer. 
+          // Once the below field is assigned text it will fire "onLoadCompleteRef" function  
+          this.refSearchText = docDetails['right_search'];
+          this.referenceReload = true; //To reload the reference documents and search new text
+          // this.setZoomInPercent = 50;
+        }
+      });
+    }
+
   }
 
   // Search Text in Label Document
@@ -190,6 +207,20 @@ export class CompareComponent implements OnInit {
 
   closeSideBarToggle(event: any) {
     if (event === 'Close') this.sidenavsection.close();
+  }
+
+  onErrorStateMessage( event : any ) {
+    if ( event.documentCategory === 'Label' ) {
+      this.labelDocError = new DocumentError();
+      this.labelDocError['title'] = event.name;
+      this.labelDocError['message'] = 'Failed to load Label PDF [ PDF Missing ].'      
+    }else if ( event.documentCategory === 'Reference' ) {
+      this.referenceDocError = new DocumentError();
+      this.referenceDocError['title'] = event.name;
+      this.referenceDocError['message'] = 'Failed to load Reference PDF [ PDF Missing ].'      
+    }else {
+      return;
+    }
   }
 
   // Open Confirmation Modal
@@ -318,7 +349,7 @@ export class CompareComponent implements OnInit {
   }
 
   showAcceptRejectConditions(item: any) {
-    if (item.conflict_type == 'Spell and Grammar' || item.conflict_type == 'Order' || item.conflict_type == 'Configured rules') {
+    if (item.conflict_type == 'Spell and Grammar' || item.conflict_type == 'Order' || item.conflict_type == 'Configured rules' || item.conflict_type == 'Regulatory') {
       return true;
     } else if (item.conflict_type == 'Content') {
       if (item.action_type == 'INSERT' || item.action_type == 'DELETE') {

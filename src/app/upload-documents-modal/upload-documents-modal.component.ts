@@ -108,9 +108,9 @@ export class UploadDocumentsModalComponent implements OnInit {
 
     // Below line mandatory to show binary in header payloads
     // this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; }
-    this.uploader.onAfterAddingFile = (file) => {
+    this.uploader.onAfterAddingFile = (file : any) => {
       file.withCredentials = false;
-      file['fileType'] = '';
+      file['fileType'] = '';        
 
       if (this.section === 'project') {
         if (!this.allowMultiple) {
@@ -136,6 +136,19 @@ export class UploadDocumentsModalComponent implements OnInit {
       } else {
         return;
       }
+
+      if ( this.section === 'configuration' ) {
+        if (file.file.name.split('.').pop() != 'pdf') {
+          this.uploader.queue.splice(0, 1);
+          this.uploadStatusNotification('Configuration file cannot be a docx, please select pdf file.', ['alert', 'alert-danger'], 5000);
+        }
+      }
+
+      if (file['fileType'] === 'Label' && file.file.name.split('.').pop() != 'docx') {
+        this.uploader.queue.splice(0, 1);
+        this.uploadStatusNotification('Label File Type cannot be a pdf, please select docx file.', ['alert', 'alert-danger'], 5000);
+      }
+
     };
 
     this.uploader.onErrorItem = (item: any, response: any, status: any, headers: any) => { }

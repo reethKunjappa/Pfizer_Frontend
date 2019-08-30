@@ -9,6 +9,7 @@ import { LoggedInUserService } from '../services/logged-in-user.service';
 
 // Component Imports
 import { UploadDocumentsModalComponent } from 'app/upload-documents-modal/upload-documents-modal.component';
+import { ReviewLabelChecksModalComponent } from 'app/review-label-checks-modal/review-label-checks-modal.component';
 
 @Component({
   selector: 'app-view-project',
@@ -26,9 +27,10 @@ export class ViewProjectComponent implements OnInit {
     { 'headerName': 'Uploaded On', 'class': '', 'width': '12%' },
     { 'headerName': 'Actions', 'class': '', 'width': '18%' }
   ];
-  public projectDetails: any = {};
-  public uploadDocumentDialog: any;
-  public reUploadDocumentDialog: any;
+  public projectDetails : any = {};
+  public uploadDocumentDialog : any;
+  public reUploadDocumentDialog : any;
+  public reviewLabelChecks : any;
 
   constructor(private projectViewService: ProjectViewService, private router: Router, private activatedRoute: ActivatedRoute, public dialog: MatDialog, private loggedInUserService : LoggedInUserService) {
     this.viewProject();
@@ -47,6 +49,36 @@ export class ViewProjectComponent implements OnInit {
   ngOnInit() { }
 
   showConflict(projectDetails) {
+    // this.reviewLabelChecks = this.dialog.open(ReviewLabelChecksModalComponent, {
+    //   disableClose: true,//true,
+    //   width: '600px',
+    //   data: {
+    //     statusText: '',
+    //     statusTitle: 'Review criteria selection',
+    //     showSubmit: true,
+    //     showCancel: true,
+    //     submitText: 'Submit',
+    //     cancelText: 'Close',
+    //   },
+    // });
+
+    // this.reviewLabelChecks.afterClosed().subscribe(( result : any ) => { 
+    //   if ( result.status === 'Submit' && result.data != undefined ) {
+    //     result.data['_id'] = projectDetails._id;
+    //     delete result['status'];
+    //     // this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
+    //     this.projectDetails.inProcess = true;
+    //     this.projectViewService.getDocument(result.data).subscribe((res: any) => {
+    //       if (res != undefined && res != "" && res.status.code === 0) {
+    //         let obj = {};
+    //         obj = res.result;
+    //         this.projectDetails.inProcess = false; 
+    //         this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
+    //       }
+    //     })        
+    //   }
+    // });
+
     // this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
     this.projectDetails.inProcess = true;
     this.projectViewService.getDocument(projectDetails._id).subscribe((res: any) => {

@@ -14,11 +14,13 @@ export class PdfViewerComponent implements OnInit, OnChanges {
   // Property Declarations
   @ViewChild(SimplePdfViewerComponent) private pdfViewers: SimplePdfViewerComponent;
   @Input('url') url: string;
+  @Input('documentCategory') documentCategory : string;
   @Input('searchText') searchText : string;
   @Input('showCloseButton') showCloseButton : boolean = false;
   @Input('setZoomInPercent') setZoomInPercent : number = 0;
   @Input('reload') reload : boolean = false;
   @Output() closeSideBarSection = new EventEmitter();
+  @Output() onErrorStateMessage = new EventEmitter();
 
   constructor() {}
 
@@ -59,10 +61,17 @@ export class PdfViewerComponent implements OnInit, OnChanges {
     this.pdfViewers.zoomPageHeight();    
   }
 
-  onProgress( event : any ) {}
+  onProgress( event : any ) {
+    // event is in {loaded: 207484, total: undefined} format where loaded is bits. 
+  }
 
-  onError( event : any ) {}
+  onError( event : any ) {
+    event['documentCategory'] = this.documentCategory;
+    this.onErrorStateMessage.emit(event);
+  }
 
-  onSearchStateDetect(event: any) {}
+  onSearchStateDetect(event: any) {
+    // onSearchStateDetect is returning numeric value ex: 0 or 3 etc when any text is passed on for searching.
+  }
 
 }

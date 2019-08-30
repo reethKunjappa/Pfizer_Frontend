@@ -125,7 +125,7 @@
                                     <td class="mat-cell">{{ config.createdBy.name }}</td>
                                     <td class="mat-cell">{{ config.created_at | date : 'dd-MMM-yyyy' }}</td>                                    
                                     <th class="mat-cell text-center" scope="row">
-                                      <button *ngIf="false" (click)="editRuleConfig(config)" mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" 
+                                      <button (click)="editRuleConfig(config, 'Rule')" mat-raised-button type="button" matTooltip="Edit" [matTooltipPosition]="'above'" 
                                         class="btn btn-primary btn-link btn-just-icon flex">
                                           <i class="material-icons">edit</i>
                                       </button>

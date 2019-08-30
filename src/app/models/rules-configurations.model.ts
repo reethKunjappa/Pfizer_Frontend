@@ -14,7 +14,7 @@ export class RulesConfigurationsData {
         "global" : false,
         "sections": { 
             "value" : [],
-            "condition" : "include/exclude"
+            "condition" : ""
         },
         "allSections" : false
     };
@@ -30,7 +30,7 @@ export class RulesConfigurationsData {
     };        
     exceptionData : string[] = [];
     createdBy : any = {};
-    // documents : any = [];
+    documents : any = [];
     // _id : string = "";
         
     constructor() { }

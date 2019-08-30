@@ -38,14 +38,14 @@ export class AdminPreferencesComponent implements OnInit {
     { 'headerName': 'Description', 'class': 'px-2', 'width': '8%' },
     { 'headerName': 'Country(s)', 'class': 'px-2', 'width': '8%' },
     { 'headerName': 'Condition', 'class': 'px-2', 'width': '8%' },
-    { 'headerName': 'Section(s)', 'class': 'px-2', 'width': '8%' },
+    { 'headerName': 'Section(s)', 'class': 'px-2', 'width': '9%' },
     { 'headerName': 'Conflict Type', 'class': 'px-2', 'width': '8%' },
-    { 'headerName': 'Comments', 'class': 'px-2', 'width': '8%' },
-    { 'headerName': 'Additional Information', 'class': 'px-2', 'width': '15%' },
+    { 'headerName': 'Comments', 'class': 'px-2', 'width': '10%' },
+    { 'headerName': 'Additional Information', 'class': 'px-2', 'width': '10%' },
     { 'headerName': 'Exception(s)', 'class': 'px-2', 'width': '10%' },
     { 'headerName': 'Created By', 'class': 'px-2', 'width': '8%' },
     { 'headerName': 'Created On', 'class': 'px-2', 'width': '7%' },
-    { 'headerName': 'Actions', 'class': 'px-2', 'width': '5%' },
+    { 'headerName': 'Actions', 'class': 'px-2', 'width': '10%' },
     // { 'headerName': 'Document(s)', 'class': 'px-2', 'width': '20%' },    
     // { 'headerName': 'Modify Label on Access', 'class': 'px-2', 'width': '10%' },
     // { 'headerName': 'Allow Reject', 'class': 'px-2', 'width': '10%' },
@@ -96,6 +96,20 @@ export class AdminPreferencesComponent implements OnInit {
         }else if( deleteConfigurationResp.result.configType === 'Country' ) {
           this.removeConfigAfterResp( this.allConfigDetails.countryConfig, deleteConfigurationResp.result._id );
         }else { return; }
+      }
+    });
+  }
+
+  editRuleConfig( config : any , configType : string ) {
+    this.ruleConfigDialog = this.dialog.open(RulesConfigComponent, {
+      disableClose: true,//true,
+      width: '1000px',
+      data: { ruleData : config, editMode : true }
+    });
+
+    this.ruleConfigDialog.afterClosed().subscribe(result => {
+      if (result === 'Submit') {
+        this.getAllConfigurations();
       }
     });
   }

@@ -1,7 +1,7 @@
 // Dependency Imports
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialog, MatFormFieldControl, MatDialogRef } from '@angular/material';
+import { MatDialog, MatFormFieldControl, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 // Model Imports
 import { RulesConfigurationsData } from '../models/rules-configurations.model';
@@ -22,10 +22,10 @@ import { UploadDocumentsModalComponent } from '../upload-documents-modal/upload-
 export class RulesConfigComponent implements OnInit {
 
   // Property Declarations
-  public rulesConfigForm : FormGroup;
-  public rulesConfig : RulesConfigurationsData = new RulesConfigurationsData();
-  public rulesConfigData : any;
-  public uploadConfigDocDialog : any;
+  public rulesConfigForm: FormGroup;
+  public rulesConfig: RulesConfigurationsData = new RulesConfigurationsData();
+  // public rulesConfigData : any;
+  public uploadConfigDocDialog: any;
   public countryData: any[] = [];
   public ruleNames: any[] = [
     { name: 'Trademark Check' },
@@ -41,12 +41,13 @@ export class RulesConfigComponent implements OnInit {
     { name: 'Proprietary Name' },
     { name: 'Local Phrase Reference' },
     { name: 'Multiple Dosages Check' },
+    { name: 'Abbreviation Check' }
   ];
-  public sectionSelectionTypes : any[] = [
+  public sectionSelectionTypes: any[] = [
     { name: 'Include' },
     { name: 'Exclude' },
   ];
-  public countryGroup : any[] = [
+  public countryGroup: any[] = [
     { name: 'Group 1' },
     { name: 'Group 2' },
     { name: 'Group 3' },
@@ -61,20 +62,20 @@ export class RulesConfigComponent implements OnInit {
     // { 'value': 'Configured rules', 'label': 'Configured Rules' },
     { 'value': 'Regulatory', 'label': 'Regulatory' },
   ];
-  public formattingType : any[] = [
+  public formattingType: any[] = [
     { name: 'Entity' },
     { name: 'Phrase' },
   ];
-  public formattingDataList : any[] = [
+  public formattingDataList: any[] = [
     { name: 'Drug Name' },
     { name: 'Address' },
     { name: 'Date' },
   ];
-  public shouldBeInValue : any[] = [
-    { name: 'Bold', disable : false },
-    { name: 'Italic', disable : false },
-    { name: 'Lower', disable : false },
-    { name: 'Upper', disable : false },
+  public shouldBeInValue: any[] = [
+    { name: 'Bold', disable: false },
+    { name: 'Italic', disable: false },
+    { name: 'Lower', disable: false },
+    { name: 'Upper', disable: false },
   ];
   public documentTableHeaders = [
     { 'headerName': 'Document Name', 'class': '', 'width': '35%' },
@@ -87,97 +88,137 @@ export class RulesConfigComponent implements OnInit {
     { name: 'English (UK)' },
     { name: 'English (US)' },
   ];
-  public addTagText : any;
-  public disableCreate : boolean = false;
+  public addTagText: any;
+  public disableCreate: boolean = false;
+  public editMode: boolean = false;
 
-  constructor( private countryCodeService : CountryCodeService, private loggedInUserService : LoggedInUserService, private projectViewService : ProjectViewService,public dialog: MatDialog,public dialogRef: MatDialogRef<RulesConfigComponent> ) {
+  constructor(private countryCodeService: CountryCodeService, private loggedInUserService: LoggedInUserService, private projectViewService: ProjectViewService, public dialog: MatDialog, public dialogRef: MatDialogRef<RulesConfigComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    if (this.data && this.data != {} && this.data.editMode) {
+      this.rulesConfig = this.data.ruleData;
+      this.editMode = this.data.editMode;
+      if (this.rulesConfig['_id'] != "" && this.rulesConfig['documents'].length < 1) this.disableCreate = true;
+    } else {
+      this.rulesConfig = new RulesConfigurationsData();
+    }
     this.countryData = this.countryCodeService.getCountryCodeData();
     this.rulesConfigForm = new FormGroup({
       ruleNameControl: new FormControl('', Validators.required),
       ruleDescriptionControl: new FormControl('', Validators.required),
-      sectionSelectionTypesControl : new FormControl('', Validators.required),
-      conflictTypeControl : new FormControl('', Validators.required),
-      commentsControl : new FormControl('', Validators.required),
-      exceptionsControl : new FormControl('', Validators.required),
+      sectionSelectionTypesControl: new FormControl('', Validators.required),
+      conflictTypeControl: new FormControl('', Validators.required),
+      commentsControl: new FormControl('', Validators.required),
+      exceptionsControl: new FormControl('', Validators.required),
     });
+    this.rulesConfig.rulesApplication.sections.condition = this.sectionSelectionTypes[0].name;
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  ruleName( event : any ) {
+  objCompareFn(c1: Object, c2: Object): boolean {
+    return c1 && c2 ? c1['name'] === c2['name'] : c1 === c2;
+  }
+
+  stringCompareFn(c1: string, c2: string): boolean {
+    return c1 && c2 ? c1 === c2 : c1['name'] === c2['name'];
+  }
+
+  ruleName(event: any) {
     let obj1 = {};
     let obj2 = {};
     this.rulesConfig.additionalInformation.additionalInfo = false;
     this.rulesConfig.additionalInformation.addInfo = [];
-    if ( event === 'Hyperlink Check' ) { 
+    if (event === 'Hyperlink Check' || event === 'Abbreviation Check') {
       this.rulesConfig.rulesApplication.allSections = true;
       this.sectionAllCheck({ checked: this.rulesConfig.rulesApplication.allSections });
-    }else if( event === 'Spell Check' || event === 'Grammar Check'  ) {
+    } else if (event === 'Spell Check' || event === 'Grammar Check') {
       this.rulesConfig.rulesApplication.allSections = true;
       this.sectionAllCheck({ checked: this.rulesConfig.rulesApplication.allSections });
       this.rulesConfig.additionalInformation.additionalInfo = true;
-      obj1 = { "label" : "Language", "value" : [] };
+      obj1 = { "label": "Language", "value": [] };
       this.rulesConfig.additionalInformation.addInfo.push(obj1);
-    }else if( event === 'Phrase Replacement' ) {
-      obj1 = { "label" : "Do not use", "value" : [] }; 
-      this.rulesConfig.additionalInformation.addInfo.push(obj1);      
-      obj2 = { "label" : "Replace with", "value" : [] };
-      this.rulesConfig.additionalInformation.addInfo.push(obj2);      
-      this.rulesConfig.additionalInformation.additionalInfo = true;
-    }else if( event === 'Formatting Entity' || event === 'Formatting Phrase' ){  
-      obj1 = { "label" : "Value", "value" : [] };    
-      this.rulesConfig.additionalInformation.addInfo.push(obj1);      
-      obj2 = { "label" : "Should be in", "value" : [] };
+    } else if (event === 'Phrase Replacement') {
+      obj1 = { "label": "Do not use", "value": [] };
+      this.rulesConfig.additionalInformation.addInfo.push(obj1);
+      obj2 = { "label": "Replace with", "value": [] };
       this.rulesConfig.additionalInformation.addInfo.push(obj2);
-      this.rulesConfig.additionalInformation.additionalInfo = true; 
-    }else if( event === 'Local Phrase Reference' ) {
-      obj1 = { "label" : "Local Phrase", "value" : [] };    
-      this.rulesConfig.additionalInformation.addInfo.push(obj1);      
-      this.rulesConfig.additionalInformation.additionalInfo = true; 
-    }else if( event === 'Multiple Dosages Check' ) {
-      this.rulesConfig.additionalInformation.additionalInfo = false; 
-    }else {
+      this.rulesConfig.additionalInformation.additionalInfo = true;
+    } else if (event === 'Formatting Entity' || event === 'Formatting Phrase') {
+      obj1 = { "label": "Value", "value": [] };
+      this.rulesConfig.additionalInformation.addInfo.push(obj1);
+      obj2 = { "label": "Should be in", "value": [] };
+      this.rulesConfig.additionalInformation.addInfo.push(obj2);
+      this.rulesConfig.additionalInformation.additionalInfo = true;
+    } else if (event === 'Local Phrase Reference') {
+      obj1 = { "label": "Local Phrase", "value": [] };
+      this.rulesConfig.additionalInformation.addInfo.push(obj1);
+      this.rulesConfig.additionalInformation.additionalInfo = true;
+    } else if (event === 'Multiple Dosages Check') {
+      this.rulesConfig.additionalInformation.additionalInfo = false;
+    } else {
       return;
     }
   }
 
-  conditionalDisable( event : any ) {
+  conditionalDisable(event: any) {
     let value = [];
     value = event.filter((x) => { return x === 'Lower' || x === 'Upper' });
-    if ( value[0] === 'Lower' ) {
-      this.shouldBeInValue.filter((e)=>{
-        if ( e.name === 'Upper' ) e.disable = true;
+    if (value[0] === 'Lower') {
+      this.shouldBeInValue.filter((e) => {
+        if (e.name === 'Upper') e.disable = true;
         else e.disable = false;
       });
-    }else if ( value[0] === 'Upper' ) {
-      this.shouldBeInValue.filter((e)=>{
-        if ( e.name === 'Lower' ) e.disable = true;
+    } else if (value[0] === 'Upper') {
+      this.shouldBeInValue.filter((e) => {
+        if (e.name === 'Lower') e.disable = true;
         else e.disable = false;
-      });      
-    }else {
-      this.shouldBeInValue.filter((e)=>{
+      });
+    } else {
+      this.shouldBeInValue.filter((e) => {
         e.disable = false;
-      });      
+      });
     }
   }
 
-  globalCheck( event : any ) {
-    if ( event.checked ) this.rulesConfig.rulesApplication.country = [];
+  globalCheck(event: any) {
+    if (event.checked) this.rulesConfig.rulesApplication.country = [];
   }
 
-  sectionAllCheck( event : any ) {
-    if ( event.checked ) {
-      this.rulesConfig.rulesApplication.sections.value = []; 
+  sectionAllCheck(event: any) {
+    if (event.checked) {
+      this.rulesConfig.rulesApplication.sections.value = [];
       this.rulesConfig.rulesApplication.sections.condition = this.sectionSelectionTypes[0].name;
     }
   }
 
+  mandatoryCheck() {
+    // if ( !this.rulesConfig.rulesSetup.ruleName || !this.rulesConfig.action.conflictType || this.disableCreate || ( !this.rulesConfig.rulesApplication.allSections && !this.rulesConfig.rulesApplication.sections.condition ) || ( this.rulesConfig.rulesApplication.sections.condition && !this.rulesConfig.rulesApplication.sections.value[0]  )  ) {
+    //   return true;     
+    // }
+    
+    // if (this.disableCreate) {
+    //   return true;
+    // } else {
+      if (this.rulesConfig.rulesSetup.ruleName && this.rulesConfig.action.conflictType) {
+        if (this.rulesConfig.rulesApplication.allSections && this.rulesConfig.rulesApplication.sections.condition) {
+          return false;
+        } else if (this.rulesConfig.rulesApplication.sections.condition && this.rulesConfig.rulesApplication.sections.value[0]) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    // }
+  }
+
   createRulesConfig() {
     this.rulesConfig.createdBy = this.loggedInUserService.getNativeWindowRef();
-    this.projectViewService.createRulesConfig( this.rulesConfig ).subscribe(( createRulesConfigResp : any )=>{
-      if ( createRulesConfigResp.result != undefined && createRulesConfigResp.result != "" ) {
-        this.rulesConfigData = createRulesConfigResp.result;
+    this.projectViewService.createRulesConfig(this.rulesConfig).subscribe((createRulesConfigResp: any) => {
+      if (createRulesConfigResp.result != undefined && createRulesConfigResp.result != "") {
+        this.rulesConfig = createRulesConfigResp.result;
         this.disableCreate = true;
+        if( this.rulesConfig['_id'] != '' ) this.editMode = true;
       }
     });
   }
@@ -186,15 +227,30 @@ export class RulesConfigComponent implements OnInit {
     this.uploadConfigDocDialog = this.dialog.open(UploadDocumentsModalComponent, {
       disableClose: true, //false,
       width: '1000px',
-      data: { section : 'configuration', configDetails: this.rulesConfigData, allowMultiple: false, documentId: this.rulesConfigData['_id'], fileType: 'Reference' }
+      data: { section: 'configuration', configDetails: this.rulesConfig, allowMultiple: false, documentId: this.rulesConfig['_id'], fileType: 'Reference' }
     });
 
-    this.uploadConfigDocDialog.afterClosed().subscribe((result) => { 
-      if ( result.uploadComplete === true ) {}     
+    this.uploadConfigDocDialog.afterClosed().subscribe((result) => {
+      if (result.uploadComplete === true) {
+        if (this.rulesConfig['_id'] != "" && this.rulesConfig['documents'].length < 1) this.disableCreate = true;
+        else this.disableCreate = false;
+      }
     });
   }
 
-  close(){
+  updateRulesConfig() {
+    this.rulesConfig['updatedBy'] = this.loggedInUserService.getNativeWindowRef();
+    this.projectViewService.updateRulesConfig(this.rulesConfig).subscribe((updateRulesConfigResp: any) => {
+      if (updateRulesConfigResp.result != undefined && updateRulesConfigResp.result != "") {
+        this.rulesConfig = updateRulesConfigResp.result;
+        if( this.rulesConfig['_id'] != '' ) this.editMode = true;
+        if (this.rulesConfig['_id'] != "" && this.rulesConfig['documents'].length < 1) this.disableCreate = true;
+        else this.disableCreate = false;
+      }
+    });
+  }
+
+  close() {
     this.dialogRef.close('Submit');
   }
 

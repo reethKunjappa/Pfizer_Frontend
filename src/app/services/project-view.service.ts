@@ -21,7 +21,7 @@ export class ProjectViewService {
   // public loggedInUser: any = { 'email': 'a@a.aa', 'name': 'Shashank Honrao', 'userId' : 'SHonrao' };
   public loggedInUser : any = this.loggedInUserService.getNativeWindowRef();
   public endPointAddress : string = environment.serverUrl; //configuration based on environment
-  // public endPointAddress : string = 'http://192.168.0.82:3005';
+  // public endPointAddress : string = 'http://192.168.0.73:3005';
 
   // public endPointAddress : string = 'http://54.164.151.252:3005'; //Dev Server URL
   // public endPointAddress: string = 'http://3.90.245.202:3005'; //Sand box server URL
@@ -139,9 +139,7 @@ export class ProjectViewService {
   //Get Document
   getDocument( requestData ): Observable<any> {
     const url = this.endPointAddress + '/api/labelling/compare';
-    const reqInput = {
-      '_id': requestData
-    }
+    const reqInput = { '_id': requestData }
     return this.http.post(url, reqInput, this.httpOptions).pipe(
       map(( response: any ) => {
         if ( response.status.code === 0 ) {
@@ -454,6 +452,22 @@ export class ProjectViewService {
   // DELETE PREFERENCE CONFIGURATION
   deleteConfiguration( requestData : any ) : Observable<any> {
     let url = this.endPointAddress + '/api/labelling/deleteConfig';
+    return this.http.post<any>( url, requestData, this.httpOptions )
+    .pipe(
+      map(( response: any )=> {
+        if ( response.status.code === 0 ) {
+          return response;
+        }else {
+          throw new Error('Value expected!');  
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
+  // UPDATE PREFERENCES RULE CONFIG
+  updateRulesConfig( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/updateRuleConfig';
     return this.http.post<any>( url, requestData, this.httpOptions )
     .pipe(
       map(( response: any )=> {
