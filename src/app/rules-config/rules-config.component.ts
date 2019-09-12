@@ -41,7 +41,8 @@ export class RulesConfigComponent implements OnInit {
     { name: 'Proprietary Name' },
     { name: 'Local Phrase Reference' },
     { name: 'Multiple Dosages Check' },
-    { name: 'Abbreviation Check' }
+    { name: 'Abbreviation Check' },
+    { name: 'Contradiction Check' }
   ];
   public sectionSelectionTypes: any[] = [
     { name: 'Include' },
@@ -127,7 +128,7 @@ export class RulesConfigComponent implements OnInit {
     let obj2 = {};
     this.rulesConfig.additionalInformation.additionalInfo = false;
     this.rulesConfig.additionalInformation.addInfo = [];
-    if (event === 'Hyperlink Check' || event === 'Abbreviation Check') {
+    if (event === 'Hyperlink Check' || event === 'Abbreviation Check' || event === 'Contradiction Check') {
       this.rulesConfig.rulesApplication.allSections = true;
       this.sectionAllCheck({ checked: this.rulesConfig.rulesApplication.allSections });
     } else if (event === 'Spell Check' || event === 'Grammar Check') {
@@ -191,25 +192,17 @@ export class RulesConfigComponent implements OnInit {
   }
 
   mandatoryCheck() {
-    // if ( !this.rulesConfig.rulesSetup.ruleName || !this.rulesConfig.action.conflictType || this.disableCreate || ( !this.rulesConfig.rulesApplication.allSections && !this.rulesConfig.rulesApplication.sections.condition ) || ( this.rulesConfig.rulesApplication.sections.condition && !this.rulesConfig.rulesApplication.sections.value[0]  )  ) {
-    //   return true;     
-    // }
-    
-    // if (this.disableCreate) {
-    //   return true;
-    // } else {
-      if (this.rulesConfig.rulesSetup.ruleName && this.rulesConfig.action.conflictType) {
-        if (this.rulesConfig.rulesApplication.allSections && this.rulesConfig.rulesApplication.sections.condition) {
-          return false;
-        } else if (this.rulesConfig.rulesApplication.sections.condition && this.rulesConfig.rulesApplication.sections.value[0]) {
-          return false;
-        } else {
-          return true;
-        }
+    if (this.rulesConfig.rulesSetup.ruleName && this.rulesConfig.action.conflictType) {
+      if (this.rulesConfig.rulesApplication.allSections && this.rulesConfig.rulesApplication.sections.condition) {
+        return false;
+      } else if (this.rulesConfig.rulesApplication.sections.condition && this.rulesConfig.rulesApplication.sections.value[0]) {
+        return false;
       } else {
         return true;
       }
-    // }
+    } else {
+      return true;
+    }
   }
 
   createRulesConfig() {
@@ -218,7 +211,7 @@ export class RulesConfigComponent implements OnInit {
       if (createRulesConfigResp.result != undefined && createRulesConfigResp.result != "") {
         this.rulesConfig = createRulesConfigResp.result;
         this.disableCreate = true;
-        if( this.rulesConfig['_id'] != '' ) this.editMode = true;
+        if (this.rulesConfig['_id'] != '') this.editMode = true;
       }
     });
   }
@@ -243,7 +236,7 @@ export class RulesConfigComponent implements OnInit {
     this.projectViewService.updateRulesConfig(this.rulesConfig).subscribe((updateRulesConfigResp: any) => {
       if (updateRulesConfigResp.result != undefined && updateRulesConfigResp.result != "") {
         this.rulesConfig = updateRulesConfigResp.result;
-        if( this.rulesConfig['_id'] != '' ) this.editMode = true;
+        if (this.rulesConfig['_id'] != '') this.editMode = true;
         if (this.rulesConfig['_id'] != "" && this.rulesConfig['documents'].length < 1) this.disableCreate = true;
         else this.disableCreate = false;
       }
