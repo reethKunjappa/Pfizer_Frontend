@@ -139,8 +139,8 @@ export class ProjectViewService {
   //Get Document
   getDocument( requestData ): Observable<any> {
     const url = this.endPointAddress + '/api/labelling/compare';
-    const reqInput = { '_id': requestData }
-    return this.http.post(url, reqInput, this.httpOptions).pipe(
+    // const reqInput = { '_id': requestData }
+    return this.http.post(url, requestData, this.httpOptions).pipe(
       map(( response: any ) => {
         if ( response.status.code === 0 ) {
           return response;

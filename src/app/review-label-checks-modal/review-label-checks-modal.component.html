@@ -2,38 +2,42 @@
   <div>{{ data.statusTitle }}</div>
 </div>
 <hr style="margin: 0px -24px 15px;" />
-<div class="mat-dialog-content pb-2">
-  <form [formGroup]="reviewFormGroup">
-    <div class="row mr-0">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <mat-label>Conflict Criteria</mat-label>
-        <br>
-        <div class="d-inline-flex mt-2" *ngFor="let criteria of conflictCriterias; let i=index">
-          <mat-checkbox color="primary" class="mr-4" (change)="onCriteriaChange($event)"
-            [value]="criteria.value">{{criteria.label}}</mat-checkbox>
-        </div>
+<div class="mat-dialog-content pb-0" style="min-height: 200px;">
+  <div class="row mr-0">
+    <div class="col-6">
+      <mat-label>Conflict Criteria</mat-label>
+    </div>
+    <div class="col-6 pr-0 text-right">
+      <mat-checkbox color="primary" (change)="onAllCriteriaChange($event)" [checked]="allCriteriaCheck">
+        All</mat-checkbox>
+    </div>
+  </div>
+  <div class="row mr-0">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="d-inline-flex mt-2" *ngFor="let criteria of conflictCriterias; let i=index">
+        <mat-checkbox color="primary" class="mr-4" (change)="onCriteriaChange($event, i)" [checked]="criteria.checked"
+          [value]="criteria.value">{{criteria.label}}</mat-checkbox>
       </div>
     </div>
-    <hr>
-    <div class="row mr-0">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-        <mat-label>Match Type</mat-label>
-        <br>
-        <!-- *ngFor="let match of matchCriterias; let x=index" -->
-        <div class="d-inline-flex mt-2"  >
-          <!-- <mat-checkbox color="primary" class="example-margin mr-4" (change)="onMatchChange($event, x)"
-            [value]="match.value" [checked]="match.checked">{{match.label}}</mat-checkbox> -->
-            <mat-radio-group>
-              <mat-radio-button class="mr-4" *ngFor="let match of matchCriterias; let x=index" (change)="onMatchChange($event, x)" color="primary" value="{{match.value}}">{{ match.label }}</mat-radio-button>
-            </mat-radio-group>
-        </div>
+  </div>
+  <hr>
+  <div class="row mr-0">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <mat-label>Match Type</mat-label>
+      <br>
+      <div class="d-inline-flex mt-2">
+        <mat-radio-group>
+          <mat-radio-button class="mr-4" *ngFor="let match of matchCriterias; let x=index" value="{{match.value}}"
+            [checked]="match.checked" (change)="onMatchChange($event, x)" color="primary">{{ match.label }}
+          </mat-radio-button>
+        </mat-radio-group>
       </div>
     </div>
-  </form>
+  </div>
 </div>
-<div class="mat-dialog-actions" style="display:block !important;">
-  <button class="btn btn-primary pull-right btn-spec" *ngIf="data.showSubmit" (click)="modalSubmit();" mat-raised-button
-    [mat-dialog-close]="true">{{ data.submitText }}</button>
+<div class="mat-dialog-actions pt-0" style="display:block !important;">
+  <button class="btn btn-primary pull-right btn-spec" *ngIf="data.showSubmit" [disabled]="disableSubmit()"
+    (click)="modalSubmit();" mat-raised-button [mat-dialog-close]="true">{{ data.submitText }}</button>
   <button class="btn btn-default pull-right btn-spec" *ngIf="data.showCancel" (click)="modalCancel();" mat-raised-button
     [mat-dialog-close]="true" style="margin-right:10px;">{{ data.cancelText }}</button>
 </div>

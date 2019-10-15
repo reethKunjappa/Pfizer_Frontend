@@ -5,10 +5,10 @@
     </div>
     <div class="col-12 text-center" *ngIf="viewType == 'getConflicts'">
       <div class="badge badge-pill badge-primary p-3" style="margin-top: 12rem;">Review Label in process.</div>
-      <br/>
-      <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-spec">Back</button>      
+      <br />
+      <button mat-raised-button routerLink="/view/{{projectId}}" type="submit" class="btn btn-spec">Back</button>
     </div>
-  </div>  
+  </div>
 </div>
 <div class="main-content" *ngIf="projectDetails != undefined">
   <div class="row">
@@ -26,7 +26,8 @@
           <div class="col-10 pl-0">
             <h4 class="card-title">{{projectDetails.project.projectName}}</h4>
             <div class="card-category">
-              <span *ngIf="projectDetails.project.proprietaryName">Proprietary Name : {{ projectDetails.project.proprietaryName }} | </span>
+              <span *ngIf="projectDetails.project.proprietaryName">Proprietary Name :
+                {{ projectDetails.project.proprietaryName }} | </span>
               <span *ngIf="projectDetails.project.drugName">Drug Name : {{ projectDetails.project.drugName }} | </span>
               <span>Country : {{ projectDetails.project.country.name }} | Created By :
                 {{ projectDetails.project.createdBy.name }} |
@@ -64,7 +65,8 @@
                           </button>
                           <button mat-raised-button type="button" matTooltip="Ignore All" [matTooltipPosition]="'above'"
                             class="btn btn-danger btn-link btn-sm py-0 px-1 m-0" [disabled]="item.value < 1"
-                            *ngIf="item.key == 'spell'" (click)="openConfirmationModal('Accept', item.key, item.label)">Ignore All
+                            *ngIf="item.key == 'spell'"
+                            (click)="openConfirmationModal('Accept', item.key, item.label)">Ignore All
                           </button>
                         </td>
                       </tr>
@@ -82,8 +84,10 @@
               <!-- style="height: 99vh !important" -->
               <div class="w-100" *ngIf="refDocUrl">
                 <div class="card mt-1 mb-0" *ngIf="refDocUrl">
-                  <app-pdf-viewer [url]="refDocUrl" [documentCategory]="'Reference'" [searchText]="refSearchText" [showCloseButton]=true
-                    (closeSideBarSection)="closeSideBarToggle($event)" (onErrorStateMessage)="onErrorStateMessage($event)" [setZoomInPercent]="setZoomInPercent" [reload]="referenceReload" ></app-pdf-viewer>
+                  <app-pdf-viewer [url]="refDocUrl" [documentCategory]="'Reference'" [searchText]="refSearchText"
+                    [showCloseButton]=true (closeSideBarSection)="closeSideBarToggle($event)"
+                    (onErrorStateMessage)="onErrorStateMessage($event)" [setZoomInPercent]="setZoomInPercent"
+                    [reload]="referenceReload"></app-pdf-viewer>
                 </div>
                 <div class="text-center" *ngIf="referenceDocError.title">
                   <div class="badge badge-pill badge-primary mt-5 p-3 text-center">
@@ -97,14 +101,16 @@
           </mat-sidenav>
 
           <mat-sidenav-content>
-            <div id="main" >
+            <div id="main">
               <div class="row mx-1 w-100 mt-1">
                 <div style="width:65%">
                   <!-- style="height: 91vh !important" -->
                   <div *ngIf="labelDocUrl">
                     <div class="card my-0" *ngIf="labelDocUrl">
-                      <app-pdf-viewer [url]="labelDocUrl" [documentCategory]="'Label'" [searchText]="labelTextSearch" [showCloseButton]=false
-                        (closeSideBarSection)="closeSideBarToggles($event)" (onErrorStateMessage)="onErrorStateMessage($event)" [setZoomInPercent]="setZoomInPercent" [reload]="labelReload"></app-pdf-viewer>
+                      <app-pdf-viewer [url]="labelDocUrl" [documentCategory]="'Label'" [searchText]="labelTextSearch"
+                        [showCloseButton]=false (closeSideBarSection)="closeSideBarToggles($event)"
+                        (onErrorStateMessage)="onErrorStateMessage($event)" [setZoomInPercent]="setZoomInPercent"
+                        [reload]="labelReload"></app-pdf-viewer>
                     </div>
                     <div class="text-center" *ngIf="labelDocError.title">
                       <div class="badge badge-pill badge-primary mt-5 p-3 text-center">
@@ -126,7 +132,8 @@
                   </div>
                   <div class="row mx-2" style="overflow-x: hidden; overflow-y: auto;max-height: 78vh;max-height: 124vh">
                     <div class="col-12 p-0 text-center">
-                      <div *ngIf="filteredItems.length < 1" class="badge badge-pill badge-primary mt-5 p-3">No conflict(s) to show.</div>
+                      <div *ngIf="filteredItems.length < 1" class="badge badge-pill badge-primary mt-5 p-3">No
+                        conflict(s) to show.</div>
                       <div *ngFor="let item of filteredItems;let i = index"
                         class="border-info m-1 mr-2 w-100 text-left">
                         <mat-card class="p-2" id="{{ i }}">
@@ -146,9 +153,9 @@
                               (click)="acceptOrRejectComment('Accept',item)">
                               <i class="material-icons">check</i>
                             </button>
-                            <!-- [hidden]="showAcceptRejectConditions(item)"  // Removed for allowing individual reject --> 
+                            <!-- [hidden]="showAcceptRejectConditions(item)"  // Removed for allowing individual reject -->
                             <button mat-raised-button type="button" matTooltip="Reject" [matTooltipPosition]="'above'"
-                              class="btn btn-danger btn-link btn-sm btn-just-icon"                              
+                              class="btn btn-danger btn-link btn-sm btn-just-icon"
                               (click)="acceptOrRejectComment('Reject',item)">
                               <i class="material-icons">close</i>
                             </button>

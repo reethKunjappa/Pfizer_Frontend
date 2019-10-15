@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SimplePdfViewerModule, SimplePdfViewerComponent } from 'simple-pdf-viewer';
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { MatSidenav } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 
 // Service Imports
 import { ProjectViewService } from 'app/services/project-view.service';
@@ -18,9 +19,9 @@ export interface DialogData {
 }
 
 class DocumentError {
-  title : string = '';
-  message : string = '';
-  constructor(){}
+  title: string = '';
+  message: string = '';
+  constructor() { }
 }
 
 export class FilterCommentsArray {
@@ -91,12 +92,12 @@ export class CompareComponent implements OnInit {
   }
   filteredItems: any;
   public setZoomInPercent: number = 100;
-  public labelDocError : DocumentError = new DocumentError();
-  public referenceDocError : DocumentError = new DocumentError();
+  public labelDocError: DocumentError = new DocumentError();
+  public referenceDocError: DocumentError = new DocumentError();
 
   constructor(public location: Location, private router: Router, public dialog: MatDialog,
     private activatedRoute: ActivatedRoute, private projectViewService: ProjectViewService,
-    private pdfViewer: SimplePdfViewerModule, private loggedInUserService: LoggedInUserService) {
+    private pdfViewer: SimplePdfViewerModule, private loggedInUserService: LoggedInUserService, public snackBar: MatSnackBar) {
 
     this.activatedRoute.paramMap.subscribe((params: any) => {
       this.projectId = params.get('id');
@@ -180,24 +181,40 @@ export class CompareComponent implements OnInit {
     this.referenceDocuments = [];
     this.refDocUrl = "";
     this.refSearchText = "";
-    if ( docDetails.conflict_type === 'Regulatory' ) {
+    if (docDetails.conflict_type === 'Regulatory') {
       this.refDocUrl = this.projectViewService.endPointAddress + docDetails.reference_doc;
       this.refSearchText = docDetails['right_search'];
       this.referenceReload = true; //To reload the reference documents and search new text
-    }else {
+    } else {
       this.projectDetails.project.documents.map((element: any) => {
-        if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) == element.documentName) {
+        if (docDetails.reference_doc.substring(docDetails.reference_doc.lastIndexOf('\\') + 1) === element.documentName) {
           this.referenceDocuments.push(element);
           this.refDocUrl = this.projectViewService.endPointAddress + this.convertToUTF8(element.pdfPath.destination);
           // Below Line to highlight text in reference document viewer. 
-          // Once the below field is assigned text it will fire "onLoadCompleteRef" function  
-          this.refSearchText = docDetails['right_search'];
-          this.referenceReload = true; //To reload the reference documents and search new text
-          // this.setZoomInPercent = 50;
+          // Once the below field is assigned text it will fire "onLoadCompleteRef" function
+          if (docDetails['right_search'] != undefined && docDetails['right_search'] != "" && docDetails['right_search'] != " " && docDetails['right_search'] != null) {
+            this.refSearchText = docDetails['right_search'];
+            this.referenceReload = true; //To reload the reference documents and search new text
+            // this.setZoomInPercent = 50;              
+          } else {
+            this.textMapNotification('Reference text cannot be highlighted.', ['alert', 'alert-danger'], 3000);
+          }
+          return;
         }
       });
+
     }
 
+  }
+
+  textMapNotification(message: any, additionClasses: any, duration: number) {
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = 'top';
+    config.horizontalPosition = 'right';
+    config.duration = duration;
+    config.panelClass = additionClasses;
+    let action: boolean = true;
+    this.snackBar.open(message, action ? 'Close' : undefined, config);
   }
 
   // Search Text in Label Document
@@ -209,16 +226,16 @@ export class CompareComponent implements OnInit {
     if (event === 'Close') this.sidenavsection.close();
   }
 
-  onErrorStateMessage( event : any ) {
-    if ( event.documentCategory === 'Label' ) {
+  onErrorStateMessage(event: any) {
+    if (event.documentCategory === 'Label') {
       this.labelDocError = new DocumentError();
       this.labelDocError['title'] = event.name;
-      this.labelDocError['message'] = 'Failed to load Label PDF [ PDF Missing ].'      
-    }else if ( event.documentCategory === 'Reference' ) {
+      this.labelDocError['message'] = 'Failed to load Label PDF [ PDF Missing ].'
+    } else if (event.documentCategory === 'Reference') {
       this.referenceDocError = new DocumentError();
       this.referenceDocError['title'] = event.name;
-      this.referenceDocError['message'] = 'Failed to load Reference PDF [ PDF Missing ].'      
-    }else {
+      this.referenceDocError['message'] = 'Failed to load Reference PDF [ PDF Missing ].'
+    } else {
       return;
     }
   }

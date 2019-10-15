@@ -28,10 +28,17 @@ export class PdfViewerComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if ( changes['url'] && changes['url'].currentValue != undefined && changes['url'].currentValue != "" && changes['url'].currentValue != null ) {
-      this.url = changes['url'].currentValue;
+      // this.url = changes['url'].currentValue;
       // this.pdfViewers.openUrl(changes['url'].currentValue);  // Commented because "reload" attribute implementation
-      this.pdfViewers.setZoomInPercent( this.setZoomInPercent );
-      this.pdfViewers.zoomPageHeight();
+      if ( changes['url'].currentValue != changes['url'].previousValue ) {
+        this.pdfViewers.openUrl(changes['url'].currentValue);  // Commented because "reload" attribute implementation        
+        this.pdfViewers.setZoomInPercent( this.setZoomInPercent );
+        this.pdfViewers.zoomPageHeight();
+      }else {
+        this.url = changes['url'].currentValue;
+      }
+      // this.pdfViewers.setZoomInPercent( this.setZoomInPercent );
+      // this.pdfViewers.zoomPageHeight();
     }
 
     if ( changes['searchText'] && changes['searchText'].currentValue != undefined && changes['searchText'].currentValue != "" && changes['searchText'].currentValue != null ) {    

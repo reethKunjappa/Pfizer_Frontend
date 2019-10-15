@@ -49,46 +49,48 @@ export class ViewProjectComponent implements OnInit {
   ngOnInit() { }
 
   showConflict(projectDetails) {
-    // this.reviewLabelChecks = this.dialog.open(ReviewLabelChecksModalComponent, {
-    //   disableClose: true,//true,
-    //   width: '600px',
-    //   data: {
-    //     statusText: '',
-    //     statusTitle: 'Review criteria selection',
-    //     showSubmit: true,
-    //     showCancel: true,
-    //     submitText: 'Submit',
-    //     cancelText: 'Close',
-    //   },
-    // });
+    this.reviewLabelChecks = this.dialog.open(ReviewLabelChecksModalComponent, {
+      disableClose: true,//true,
+      width: '620px',
+      data: {
+        statusText: '',
+        statusTitle: 'Review criteria selection',
+        showSubmit: true,
+        showCancel: true,
+        submitText: 'Submit',
+        cancelText: 'Close',
+      },
+    });
 
-    // this.reviewLabelChecks.afterClosed().subscribe(( result : any ) => { 
-    //   if ( result.status === 'Submit' && result.data != undefined ) {
-    //     result.data['_id'] = projectDetails._id;
-    //     delete result['status'];
-    //     // this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
-    //     this.projectDetails.inProcess = true;
-    //     this.projectViewService.getDocument(result.data).subscribe((res: any) => {
-    //       if (res != undefined && res != "" && res.status.code === 0) {
-    //         let obj = {};
-    //         obj = res.result;
-    //         this.projectDetails.inProcess = false; 
-    //         this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
-    //       }
-    //     })        
+    this.reviewLabelChecks.afterClosed().subscribe(( result : any ) => { 
+      if ( result.status === 'Submit' && result.data != undefined ) {
+        result.data['_id'] = projectDetails._id;
+        delete result['status'];
+        // this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
+        this.projectDetails.inProcess = true;
+        this.projectViewService.getDocument(result.data).subscribe((res: any) => {
+          if (res != undefined && res != "" && res.status.code === 0) {
+            let obj = {};
+            obj = res.result;
+            this.projectDetails.inProcess = false; 
+            this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
+          }
+        })        
+      }
+    });
+
+    // // this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
+    // this.projectDetails.inProcess = true;
+    // this.projectViewService.getDocument(projectDetails._id).subscribe((res: any) => {
+    //   if (res != undefined && res != "" && res.status.code === 0) {
+    //     let obj = {};
+    //     obj = res.result;
+    //     this.projectDetails.inProcess = false; 
+    //     this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
     //   }
     // });
 
-    // this.router.navigate(['/compare', projectDetails._id, 'getConflicts']);
-    this.projectDetails.inProcess = true;
-    this.projectViewService.getDocument(projectDetails._id).subscribe((res: any) => {
-      if (res != undefined && res != "" && res.status.code === 0) {
-        let obj = {};
-        obj = res.result;
-        this.projectDetails.inProcess = false; 
-        this.router.navigate(['/compare', projectDetails._id, 'viewProjectConflicts']);
-      }
-    })
+
   }
 
   uploadMoreDocuments() {

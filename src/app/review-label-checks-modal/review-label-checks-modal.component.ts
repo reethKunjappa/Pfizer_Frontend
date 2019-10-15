@@ -1,7 +1,13 @@
 // Dependency Imports
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+
+export class ReviewCheckData {
+  criteria: string[] = [];
+  match: string[] = [];
+  constructor() { }
+}
 
 @Component({
   selector: 'app-review-label-checks-modal',
@@ -13,67 +19,78 @@ export class ReviewLabelChecksModalComponent implements OnInit {
   // Property Declarations
   public conflictCriterias: any[] = [
     // { 'value': 'ALL', 'label': 'All', checked : false },
-    { 'value': 'Content', 'label': 'Content', checked : false },
-    { 'value': 'Font', 'label': 'Font', checked : false },
-    { 'value': 'Spell and Grammar', 'label': 'Spell and Grammar', checked : false },
-    { 'value': 'Order', 'label': 'Order', checked : false },
-    { 'value': 'Regulatory', 'label': 'Regulatory', checked : true },
+    { 'value': 'Content', 'label': 'Content', checked: true },
+    { 'value': 'Font', 'label': 'Font', checked: true },
+    { 'value': 'Spell and Grammar', 'label': 'Spell and Grammar', checked: true },
+    { 'value': 'Order', 'label': 'Order', checked: true },
+    { 'value': 'Regulatory', 'label': 'Regulatory', checked: true },
   ];
   public matchCriterias: any[] = [
-    { 'value': 'Exact', 'label': 'Exact', checked : false },
-    { 'value': 'Schematic', 'label': 'Schematic', checked : false },
+    { 'value': 'Semantic', 'label': 'Semantic', checked: true },
+    { 'value': 'Exact', 'label': 'Exact', checked: false },
   ];
-  public reviewFormGroup : FormGroup;
+  public allCriteriaCheck: boolean = true;
+  public submitData: ReviewCheckData = new ReviewCheckData();
 
-  constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<ReviewLabelChecksModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { 
-    this.reviewFormGroup = this.formBuilder.group({
-      criteria: this.formBuilder.array([]),
-      match: this.formBuilder.array([])
-    });
-  }
+  constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<ReviewLabelChecksModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  onCriteriaChange(event) {
-    const criteria = <FormArray>this.reviewFormGroup.get('criteria') as FormArray;
-    if(event.checked) {
-      criteria.push(new FormControl(event.source.value));
+  onAllCriteriaChange(event) {
+    if (event.checked) {
+      this.conflictCriterias.map(e => e.checked = true);
+      this.allCriteriaCheck = true;
     } else {
-      const i = criteria.controls.findIndex(x => x.value === event.source.value);
-      criteria.removeAt(i);
+      this.conflictCriterias.map(e => e.checked = false);
+      this.allCriteriaCheck = false;
     }
   }
 
-  onMatchChange(event : any, index : number) {
-    const match = <FormArray>this.reviewFormGroup.get('match') as FormArray;
-    if(event.source.checked) {
-      if( event.source.value === 'Schematic' ) {
-        const i = match.controls.findIndex( x => x.value === 'Exact' );
-        match.removeAt(i);
-        match.push(new FormControl(event.source.value));
-        this.matchCriterias.map(e => e.checked = false);
-        this.matchCriterias[index].checked = true;        
-      }else if( event.source.value === 'Exact' ) {
-        const i = match.controls.findIndex( x => x.value === 'Schematic' );
-        match.removeAt(i);
-        match.push(new FormControl(event.source.value));
-        this.matchCriterias.map(e => e.checked = false);
-        this.matchCriterias[index].checked = true;
-      }else {
-        match.push(new FormControl(event.source.value));
-      }
+  onCriteriaChange(event, i) {
+    this.conflictCriterias[i].checked = event.checked;
+    let obj = this.conflictCriterias.every(this.isAllCriteriaChecked);
+    if (obj === true && this.conflictCriterias[0].checked === true) this.allCriteriaCheck = true;
+    else if (obj === true && this.conflictCriterias[0].checked === false) this.allCriteriaCheck = false;
+    else if (obj === false) this.allCriteriaCheck = false;
+    else return;
+  }
+
+  isAllCriteriaChecked(el, index, arr) {
+    if (index === 0) return true;
+    else return (el.checked === arr[index - 1].checked);
+  }
+
+  onMatchChange(event: any, index: number) {
+    if (event.source.checked) {
+      this.matchCriterias.map((e) => {
+        if (e.value === event.value) e.checked = true;
+        else e.checked = false;
+      });
     } else {
-      const i = match.controls.findIndex(x => x.value === event.source.value);
-      match.removeAt(i);
+      return;
+    }
+  }
+
+  disableSubmit() {
+    if (this.conflictCriterias.some(e => e.checked === true) && this.matchCriterias.some(e => e.checked === true)) {
+      return false;
+    } else {
+      return true;
     }
   }
 
   modalSubmit() {
-    this.dialogRef.close({ 'status' : 'Submit', 'data' : this.reviewFormGroup.value });
+    this.conflictCriterias.map((x) => {
+      if (x.checked === true) { this.submitData.criteria.push(x.value); }
+    });
+    this.matchCriterias.map((x) => {
+      if (x.checked === true) { this.submitData.match.push(x.value); }
+    });
+    this.dialogRef.close({ 'status': 'Submit', 'data': this.submitData });
   }
 
   modalCancel() {
-    this.dialogRef.close({ 'status' : 'Cancel', 'data' : undefined });
+    this.dialogRef.close({ 'status': 'Cancel', 'data': undefined });
   }
 
 }
