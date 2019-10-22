@@ -97,6 +97,15 @@ export class CommentsComponent implements OnInit {
     this.selectedIndex = -1;    
   }
 
-  removeComment(comment) {}
+  // Delete a comment 
+  deleteComment(comment, index) {
+    this.projectViewService.deleteProjectComment({ 'commentId': comment._id, 'projectId': comment.projectId }).subscribe((deleteProjectCommentResp: any) => {
+      if (deleteProjectCommentResp.status.code === 0) {
+        this.commentsList.splice(index, 1);
+      } else {
+        return;
+      }
+    });
+  }
 
 }

@@ -253,6 +253,22 @@ export class ProjectViewService {
     );
   }
 
+  // DELETE PROJECT SPECIFIC COMMENTS API
+  deleteProjectComment( requestData : any ) : Observable<any> {
+    let url = this.endPointAddress + '/api/labelling/deleteComments';
+    return this.http.post<any>( url, requestData, this.httpOptions)
+    .pipe(
+      map(( response: any )=> {
+        if ( response.status.code === 0 ) {
+          return response;                
+        }else {
+          throw new Error('Value expected!');
+        }
+      }),
+      // catchError(err => of([]))
+    );
+  }
+
   // Delete Document API Call
   deleteDocument( requestData : any ) : Observable<any> {
     let url = this.endPointAddress + '/api/labelling/deleteDocument';
